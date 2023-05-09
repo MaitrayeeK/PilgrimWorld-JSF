@@ -325,7 +325,7 @@ button:focus {
 .navbar {
   padding: 0px;
   border: 0px;
-  border-radius: 0px;
+  border-radius: 30px;
 }
 
 .navbar {
