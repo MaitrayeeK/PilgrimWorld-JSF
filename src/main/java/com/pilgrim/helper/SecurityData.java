@@ -4,7 +4,7 @@
  */
 package com.pilgrim.helper;
 
-import com.pilgrim.models.UserMaster;
+import com.pligrim.models.UserMaster;
 import java.io.Serializable;
 import javax.security.enterprise.identitystore.CredentialValidationResult.Status;
 
