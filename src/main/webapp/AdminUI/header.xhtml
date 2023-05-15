@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Header</title>
+
+        <!-- CSS links -->
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/AdminUI//assets/css/style.css"/>
+        <link href="#{facesContext.externalContext.requestContextPath}/AdminUI/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="#{facesContext.externalContext.requestContextPath}/AdminUI/assets/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"/>
+
+    </h:head>
+
+    <h:body>
+        <header id="header" class="header fixed-top d-flex align-items-center">
+
+            <!-- logo and sidebar button -->
+            <div class="d-flex align-items-center justify-content-between">
+                <a class="navbar-brand logo_h" href="index.jsf"><img src="#{facesContext.externalContext.requestContextPath}/UserUI//image/logo_pilgrimworld.jpeg" alt="" height="70px" width="200px"/></a>
+                <i class="bi bi-list toggle-sidebar-btn"></i>
+            </div>
+        </header>
+
+        <!-- sidebar -->
+        <aside id="sidebar" class="sidebar">
+
+
+            <p:panelMenu style="width:270px; padding-top: 20px">
+                <p:submenu label="Options" icon="pi pi-refresh">
+                    <p:menuitem value="Save (Non-Ajax)" icon="pi pi-save"/>
+                    <p:menuitem value="Update" icon="pi pi-refresh"/>
+                    <p:menuitem value="Delete" icon="pi pi-times"/>
+                </p:submenu>
+                <p:submenu label="Navigations">
+                    <p:menuitem value="Website" url="http://www.primefaces.org" icon="pi pi-external-link"/>
+                    <p:menuitem value="Internal" outcome="index.jsf" icon="pi pi-upload"/>
+                </p:submenu>
+            </p:panelMenu>
+        </aside>
+
+    </h:body>
+</html>
+
