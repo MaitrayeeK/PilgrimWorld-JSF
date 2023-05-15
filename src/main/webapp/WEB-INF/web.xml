@@ -19,6 +19,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>UserUI/index.jsf</welcome-file>
+        <welcome-file>AdminUI/index.jsf</welcome-file>
     </welcome-file-list>
 </web-app>
