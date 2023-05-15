@@ -8,8 +8,8 @@ import com.pilgrim.helper.SecurityData;
 import com.pilgrim.clients.AuthClient;
 import com.pilgrim.helper.JWTConstants;
 import com.pilgrim.helper.Response;
-import com.pilgrim.models.UserMaster;
 import com.pilgrim.record.KeepRecord;
+import com.pligrim.models.UserMaster;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,13 +56,20 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
         String token = extractToken(context);
 
         try {
+            String u = request.getParameter("username");
 
+            System.out.println("Username: " + request.getParameter("username"));
+            
             if (token == null && request.getParameter("username") != null) {
 
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
+                
+                UserMaster user = new UserMaster();
+                user.setUsername(username);
+                user.setPassword(password);
 
-                securityData = new SecurityData(new UserMaster(username, password));
+                securityData = new SecurityData(user);
 //                Request<SecurityData> reqSecurityData = new Request<>();
 //                reqSecurityData.setData(securityData);
 

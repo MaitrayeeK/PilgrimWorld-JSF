@@ -28,10 +28,12 @@
 
                     <div>
                         <label for="email1" class="block text-900 font-semibold mb-2">Email</label>
-                        <p:inputText id="email1" styleClass="w-full mb-3" placeholder="Email address"/>
+                        <!--<p:inputText id="username" styleClass="w-full mb-3" placeholder="Email address"/>-->
+                        <input type="text" name="username" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all w-full mb-3" placeholder="Username"/>
                         <label for="password1" class="block text-900 font-semibold mb-2">Password</label>
-                        <p:inputText id="password1" type="password" styleClass="w-full mb-3" placeholder="Password"/>
-
+                        <!--<p:inputText id="password" type="password" styleClass="w-full mb-3" placeholder="Password"/>-->
+                        <input type="password" name="password" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all w-full mb-3" placeholder="Password"/>
+                        
                         <div class="flex align-items-center justify-content-between mb-6">
                             <div class="flex align-items-center">
                                 <p:selectBooleanCheckbox id="rememberme" styleClass="mr-2"/>
@@ -40,7 +42,7 @@
                             <a class="font-semibold no-underline ml-2 text-blue-900 text-right cursor-pointer">Forgot your password?</a>
                         </div>
 
-                        <p:commandButton type="button" value="Sign In" icon="pi pi-user" styleClass="w-full"/>
+                        <p:commandButton type="submit" value="Sign In" icon="pi pi-user" styleClass="w-full"/>
                     </div>
                 </h:form>
 
