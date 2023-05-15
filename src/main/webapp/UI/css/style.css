@@ -1,0 +1,71 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 13-May-2023, 3:50:07 PM
+    Author     : maitr
+*/
+
+
+.ui-sticky {
+    height: 5rem;
+    background-color: black;
+}
+
+.logo {
+    position: absolute;
+    z-index: 9;
+    top: 0;
+    transform: translate(-50%, -50%);
+}
+
+.logo button{
+    height: 50px;
+    width: 150px;
+    margin: 5rem 0 0 10rem;
+    border-radius: .5rem;
+}
+
+.inner-img{
+    border-radius: 1rem;
+}
+
+.speeddial-circle-demo .ui-speeddial-quarter-circle.ui-speeddial-direction-up-left {
+    right: 0;
+    bottom: 0;
+}
+
+.custom-scrolltop.ui-scrolltop {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    outline: 0 none;
+    background-color: var(--primary-color);
+}
+.custom-scrolltop.ui-scrolltop:hover {
+    background-color: var(--primary-color);
+}
+
+.custom-scrolltop.ui-scrolltop .ui-scrolltop-icon {
+    font-size: 1rem;
+    color: var(--primary-color-text);
+}
+
+.ui-speeddial-quarter-circle.ui-speeddial-direction-down-right {
+    left: 7px;
+    top: 7px;
+}
+
+.ui-speeddial button {
+    background-image: url("../images/favicon.jpeg");
+    background-size: cover;
+}
+
+.ui-speeddial button span{
+    visibility: hidden;
+}
+
+.ui-speeddial-action, .ui-scrolltop{
+    background: #429afe !important;
+}

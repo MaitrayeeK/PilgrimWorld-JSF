@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pilgrim World</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"></link>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/bootstrap.min.css" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/bootstrap-icons.css" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/tooplate-crispy-kitchen.css" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/style.css" rel="stylesheet"></link>
+        
+        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+    </h:head>
+    <h:body>
+        <p:scrollTop />
+        <h:form>
+
+            <p:speedDial radius="120" direction="down-right" type="quarter-circle">
+                <p:menuitem id="signup" icon="fa-solid fa-right-to-bracket fa-beat-fade" url="#{facesContext.externalContext.requestContextPath}/UI/signin.jsf"/>
+                <p:menuitem icon="fa-solid fa-calendar-plus fa-beat" />
+                <p:menuitem icon="fa-solid fa-compass fa-spin" />
+                <p:menuitem icon="fa-brands fa-searchengin fa-bounce" />
+            </p:speedDial>
+            
+<!--            <p:tooltip id="speeddialtt"
+                       position="right"
+                       for="@(.ui-speeddial > button)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui1tt"
+                       position="right"
+                       for="@(#signup)"
+                       value="Sign Up" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui2tt"
+                       position="right"
+                       for="@(.ui-speeddial)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui3tt"
+                       position="right"
+                       for="@(.ui-speeddial)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui4tt"
+                       position="right"
+                       for="@(.ui-speeddial)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>-->
+            <main>
+                <section class="hero">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-lg-5 col-12 m-auto">
+                                <div class="heroText">
+
+                                    <h4 class="text-white mb-lg-5 mb-3">Living the gospel and standing in holy places is not always easy, but it is worth it.</h4>
+                                    <h6 class="text-white mb-lg-5 mb-3">So, What are you waiting for?</h6>
+                                    <p:linkButton value="Explore" icon="fa-solid fa-star fa-beat-fade" style="margin-right:20px;" href="#{facesContext.externalContext.requestContextPath}/UI/signin.jsf"/>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-7 col-12">
+                                <div id="carouselExampleCaptions" class="carousel carousel-fade hero-carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <div class="carousel-image-wrap">
+                                                <img src="#{facesContext.externalContext.requestContextPath}/UI/images/golden_temple.jpg" class="img-fluid carousel-image" alt=""/>
+                                            </div>
+
+                                            <div class="carousel-caption">
+                                                <span class="text-white">
+                                                    <i class="fa-solid fa-location-dot"></i>
+                                                    Amritsar, Punjab
+                                                </span>
+
+                                                <h4 class="hero-text">Golden Temple</h4>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="video-wrap">
+                        <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                            <source src="#{facesContext.externalContext.requestContextPath}/UI/video/indian-temple-44740.mp4" type="video/mp4"/>
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <!--<div class="overlay"></div>-->
+                </section>
+
+                <section class="menu section-padding">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-12">
+                                <h3 class="text-center mb-lg-5 mb-4">Explore the Places</h3>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-12">
+                                <div class="menu-thumb">
+                                    <div class="menu-image-wrap">
+                                        <img src="images/breakfast/brett-jordan-8xt8-HIFqc8-unsplash.jpg" class="img-fluid menu-image" alt=""/>
+
+                                        <span class="menu-tag bg-warning">Breakfast</span>
+                                    </div>
+
+                                    <div class="menu-info d-flex flex-wrap align-items-center">
+                                        <h4 class="mb-0">Morning Fresh</h4>
+
+                                        <span class="price-tag bg-white shadow-lg ms-4"><small>$</small>12.50</span>
+
+                                        <div class="d-flex flex-wrap align-items-center w-100 mt-2">
+                                            <h6 class="reviews-text mb-0 me-3">4.3/5</h6>
+
+                                            <div class="reviews-stars">
+                                                <i class="bi-star-fill reviews-icon"></i>
+                                                <i class="bi-star-fill reviews-icon"></i>
+                                                <i class="bi-star-fill reviews-icon"></i>
+                                                <i class="bi-star-fill reviews-icon"></i>
+                                                <i class="bi-star reviews-icon"></i>
+                                            </div>
+
+                                            <p class="reviews-text mb-0 ms-4">102 Reviews</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <section class="BgImage"></section>
+                <section class="news section-padding">
+                    <div class="container">
+                        <div class="row">
+
+                            <h2 class="text-center mb-lg-5 mb-4">News &amp; Events</h2>
+
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="news-thumb mb-4">
+                                    <a href="news-detail.html">
+                                        <img src="images/news/pablo-merchan-montes-Orz90t6o0e4-unsplash.jpg" class="img-fluid news-image" alt=""/>
+                                    </a>
+
+                                    <div class="news-text-info news-text-info-large">
+                                        <span class="category-tag bg-danger">Featured</span>
+
+                                        <h5 class="news-title mt-2">
+                                            <a href="news-detail.html" class="news-title-link">Healthy Lifestyle and happy living tips</a>
+                                        </h5>
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="news-thumb mb-4">
+                                    <a href="news-detail.html">
+                                        <img src="images/news/stefan-johnson-xIFbDeGcy44-unsplash.jpg" class="img-fluid news-image" alt=""/>
+                                    </a>
+
+                                    <div class="news-text-info news-text-info-large">
+                                        <span class="category-tag bg-danger">Featured</span>
+
+                                        <h5 class="news-title mt-2">
+                                            <a href="news-detail.html" class="news-title-link">How to make a healthy meal</a>
+                                        </h5>
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="news-thumb mb-lg-0 mb-lg-4 mb-0">
+                                    <a href="news-detail.html">
+                                        <img src="images/news/gilles-lambert-S_LhjpfIdm4-unsplash.jpg" class="img-fluid news-image" alt=""/>
+                                    </a>
+
+                                    <div class="news-text-info">
+                                        <span class="category-tag me-3 bg-info">Promotions</span>
+
+                                        <strong>8 April 2022</strong>
+
+                                        <h5 class="news-title mt-2">
+                                            <a href="news-detail.html" class="news-title-link">Is Coconut good for you?</a>
+                                        </h5>
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="news-thumb mb-lg-0 mb-lg-4 mb-2">
+                                    <a href="news-detail.html">
+                                        <img src="images/news/caroline-attwood-bpPTlXWTOvg-unsplash.jpg" class="img-fluid news-image" alt=""/>
+                                    </a>
+
+                                    <div class="news-text-info">
+                                        <span class="category-tag">News</span>
+
+                                        <h5 class="news-title mt-2">
+                                            <a href="news-detail.html" class="news-title-link">Salmon Steak Noodle</a>
+                                        </h5>
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-12">
+                                <div class="news-thumb mb-4">
+                                    <a href="news-detail.html">
+                                        <img src="images/news/louis-hansel-GiIiRV0FjwU-unsplash.jpg" class="img-fluid news-image" alt=""/>
+                                    </a>
+
+                                    <div class="news-text-info">
+                                        <span class="category-tag me-3 bg-info">Meeting</span>
+
+                                        <strong>30 April 2022</strong>
+
+                                        <h5 class="news-title mt-2">
+                                            <a href="news-detail.html" class="news-title-link">Making a healthy salad</a>
+                                        </h5>
+                                    </div>
+                                </div> 
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                
+                <footer class="site-footer section-padding">
+
+                    <div class="container">
+
+                        <div class="row">
+
+                            <div class="col-12">
+                                <h4 class="text-white mb-4 me-5">Crispy Kitchen</h4>
+                            </div>
+
+                            <div class="col-lg-4 col-md-7 col-xs-12 tooplate-mt30">
+                                <h6 class="text-white mb-lg-4 mb-3">Location</h6>
+
+                                <p>121 Einstein Loop N, Bronx, NY 10475, United States</p>
+
+                                <a href="https://goo.gl/maps/wZVGLA7q64uC1s886" class="custom-btn btn btn-dark mt-2">Directions</a>
+                            </div>
+
+                            <div class="col-lg-4 col-md-5 col-xs-12 tooplate-mt30">
+                                <h6 class="text-white mb-lg-4 mb-3">Opening Hours</h6>
+
+                                <p class="mb-2">Monday - Friday</p>
+
+                                <p>10:00 AM - 08:00 PM</p>
+
+                                <p>Tel: <a href="tel: 010-02-0340" class="tel-link">010-02-0340</a></p>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-xs-12 tooplate-mt30">
+                                <h6 class="text-white mb-lg-4 mb-3">Social</h6>
+
+                                <ul class="social-icon">
+                                    <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+
+                                    <li><a href="#" class="social-icon-link bi-instagram"></a></li>
+
+                                    <li><a href="https://twitter.com/search?q=tooplate.comsrc=typed_queryf=live" target="_blank"
+                                           class="social-icon-link bi-twitter"></a></li>
+
+                                    <li><a href="#" class="social-icon-link bi-youtube"></a></li>
+                                </ul>
+
+                                <p class="copyright-text tooplate-mt60">Copyright © 2022 Crispy Kitchen Co., Ltd.
+                                    <br/>Design: <a rel="nofollow" href="https://www.tooplate.com/" target="_blank">Tooplate</a></p>
+
+                            </div>
+
+                        </div><!-- row ending -->
+
+                    </div><!-- container ending -->
+
+                </footer>
+                <p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />
+
+            </main>
+        </h:form>
+    </h:body>
+</html>
+

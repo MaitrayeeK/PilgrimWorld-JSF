@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Sign In</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700" rel="stylesheet"></link>
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/loginsignup.css" rel="stylesheet"></link>
+        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+    </h:head>
+    <h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
+    <h:body>
+        <div class="wrapper">
+            <div class="inner">
+                <div class="image-holder">
+                    <img src="#{facesContext.externalContext.requestContextPath}/UI/images/signup-screen.png" alt=""/>
+                </div>
+                <h:form>
+                    <div class="text-center mb-5">
+                        <div class="text-900 text-3xl font-semibold mb-3">Welcome Back</div>
+                        <span class="text-800 font-semibold line-height-3">Don't have an account?</span>
+                        <a class="font-semibold no-underline ml-2 text-blue-900 cursor-pointer" href="#{facesContext.externalContext.requestContextPath}/UI/signup.jsf">Create today!</a>
+                    </div>
+
+                    <div>
+                        <label for="email1" class="block text-900 font-semibold mb-2">Email</label>
+                        <p:inputText id="email1" styleClass="w-full mb-3" placeholder="Email address"/>
+                        <label for="password1" class="block text-900 font-semibold mb-2">Password</label>
+                        <p:inputText id="password1" type="password" styleClass="w-full mb-3" placeholder="Password"/>
+
+                        <div class="flex align-items-center justify-content-between mb-6">
+                            <div class="flex align-items-center">
+                                <p:selectBooleanCheckbox id="rememberme" styleClass="mr-2"/>
+                                <label class="text-800 font-semibold" for="rememberme">Remember me</label>
+                            </div>
+                            <a class="font-semibold no-underline ml-2 text-blue-900 text-right cursor-pointer">Forgot your password?</a>
+                        </div>
+
+                        <p:commandButton type="button" value="Sign In" icon="pi pi-user" styleClass="w-full"/>
+                    </div>
+                </h:form>
+
+            </div>
+        </div>
+    </h:body>
+</html>
+
