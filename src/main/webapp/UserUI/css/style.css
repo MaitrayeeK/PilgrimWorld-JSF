@@ -325,7 +325,7 @@ button:focus {
 .navbar {
   padding: 0px;
   border: 0px;
-  border-radius: 0px;
+  border-radius: 30px;
 }
 
 .navbar {
@@ -2331,7 +2331,7 @@ button:focus {
 }
 
 b, sup, sub, u, del {
-  color: #f8b600;
+  color: #2196f3;;
 }
 
 h1 {

@@ -11,7 +11,9 @@ import java.io.Serializable;
  *
  * @author Maitrayee
  */
+
 public class Response<T> implements Serializable {
+
     T result;
     String message;
     boolean status;

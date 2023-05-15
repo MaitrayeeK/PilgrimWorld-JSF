@@ -1,12 +1,127 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <link rel="icon" href="#{facesContext.externalContext.requestContextPath}/UserUI/image/favicon.jpeg" type="image/png" />
     <h:head>
-        <title>Facelet Title</title>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI//css/bootstrap.css" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI//vendors/linericon/style.css" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI//css/font-awesome.min.css" />
+        <link rel="stylesheet"
+              href="#{facesContext.externalContext.requestContextPath}/UserUI//vendors/owl-carousel/owl.carousel.min.css" />
+        <link rel="stylesheet"
+              href="#{facesContext.externalContext.requestContextPath}/UserUI//vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css" />
+        <link rel="stylesheet"
+              href="#{facesContext.externalContext.requestContextPath}/UserUI//vendors/nice-select/css/nice-select.css" />
+        <link rel="stylesheet"
+              href="#{facesContext.externalContext.requestContextPath}/UserUI//vendors/owl-carousel/owl.carousel.min.css" />
+        <!-- main css -->
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI//css/signinstyle.css" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI//css/style.css" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI//css/style.css.map" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI//css/responsive.css" />
+
+        <title>PilgrimWorld</title>
     </h:head>
-    <h:body>
-        Hello from Facelets
+    <h:body style="background-color: #e3e3fa">
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+
+                    <div class="login100-more" style="background-image: url('image/gallery/01-1.jpg');">
+                    </div>
+
+                    <h:form class="login100-form validate-form">
+                        <p:growl id="growl" showDetail="true" />
+                        <span class="login100-form-title p-b-43">
+                            Welcome
+                        </span>
+                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                            <h:inputText class="input100" id="name" value="#{signupBean.name}"/>
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Name</span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                            <h:inputText class="input100" id="email" value="#{signupBean.email}"/>
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Email</span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                            <h:inputText class="input100" id="uname" value="#{signupBean.uname}"/>
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Username</span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Password is required">
+                            <h:inputSecret class="input100" id="pass" value="#{signupBean.password}"/>
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Password</span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                            <h:inputTextarea class="input100" id="address" value="#{signupBean.address}"/>
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Address</span>
+                        </div>
+                        <div class="field col-12 m-b-10">
+                            <div class=" ui-fluid ">
+                                <div class="formgrid grid">
+                                    <div class="field col-20 md:col-4">
+                                        <p:selectOneMenu id="statec" value="#{signupBean.stateid}" class="bg-transparent">
+                                            <p:ajax listener="#{signupBean.onStateChange()}" update="city"/>
+                                            <f:selectItem itemLabel="Select State" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{signupBean.states}" var="state" itemLabel="#{state.stateName}" itemValue="#{state.stateId}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field col-12 m-b-5">
+                            <div class=" ui-fluid ">
+                                <div class="formgrid grid">
+                                    <div class="field col-20 md:col-4">
+                                        <p:selectOneMenu id="city" value="#{signupBean.cityid}" class="bg-transparent">
+                                            <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{signupBean.cities}" var="item" itemLabel="#{item.cityName}" itemValue="#{item.cityId}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-sb-m w-full p-t-15 p-b-32">
+                            <div class="contact100-form-checkbox">
+                                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me"/>
+                                <label class="label-checkbox100" for="ckb1">
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="container-login100-form-btn">
+                            <!--<button class="login100-form-btn">-->
+                            <p:commandButton value="SignUp" class="login100-form-btn" actionListener="#{signupBean.onSubmit()}" update="growl"></p:commandButton>
+                            <!--</button>-->
+                        </div>
+                        <div class="text-center p-t-46 p-b-20">
+                            <span class="txt2">
+                                or sign in 
+                            </span>
+                            <br/>
+                            <a href="signin.jsf" class="txt1"><b>Login</b></a>
+                        </div>
+                        <div class="login100-form-social flex-c-m">
+                            <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+                                <i class="fa fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+
     </h:body>
 </html>
 
