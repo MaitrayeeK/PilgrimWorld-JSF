@@ -1,0 +1,89 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 13-May-2023, 5:25:06 PM
+    Author     : Dell
+*/
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ui-speeddial {
+    right: .5rem !important;
+}
+
+.ui-speeddial button {
+    background-image: url("../images/favicon.jpeg") !important;
+    background-size: cover !important;
+    border: 1px solid #0d3c61;
+}
+
+.ui-speeddial button span{
+    visibility: hidden;
+}
+
+.ui-speeddial-action, .ui-scrolltop{
+    background: #0d3c61 !important;
+    text-decoration: none;
+}
+
+.ui-button {
+    background: #0d3c61 !important;
+}
+
+.ui-sidebar-close {
+    float: left !important;
+    background: #0d3c61 !important;
+    border-radius: 4px !important;
+    color: #ffffff !important;
+    padding: 0 !important;
+    margin: -.5rem;
+    width: 2.357rem !important;
+    height: 2.457rem !important;
+    vertical-align: middle;
+}
+
+.ui-sidebar-content {
+    margin-top: 4rem;
+}
+
+.ui-sidebar .ui-sidebar-close .ui-icon {
+    margin: .2rem;
+}
+
+.main {
+    margin-top: 3rem;
+}
+
+.card {
+    background: #ffffff;
+    padding: 2rem;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    border-radius: 4px;
+}
+
+.ui-menu {
+    border: none !important;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link {
+    padding: .85rem 1rem !important;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
+    color: #0d3c61 !important;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon {
+    color: #0d3c61 !important;
+    font-size: 1.5em;
+    margin-right: 1rem !important;
+}
+
+.ui-datatable thead th {
+    color: #0d3c61 !important;
+}

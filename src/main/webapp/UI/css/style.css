@@ -58,8 +58,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .ui-speeddial button {
-    background-image: url("../images/favicon.jpeg");
-    background-size: cover;
+    background-image: url("../images/favicon.jpeg") !important;
+    background-size: cover !important;
 }
 
 .ui-speeddial button span{

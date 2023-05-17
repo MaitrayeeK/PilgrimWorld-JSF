@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pilgrim World</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"></link>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/bootstrap.min.css" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/bootstrap-icons.css" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/tooplate-crispy-kitchen.css" rel="stylesheet"></link>
+
+        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/style.css" rel="stylesheet"></link>
+
+        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+    </h:head>
+    <h:body>
+        <p:scrollTop />
+        <p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />
+        <h:form>
+            <p:speedDial radius="120" direction="down-right" type="quarter-circle">
+                <p:menuitem id="signup" icon="fa-solid fa-right-to-bracket fa-beat-fade" url="#{facesContext.externalContext.requestContextPath}/UI/signin.jsf"/>
+                <p:menuitem icon="fa-solid fa-calendar-plus fa-beat" />
+                <p:menuitem icon="fa-solid fa-compass fa-spin" />
+                <p:menuitem icon="fa-brands fa-searchengin fa-bounce" />
+            </p:speedDial>
+            
+            <!--            <p:tooltip id="speeddialtt"
+                       position="right"
+                       for="@(.ui-speeddial > button)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui1tt"
+                       position="right"
+                       for="@(#signup)"
+                       value="Sign Up" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui2tt"
+                       position="right"
+                       for="@(.ui-speeddial)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui3tt"
+                       position="right"
+                       for="@(.ui-speeddial)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>
+            <p:tooltip id="speeddialmenui4tt"
+                       position="right"
+                       for="@(.ui-speeddial)"
+                       value="Start from here" showEffect="clip"
+                       hideEffect="explode"/>-->
+        </h:form>
+    </h:body>
+</html>
+

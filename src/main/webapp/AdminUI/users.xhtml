@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pilgrim World</title>
+        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <div class="main">
+            <div class="card">
+                    <p:dataTable id="basicDT"><!--var="product" value="#{dtSelectionView.products1}"-->
+                    <p:column headerText="ID">
+                        <h:outputText />
+                    </p:column>
+
+                    <p:column headerText="Name">
+                        <h:outputText />
+                    </p:column>
+
+                    <p:column headerText="Email">
+                        <h:outputText />
+                    </p:column>
+
+                    <p:column headerText="State">
+                        <h:outputText  />
+                    </p:column>
+                    
+                    <p:column headerText="Group">
+                        <h:outputText  />
+                    </p:column>
+                    <p:column style="width:3rem;text-align: center">
+                        <p:commandButton update=":form:productDetail" oncomplete="PF('productDialog').show()"
+                                         icon="fa-brands fa-searchengine" title="View">
+                            <f:setPropertyActionListener value="#{product}"
+                                                         target="#{dtSelectionView.selectedProduct}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
+        <p:dialog header="Product Info" widgetVar="productDialog" modal="true" showEffect="fade"
+                  hideEffect="fade" resizable="false">
+            <p:outputPanel id="productDetail" style="text-align:center;">
+                <p:column rendered="#{not empty dtSelectionView.selectedProduct}">
+                    <div class="product">
+                        <div class="product-grid-item card" style="margin-bottom: 0">
+                            <div class="product-grid-item-top">
+                                <div>
+                                    <i class="pi pi-tag product-category-icon"/>
+                                    <span class="product-category">#{dtSelectionView.selectedProduct.category}</span>
+                                </div>
+                                <span class="product-badge status-#{dtSelectionView.selectedProduct.inventoryStatus.name().toLowerCase()}">#{dtSelectionView.selectedProduct.inventoryStatus.text}</span>
+                            </div>
+                            <div class="product-grid-item-content">
+                                <p:graphicImage
+                                    name="demo/images/product/#{dtSelectionView.selectedProduct.image}"/>
+                                <div class="product-name">#{dtSelectionView.selectedProduct.name}</div>
+                                <div class="product-description">#{dtSelectionView.selectedProduct.description}</div>
+                                <p:rating readonly="true" value="#{dtSelectionView.selectedProduct.rating}"/>
+                            </div>
+                            <div class="product-grid-item-bottom">
+                                <h:outputText value="#{dtSelectionView.selectedProduct.price}"
+                                              styleClass="product-price">
+                                    <f:convertNumber currencySymbol="$" type="currency"/>
+                                </h:outputText>
+                                <p:commandButton value="Add To Cart" icon="pi pi-shopping-cart"
+                                                 disabled="#{dtSelectionView.selectedProduct.inventoryStatus == 'OUTOFSTOCK'}">
+                                    <f:setPropertyActionListener value="#{dtSelectionView.selectedProduct}"
+                                                                 target="#{dtSelectionView.selectedProduct}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </div>
+                </p:column>
+            </p:outputPanel>
+        </p:dialog>
+    </h:body>
+</html>
+
