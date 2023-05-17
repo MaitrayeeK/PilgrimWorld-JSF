@@ -27,11 +27,9 @@
                     </div>
 
                     <div>
-                        <label for="email1" class="block text-900 font-semibold mb-2">Email</label>
-                        <!--<p:inputText id="username" styleClass="w-full mb-3" placeholder="Email address"/>-->
+                        <label for="username" class="block text-900 font-semibold mb-2">Username</label>
                         <input type="text" name="username" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all w-full mb-3" placeholder="Username"/>
-                        <label for="password1" class="block text-900 font-semibold mb-2">Password</label>
-                        <!--<p:inputText id="password" type="password" styleClass="w-full mb-3" placeholder="Password"/>-->
+                        <label for="password" class="block text-900 font-semibold mb-2">Password</label>
                         <input type="password" name="password" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all w-full mb-3" placeholder="Password"/>
                         
                         <div class="flex align-items-center justify-content-between mb-6">
@@ -42,7 +40,10 @@
                             <a class="font-semibold no-underline ml-2 text-blue-900 text-right cursor-pointer">Forgot your password?</a>
                         </div>
 
-                        <p:commandButton type="submit" value="Sign In" icon="pi pi-user" styleClass="w-full"/>
+                        <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left w-full">
+                            <span class="ui-button-icon-left ui-icon ui-c pi pi-user"></span>
+                            <span class="ui-button-text ui-c">Sign In</span>
+                        </button>
                     </div>
                 </h:form>
 

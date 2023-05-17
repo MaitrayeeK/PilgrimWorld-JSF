@@ -3,61 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Pilgrim World</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"></link>
-
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700" rel="stylesheet"></link>
-
-        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/bootstrap.min.css" rel="stylesheet"></link>
-
-        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/bootstrap-icons.css" rel="stylesheet"></link>
-
-        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/tooplate-crispy-kitchen.css" rel="stylesheet"></link>
-
-        <link href="#{facesContext.externalContext.requestContextPath}/UI/css/style.css" rel="stylesheet"></link>
-        
-        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
     </h:head>
     <h:body>
-        <p:scrollTop />
+        <ui:include src="header.xhtml"/>
         <h:form>
 
-            <p:speedDial radius="120" direction="down-right" type="quarter-circle">
-                <p:menuitem id="signup" icon="fa-solid fa-right-to-bracket fa-beat-fade" url="#{facesContext.externalContext.requestContextPath}/UI/signin.jsf"/>
-                <p:menuitem icon="fa-solid fa-calendar-plus fa-beat" />
-                <p:menuitem icon="fa-solid fa-compass fa-spin" />
-                <p:menuitem icon="fa-brands fa-searchengin fa-bounce" />
-            </p:speedDial>
-            
-<!--            <p:tooltip id="speeddialtt"
-                       position="right"
-                       for="@(.ui-speeddial > button)"
-                       value="Start from here" showEffect="clip"
-                       hideEffect="explode"/>
-            <p:tooltip id="speeddialmenui1tt"
-                       position="right"
-                       for="@(#signup)"
-                       value="Sign Up" showEffect="clip"
-                       hideEffect="explode"/>
-            <p:tooltip id="speeddialmenui2tt"
-                       position="right"
-                       for="@(.ui-speeddial)"
-                       value="Start from here" showEffect="clip"
-                       hideEffect="explode"/>
-            <p:tooltip id="speeddialmenui3tt"
-                       position="right"
-                       for="@(.ui-speeddial)"
-                       value="Start from here" showEffect="clip"
-                       hideEffect="explode"/>
-            <p:tooltip id="speeddialmenui4tt"
-                       position="right"
-                       for="@(.ui-speeddial)"
-                       value="Start from here" showEffect="clip"
-                       hideEffect="explode"/>-->
             <main>
                 <section class="hero">
                     <div class="container">
@@ -68,7 +21,7 @@
 
                                     <h4 class="text-white mb-lg-5 mb-3">Living the gospel and standing in holy places is not always easy, but it is worth it.</h4>
                                     <h6 class="text-white mb-lg-5 mb-3">So, What are you waiting for?</h6>
-                                    <p:linkButton value="Explore" icon="fa-solid fa-star fa-beat-fade" style="margin-right:20px;" href="#{facesContext.externalContext.requestContextPath}/UI/signin.jsf"/>
+                                    <p:linkButton value="Explore" icon="fa-solid fa-star fa-beat-fade" style="margin-right:20px;" href="#{facesContext.externalContext.requestContextPath}/UI/explore.jsf"/>
                                 </div>
                             </div>
 
@@ -245,61 +198,8 @@
                     </div>
                 </section>
                 
-                <footer class="site-footer section-padding">
-
-                    <div class="container">
-
-                        <div class="row">
-
-                            <div class="col-12">
-                                <h4 class="text-white mb-4 me-5">Crispy Kitchen</h4>
-                            </div>
-
-                            <div class="col-lg-4 col-md-7 col-xs-12 tooplate-mt30">
-                                <h6 class="text-white mb-lg-4 mb-3">Location</h6>
-
-                                <p>121 Einstein Loop N, Bronx, NY 10475, United States</p>
-
-                                <a href="https://goo.gl/maps/wZVGLA7q64uC1s886" class="custom-btn btn btn-dark mt-2">Directions</a>
-                            </div>
-
-                            <div class="col-lg-4 col-md-5 col-xs-12 tooplate-mt30">
-                                <h6 class="text-white mb-lg-4 mb-3">Opening Hours</h6>
-
-                                <p class="mb-2">Monday - Friday</p>
-
-                                <p>10:00 AM - 08:00 PM</p>
-
-                                <p>Tel: <a href="tel: 010-02-0340" class="tel-link">010-02-0340</a></p>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-xs-12 tooplate-mt30">
-                                <h6 class="text-white mb-lg-4 mb-3">Social</h6>
-
-                                <ul class="social-icon">
-                                    <li><a href="#" class="social-icon-link bi-facebook"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-instagram"></a></li>
-
-                                    <li><a href="https://twitter.com/search?q=tooplate.comsrc=typed_queryf=live" target="_blank"
-                                           class="social-icon-link bi-twitter"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-youtube"></a></li>
-                                </ul>
-
-                                <p class="copyright-text tooplate-mt60">Copyright © 2022 Crispy Kitchen Co., Ltd.
-                                    <br/>Design: <a rel="nofollow" href="https://www.tooplate.com/" target="_blank">Tooplate</a></p>
-
-                            </div>
-
-                        </div><!-- row ending -->
-
-                    </div><!-- container ending -->
-
-                </footer>
-                <p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />
-
             </main>
+            <ui:include src="footer.xhtml"/>
         </h:form>
     </h:body>
 </html>
