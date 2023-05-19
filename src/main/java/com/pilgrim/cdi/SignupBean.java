@@ -11,15 +11,24 @@ import com.pligrim.models.CityMaster;
 import com.pligrim.models.GroupMaster;
 import com.pligrim.models.StateMaster;
 import com.pligrim.models.UserMaster;
+import java.io.File;
+import java.io.InputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.ws.rs.core.GenericType;
+import org.glassfish.soteria.identitystores.hash.Pbkdf2PasswordHashImpl;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -39,12 +48,18 @@ public class SignupBean implements Serializable {
     GenericType<Response<Collection<CityMaster>>> gresCities;
     GenericType<Response> gresponse1;
 
+    Response<Boolean> resIfExists;
+    GenericType<Response<Boolean>> gresIfExists;
+
     Collection<StateMaster> states;
     Collection<CityMaster> cities;
 
-    String name, uname, email, password, address;
+    Pbkdf2PasswordHashImpl pb;
+
+    String firstName, lastName, uname, email, password, address;
     Integer stateid;
     Integer cityid;
+    UploadedFile userImage;
 
     public SignupBean() {
         client = new AdminClient();
@@ -52,10 +67,15 @@ public class SignupBean implements Serializable {
         };
         gresCities = new GenericType<Response<Collection<CityMaster>>>() {
         };
-        gresponse1 = new GenericType<Response>(){};
+        gresponse1 = new GenericType<Response>() {
+        };
+        resIfExists = new Response<>();
+        gresIfExists = new GenericType<Response<Boolean>>() {
+        };
+        pb = new Pbkdf2PasswordHashImpl();
     }
-    
-     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
@@ -111,12 +131,20 @@ public class SignupBean implements Serializable {
         this.cityid = cityid;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUname() {
@@ -140,7 +168,15 @@ public class SignupBean implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = pb.generate(password.toCharArray());
+    }
+
+    public UploadedFile getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(UploadedFile userImage) {
+        this.userImage = userImage;
     }
 
     public String getAddress() {
@@ -160,36 +196,86 @@ public class SignupBean implements Serializable {
             cities = new ArrayList<CityMaster>();
         }
     }
+    
+    public void checkUsernameExists(FacesContext ctx, UIComponent component, Object value) {
+        String username = (String) value;
+        if (!username.equals("")) {
+            response = client.checkifUsernameExists(javax.ws.rs.core.Response.class, username);
+            resIfExists = response.readEntity(gresIfExists);
+            if(resIfExists.getResult().equals(true)) {
+                FacesMessage msg = new FacesMessage("Username already exists!");
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(msg);
+            }
+        }
+    }
+    
+    public void checkEmailExists(FacesContext ctx, UIComponent component, Object value) {
+        String emailValue = (String) value;
+        if (!emailValue.equals("")) {
+            response = client.checkifEmailExists(javax.ws.rs.core.Response.class, emailValue);
+            resIfExists = response.readEntity(gresIfExists);
+            if(resIfExists.getResult().equals(true)) {
+                FacesMessage msg = new FacesMessage("Email already exists!");
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                throw new ValidatorException(msg);
+            }
+        }
+    }
 
     public void onSubmit() {
-        Request req = new Request();
-        UserMaster user = new UserMaster();
-        user.setFirstname(name.split(" ")[0]);
-        user.setLastname(name.split(" ")[1]);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setAddress(address);
-        user.setUsername(uname);
-        StateMaster state = new StateMaster();
-        state.setStateId(stateid);
-        user.setState(state);
-        GroupMaster group = new GroupMaster();
-        group.setGroupId(6);
-        user.setGroup(group);
-        CityMaster city = new CityMaster();
-        city.setCityId(cityid);
-        user.setCity(city);
 
-        req.setData(user);
-        System.out.println("name " + name);
-        System.out.println("cdi " + req.getData());
-        response = client.adduser(req, javax.ws.rs.core.Response.class);
-        response1 = response.readEntity(gresStates);
-        if(response1.isStatus()){
-            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Registration completed! Login to continue.");
+        try {
+            InputStream imageInputStream = userImage.getInputStream();
+            String uploadedImageName = userImage.getFileName();
+            
+            String ext = uploadedImageName.substring(uploadedImageName.indexOf("."), uploadedImageName.length());
+            Random random = new Random();
+            String imageName = uname + "_" + random.nextInt(1000) + ext;
+            System.out.println("Image Name: " + imageName);
+
+            File uploadedImage = new File("D:\\Sem_8\\PilgrimWorld_Project\\PilgrimWorldf\\src\\main\\webapp\\images\\users\\" + imageName);
+            Files.copy(imageInputStream, uploadedImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            Request<UserMaster> req = new Request<>();
+            UserMaster user = new UserMaster();
+            user.setFirstname(firstName);
+            user.setLastname(lastName);
+            user.setUsername(uname);
+
+            user.setUserImage(imageName);
+
+            user.setAddress(address);
+            StateMaster state = new StateMaster();
+            state.setStateId(stateid);
+            user.setState(state);
+            CityMaster city = new CityMaster();
+            city.setCityId(cityid);
+            user.setCity(city);
+
+            System.out.println("Password: " + password);
+
+            user.setEmail(email);
+            user.setPassword(password);
+
+            GroupMaster group = new GroupMaster();
+            group.setGroupId(6);
+            user.setGroup(group);
+
+            req.setData(user);
+
+            response = client.adduser(req, javax.ws.rs.core.Response.class);
+            response1 = response.readEntity(gresponse1);
+            if (response1.isStatus()) {
+                addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Registration completed! Login to continue.");
 //            return "signin.jsf";
-        } else {
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Registration not completed! ");
+            } else {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Registration not completed! ");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
+//        
     }
 }

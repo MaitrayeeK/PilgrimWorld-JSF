@@ -87,3 +87,11 @@ body {
 .ui-datatable thead th {
     color: #0d3c61 !important;
 }
+
+.product-image {
+    width: 250px;
+    height: 200px;
+    margin: 0 auto 2rem auto;
+    display: block;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+}

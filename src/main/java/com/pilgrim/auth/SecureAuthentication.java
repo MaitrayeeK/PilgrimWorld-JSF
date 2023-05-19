@@ -59,12 +59,12 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
             String u = request.getParameter("username");
 
             System.out.println("Username: " + request.getParameter("username"));
-            
+
             if (token == null && request.getParameter("username") != null) {
 
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
-                
+
                 UserMaster user = new UserMaster();
                 user.setUsername(username);
                 user.setPassword(password);
@@ -107,6 +107,9 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                     if (result.getCallerGroups().contains("User")) {
                         response.sendRedirect("index.jsf");
                     }
+                    if (result.getCallerGroups().contains("Admin")) {
+                        response.sendRedirect("AdminUI/index.jsf");
+                    }
                     return status;
                 } else {
                     KeepRecord.setErrorStatus(resSecurityData.getMessage());
@@ -114,8 +117,8 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                     return context.doNothing();
                 }
             }
-            
-            if(KeepRecord.getToken() != null) {
+
+            if (KeepRecord.getToken() != null) {
                 System.out.println("KeepRecord Token: " + KeepRecord.getToken());
                 return context.notifyContainerAboutLogin(KeepRecord.getPrincipal(), KeepRecord.getRoles());
             }

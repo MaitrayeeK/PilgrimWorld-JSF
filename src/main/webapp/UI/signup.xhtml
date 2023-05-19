@@ -20,7 +20,7 @@
                 <div class="image-holder">
                     <img src="#{facesContext.externalContext.requestContextPath}/UI/images/signup-screen.png" alt=""/>
                 </div>
-                <h:form>
+                <h:form enctype="multipart/form-data">
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-semibold mb-3">Welcome</div>
                         <span class="text-800 font-semibold line-height-3">Already have an account?</span>
@@ -33,11 +33,26 @@
                             <p:panel header="Personal Details">
                                 <p:messages/>
 
-                                <p:inputText id="firstname" styleClass="w-full mb-3" placeholder="Firstname"/>
+                                <p:inputText id="firstname" value="#{signupBean.firstName}" styleClass="w-full mb-3" placeholder="Firstname" 
+                                             required="true" requiredMessage="First Name is required." />
 
-                                <p:inputText id="lastname" styleClass="w-full mb-3" placeholder="Lastname"/>
+                                <p:inputText id="lastname" value="#{signupBean.lastName}" styleClass="w-full mb-3" placeholder="Lastname" 
+                                             required="true" requiredMessage="Last Name is required." />
 
-                                <p:inputText id="username" styleClass="w-full mb-3" placeholder="Username"/>
+                                <p:inputText id="username" value="#{signupBean.uname}" styleClass="w-full mb-3" placeholder="Username" 
+                                             required="true" requiredMessage="Username is required." validator="#{signupBean.checkUsernameExists}">
+                                    <f:validateLength minimum="3" maximum="15" />
+                                </p:inputText>
+
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab id="photo" title="Photo">
+                            <p:panel header="Upload Photo">
+                                <p:messages/>
+
+                                <p:fileUpload value="#{signupBean.userImage}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(jpe?g|png)$/" 
+                                              required="true" requiredMessage="Photo is required." />
 
                             </p:panel>
                         </p:tab>
@@ -46,14 +61,17 @@
                             <p:panel header="Address Details">
                                 <p:messages/>
 
-                                <p:inputText styleClass="w-full mb-3" placeholder="Address"/>
+                                <p:inputText value="#{signupBean.address}" styleClass="w-full mb-3" placeholder="Address" 
+                                             required="true" requiredMessage="Address is required." />
 
-                                <p:selectOneMenu id="statec" value="#{signupBean.stateid}" class="bg-transparent" styleClass="w-full mb-3">
+                                <p:selectOneMenu id="statec" value="#{signupBean.stateid}" class="bg-transparent" styleClass="w-full mb-3" 
+                                                 required="true" requiredMessage="State is required." >
                                     <p:ajax listener="#{signupBean.onStateChange()}" update="city"/>
                                     <f:selectItem itemLabel="Select State" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{signupBean.states}" var="state" itemLabel="#{state.stateName}" itemValue="#{state.stateId}"/>
                                 </p:selectOneMenu>
-                                <p:selectOneMenu id="city" value="#{signupBean.cityid}" class="bg-transparent" styleClass="w-full mb-3">
+                                <p:selectOneMenu id="city" value="#{signupBean.cityid}" class="bg-transparent" styleClass="w-full mb-3" 
+                                                 required="true" requiredMessage="City is required." >
                                     <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true"/>
                                     <f:selectItems value="#{signupBean.cities}" var="item" itemLabel="#{item.cityName}" itemValue="#{item.cityId}"/>
                                 </p:selectOneMenu>
@@ -65,18 +83,22 @@
                             <p:panel header="Contact Information">
                                 <p:messages/>
 
-                                <p:inputText id="email" styleClass="w-full mb-3" placeholder="Email"/>
+                                <p:inputText id="email" value="#{signupBean.email}" styleClass="w-full mb-3" placeholder="Email" 
+                                             required="true" requiredMessage="Email is required." validator="#{signupBean.checkEmailExists}">
+                                    <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" />
+                                </p:inputText>
 
-                                <p:inputText id="password" styleClass="w-full mb-3" placeholder="Password"/>
-
+                                <!--<p:inputMask id="password" value="#{signupBean.password}" styleClass="w-full mb-3" placeholder="Password"/>-->
+                                <p:password id="password" value="#{signupBean.password}" toggleMask="true" redisplay="true" placeholder="Password"
+                                            required="true" requiredMessage="Password is required." />
+                                
                             </p:panel>
                         </p:tab>
 
                         <p:tab id="confirm" title="Confirmation">
                             <p:panel header="Confirmation">
-                                
 
-                                <p:button value="Submit" icon="fa-solid fa-floppy-disk"/>
+                                <p:commandButton value="Submit" icon="fa-solid fa-floppy-disk" action="#{signupBean.onSubmit()}" />
                             </p:panel>
                         </p:tab>
                     </p:wizard>

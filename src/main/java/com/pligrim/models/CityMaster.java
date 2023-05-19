@@ -5,14 +5,16 @@
 
 package com.pligrim.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbTransient;
 
 /**
  *
  * @author Maitrayee
  */
-public class CityMaster {
+public class CityMaster implements Serializable {
     
     private Integer cityId;
     
@@ -22,11 +24,29 @@ public class CityMaster {
     
     private Date updatedDate;
     
-//    private Collection<PilgrimMaster> pilgrimMasterCollection;
-    
     private StateMaster state;
     
     private Collection<UserMaster> userMasterCollection;
+
+    private Collection<PilgrimMaster> pilgrimMasterCollection;
+
+    public CityMaster() {
+    }
+
+    public CityMaster(Integer cityId, String cityName, Date createdDate, Date updatedDate, StateMaster state) {
+        this.cityId = cityId;
+        this.cityName = cityName;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.state = state;
+    }
+
+    public CityMaster(String cityName, Date createdDate, Date updatedDate, StateMaster state) {
+        this.cityName = cityName;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.state = state;
+    }
 
     public Integer getCityId() {
         return cityId;
@@ -68,6 +88,7 @@ public class CityMaster {
         this.state = state;
     }
 
+    @JsonbTransient
     public Collection<UserMaster> getUserMasterCollection() {
         return userMasterCollection;
     }
@@ -75,5 +96,13 @@ public class CityMaster {
     public void setUserMasterCollection(Collection<UserMaster> userMasterCollection) {
         this.userMasterCollection = userMasterCollection;
     }
-    
+
+    @JsonbTransient
+    public Collection<PilgrimMaster> getPilgrimMasterCollection() {
+        return pilgrimMasterCollection;
+    }
+
+    public void setPilgrimMasterCollection(Collection<PilgrimMaster> pilgrimMasterCollection) {
+        this.pilgrimMasterCollection = pilgrimMasterCollection;
+    }
 }
