@@ -5,13 +5,16 @@
 
 package com.pligrim.models;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbTransient;
 
 /**
  *
  * @author Maitrayee
  */
-public class StateMaster {
+public class StateMaster implements Serializable {
     
     private Integer stateId;
     
@@ -21,10 +24,27 @@ public class StateMaster {
     
     private Date updatedDate;
     
+    private Collection<PilgrimMaster> pilgrimMasterCollection;
     
-//    private Collection<PilgrimMaster> pilgrimMasterCollection;
-//    private Collection<CityMaster> cityMasterCollection;
-//    private Collection<UserMaster> userMasterCollection;
+    private Collection<CityMaster> cityMasterCollection;
+    
+    private Collection<UserMaster> userMasterCollection;
+
+    public StateMaster() {
+    }
+
+    public StateMaster(Integer stateId, String stateName, Date createdDate, Date updatedDate) {
+        this.stateId = stateId;
+        this.stateName = stateName;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+    }
+
+    public StateMaster(String stateName, Date createdDate, Date updatedDate) {
+        this.stateName = stateName;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+    }
 
     public Integer getStateId() {
         return stateId;
@@ -56,5 +76,32 @@ public class StateMaster {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    @JsonbTransient
+    public Collection<PilgrimMaster> getPilgrimMasterCollection() {
+        return pilgrimMasterCollection;
+    }
+
+    public void setPilgrimMasterCollection(Collection<PilgrimMaster> pilgrimMasterCollection) {
+        this.pilgrimMasterCollection = pilgrimMasterCollection;
+    }
+
+    @JsonbTransient
+    public Collection<CityMaster> getCityMasterCollection() {
+        return cityMasterCollection;
+    }
+
+    public void setCityMasterCollection(Collection<CityMaster> cityMasterCollection) {
+        this.cityMasterCollection = cityMasterCollection;
+    }
+
+    @JsonbTransient
+    public Collection<UserMaster> getUserMasterCollection() {
+        return userMasterCollection;
+    }
+
+    public void setUserMasterCollection(Collection<UserMaster> userMasterCollection) {
+        this.userMasterCollection = userMasterCollection;
     }
 }

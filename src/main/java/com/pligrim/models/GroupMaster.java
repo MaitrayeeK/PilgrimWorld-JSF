@@ -5,14 +5,16 @@
 
 package com.pligrim.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbTransient;
 
 /**
  *
  * @author Maitrayee
  */
-public class GroupMaster {
+public class GroupMaster implements Serializable {
     
     private Integer groupId;
     
@@ -58,6 +60,7 @@ public class GroupMaster {
         this.updateDate = updateDate;
     }
 
+    @JsonbTransient
     public Collection<UserMaster> getUserMasterCollection() {
         return userMasterCollection;
     }

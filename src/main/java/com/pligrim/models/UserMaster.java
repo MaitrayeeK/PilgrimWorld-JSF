@@ -5,14 +5,16 @@
 
 package com.pligrim.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbTransient;
 
 /**
  *
  * @author Maitrayee
  */
-public class UserMaster {
+public class UserMaster implements Serializable {
     
     private Integer userId;
     
@@ -21,31 +23,64 @@ public class UserMaster {
     private String lastname;
     
     private String username;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     
     private String email;
     
     private String password;
     
+    private String userImage;
+    
     private String address;
+    
+    private CityMaster city;
+    
+    private GroupMaster group;
+    
+    private StateMaster state;    
     
     private Date createdDate;
     
     private Date updatedDate;
     
-//    private Collection<PilgrimMaster> pilgrimMasterCollection;
-//    
-//    private Collection<FeedbackMaster> feedbackMasterCollection;
-//    
-//    private Collection<PaymentMaster> paymentMasterCollection;
-//    
-    private CityMaster city;
-//    
-    private GroupMaster group;
-//    
-    private StateMaster state;
-//    
-//    private Collection<BookingMaster> bookingMasterCollection;
+    private Collection<PilgrimMaster> pilgrimMasterCollection;
+    
+    private Collection<FeedbackMaster> feedbackMasterCollection;
+    
+    private Collection<PaymentMaster> paymentMasterCollection;
+    
+    private Collection<BookingMaster> bookingMasterCollection;
+
+    public UserMaster() {
+    }
+
+    public UserMaster(Integer userId, String firstname, String lastname, String username, String email, String password, String address, CityMaster city, GroupMaster group, StateMaster state, Date createdDate, Date updatedDate) {
+        this.userId = userId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.city = city;
+        this.group = group;
+        this.state = state;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+    }
+
+    public UserMaster(String firstname, String lastname, String username, String email, String password, String address, CityMaster city, GroupMaster group, StateMaster state, Date createdDate, Date updatedDate) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.city = city;
+        this.group = group;
+        this.state = state;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -95,6 +130,14 @@ public class UserMaster {
         this.password = password;
     }
 
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -142,5 +185,40 @@ public class UserMaster {
     public void setGroup(GroupMaster group) {
         this.group = group;
     }
-    
+
+    @JsonbTransient
+    public Collection<PilgrimMaster> getPilgrimMasterCollection() {
+        return pilgrimMasterCollection;
+    }
+
+    public void setPilgrimMasterCollection(Collection<PilgrimMaster> pilgrimMasterCollection) {
+        this.pilgrimMasterCollection = pilgrimMasterCollection;
+    }
+
+    @JsonbTransient
+    public Collection<FeedbackMaster> getFeedbackMasterCollection() {
+        return feedbackMasterCollection;
+    }
+
+    public void setFeedbackMasterCollection(Collection<FeedbackMaster> feedbackMasterCollection) {
+        this.feedbackMasterCollection = feedbackMasterCollection;
+    }
+
+    @JsonbTransient
+    public Collection<PaymentMaster> getPaymentMasterCollection() {
+        return paymentMasterCollection;
+    }
+
+    public void setPaymentMasterCollection(Collection<PaymentMaster> paymentMasterCollection) {
+        this.paymentMasterCollection = paymentMasterCollection;
+    }
+
+    @JsonbTransient
+    public Collection<BookingMaster> getBookingMasterCollection() {
+        return bookingMasterCollection;
+    }
+
+    public void setBookingMasterCollection(Collection<BookingMaster> bookingMasterCollection) {
+        this.bookingMasterCollection = bookingMasterCollection;
+    }
 }

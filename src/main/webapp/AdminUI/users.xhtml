@@ -13,70 +13,76 @@
         <ui:include src="header.xhtml"/>
         <div class="main">
             <div class="card">
-                    <p:dataTable id="basicDT"><!--var="product" value="#{dtSelectionView.products1}"-->
-                    <p:column headerText="ID">
-                        <h:outputText />
-                    </p:column>
+                <h:form>
+                    <p:dataTable id="dt-users" var="user" value="#{usersDisplayBean.users}" widgetVar="usersTable"
+                                 emptyMessage="No users found with given criteria"
+                                 paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            <div class="flex align-items-center justify-content-between">
+                                <span style="font-weight: bold">List of User</span>
+                                <div>
+                                    <p:inputText id="globalFilter" onkeyup="PF('usersTable').filter()" style="width:15rem"
+                                                 placeholder="Enter keyword" styleClass="mr-2" />
+                                    <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                        <p:dataExporter type="pdf" target="dt-users" fileName="users" />
+                                    </p:commandButton>
+                                </div>
+                            </div>
 
-                    <p:column headerText="Name">
-                        <h:outputText />
-                    </p:column>
+                        </f:facet>
+                        <p:column headerText="ID" sortBy="#{user.userId}" filterBy="#{user.userId}">
+                            <h:outputText value="#{user.userId}" />
+                        </p:column>
 
-                    <p:column headerText="Email">
-                        <h:outputText />
-                    </p:column>
+                        <p:column headerText="Name" sortBy="#{user.firstname}" filterBy="#{user.firstname}">
+                            <h:outputText value="#{user.firstname}" />
+                        </p:column>
 
-                    <p:column headerText="State">
-                        <h:outputText  />
-                    </p:column>
-                    
-                    <p:column headerText="Group">
-                        <h:outputText  />
-                    </p:column>
-                    <p:column style="width:3rem;text-align: center">
-                        <p:commandButton update=":form:productDetail" oncomplete="PF('productDialog').show()"
-                                         icon="fa-brands fa-searchengine" title="View">
-                            <f:setPropertyActionListener value="#{product}"
-                                                         target="#{dtSelectionView.selectedProduct}"/>
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
+                        <p:column headerText="Email" sortBy="#{user.email}" filterBy="#{user.email}">
+                            <h:outputText value="#{user.email}" />
+                        </p:column>
+
+                        <p:column headerText="State" sortBy="#{user.state.stateName}" filterBy="#{user.state.stateName}">
+                            <h:outputText value="#{user.state.stateName}" />
+                        </p:column>
+
+                        <p:column headerText="Group" sortBy="#{user.group.groupId}" filterBy="#{user.group.groupId}">
+                            <h:outputText value="#{user.group.groupName}" />
+                        </p:column>
+                        <p:column style="width:3rem;text-align: center">
+                            <p:commandButton update="userDetail" oncomplete="PF('userDialog').show()"
+                                             icon="fa fa-search" title="View">
+                                <f:setPropertyActionListener value="#{user}"
+                                                             target="#{usersDisplayBean.selectedUser}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
             </div>
         </div>
-        <p:dialog header="Product Info" widgetVar="productDialog" modal="true" showEffect="fade"
-                  hideEffect="fade" resizable="false">
-            <p:outputPanel id="productDetail" style="text-align:center;">
-                <p:column rendered="#{not empty dtSelectionView.selectedProduct}">
-                    <div class="product">
-                        <div class="product-grid-item card" style="margin-bottom: 0">
-                            <div class="product-grid-item-top">
-                                <div>
-                                    <i class="pi pi-tag product-category-icon"/>
-                                    <span class="product-category">#{dtSelectionView.selectedProduct.category}</span>
-                                </div>
-                                <span class="product-badge status-#{dtSelectionView.selectedProduct.inventoryStatus.name().toLowerCase()}">#{dtSelectionView.selectedProduct.inventoryStatus.text}</span>
-                            </div>
-                            <div class="product-grid-item-content">
-                                <p:graphicImage
-                                    name="demo/images/product/#{dtSelectionView.selectedProduct.image}"/>
-                                <div class="product-name">#{dtSelectionView.selectedProduct.name}</div>
-                                <div class="product-description">#{dtSelectionView.selectedProduct.description}</div>
-                                <p:rating readonly="true" value="#{dtSelectionView.selectedProduct.rating}"/>
-                            </div>
-                            <div class="product-grid-item-bottom">
-                                <h:outputText value="#{dtSelectionView.selectedProduct.price}"
-                                              styleClass="product-price">
-                                    <f:convertNumber currencySymbol="$" type="currency"/>
-                                </h:outputText>
-                                <p:commandButton value="Add To Cart" icon="pi pi-shopping-cart"
-                                                 disabled="#{dtSelectionView.selectedProduct.inventoryStatus == 'OUTOFSTOCK'}">
-                                    <f:setPropertyActionListener value="#{dtSelectionView.selectedProduct}"
-                                                                 target="#{dtSelectionView.selectedProduct}"/>
-                                </p:commandButton>
-                            </div>
-                        </div>
+
+        <p:dialog header="User Details" showEffect="fade" modal="true" widgetVar="userDialog"
+                   hideEffect="fade">
+            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                <p:outputPanel id="userDetail">
+                    <p:avatar styleClass="mr-2 mb-4" size="xlarge" shape="circle">
+                        <img src="../images/users/messages-2.jpg" alt="alt" class="user-image" />
+                    </p:avatar>
+                    <div class="field">
+                        <p:outputLabel value="Name:" class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{usersDisplayBean.selectedUser.firstname} #{usersDisplayBean.selectedUser.lastname}"/>
                     </div>
-                </p:column>
+                    <div class="field">
+                        <p:outputLabel value="Email" class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{usersDisplayBean.selectedUser.email}"/>
+                    </div>
+                    <div class="field">
+                        
+                    </div>
+                    <div class="formgrid grid">
+                        
+                    </div>
+                </p:outputPanel>
             </p:outputPanel>
         </p:dialog>
     </h:body>
