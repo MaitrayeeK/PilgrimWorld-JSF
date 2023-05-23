@@ -26,8 +26,13 @@
         <p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />
         <h:form>
             <p:speedDial radius="120" direction="down-right" type="quarter-circle">
-                <p:menuitem id="signup" icon="fa-solid fa-right-to-bracket fa-beat-fade" url="#{facesContext.externalContext.requestContextPath}/UI/signin.jsf"/>
-                <p:menuitem icon="fa-solid fa-calendar-plus fa-beat" />
+                <p:menuitem id="signup" icon="fa-solid fa-right-to-bracket fa-beat-fade" rendered="#{signupBean.isLoggedin eq 'false'}" url="#{facesContext.externalContext.requestContextPath}/signin.jsf">
+                    <p:tooltip for="signup" value="Signin" />
+                </p:menuitem>
+                <p:menuitem id="logout" icon="fa-solid fa-right-from-bracket fa-beat-fade" title="logout" rendered="#{signupBean.isLoggedin eq 'true'}" url="#{facesContext.externalContext.requestContextPath}/logout.jsf" >
+                    <p:tooltip for="logout" value="Logout" />
+                </p:menuitem>
+                <p:menuitem icon="fa-solid fa-calendar-plus fa-beat" title="calender" />
                 <p:menuitem icon="fa-solid fa-compass fa-spin" />
                 <p:menuitem icon="fa-brands fa-searchengin fa-bounce" />
             </p:speedDial>
