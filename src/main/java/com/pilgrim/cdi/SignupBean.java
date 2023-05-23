@@ -7,6 +7,7 @@ package com.pilgrim.cdi;
 import com.pilgrim.client.AdminClient;
 import com.pilgrim.helper.Request;
 import com.pilgrim.helper.Response;
+import com.pilgrim.record.KeepRecord;
 import com.pligrim.models.CityMaster;
 import com.pligrim.models.GroupMaster;
 import com.pligrim.models.StateMaster;
@@ -60,6 +61,7 @@ public class SignupBean implements Serializable {
     Integer stateid;
     Integer cityid;
     UploadedFile userImage;
+    boolean isLoggedin;
 
     public SignupBean() {
         client = new AdminClient();
@@ -185,6 +187,15 @@ public class SignupBean implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isIsLoggedin() {
+        isLoggedin = KeepRecord.isIsLoggedin();
+        return isLoggedin;
+    }
+
+    public void setIsLoggedin(boolean isLoggedin) {
+        this.isLoggedin = isLoggedin;
     }
 
     public void onStateChange() {

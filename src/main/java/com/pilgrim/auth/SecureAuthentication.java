@@ -52,6 +52,19 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext context) throws AuthenticationException {
 
         System.out.println("in ValidateRequest!");
+
+        //logout
+        try {
+            if (request.getRequestURI().contains("logout")) {
+                request.logout();
+                KeepRecord.reset();
+                response.sendRedirect("signin.jsf");
+                return context.doNothing();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         //extracting token
         String token = extractToken(context);
 
@@ -98,6 +111,7 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                     System.out.println("Result Groups: " + result.getCallerGroups());
 
                     KeepRecord.setErrorStatus("");
+                    KeepRecord.setIsLoggedin(true);
                     KeepRecord.setPrincipal(result.getCallerPrincipal());
                     KeepRecord.setRoles(result.getCallerGroups());
                     KeepRecord.setToken(securityData.getToken());
@@ -105,7 +119,7 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                     KeepRecord.setPassword(password);
 
                     if (result.getCallerGroups().contains("User")) {
-                        response.sendRedirect("index.jsf");
+                        response.sendRedirect("UI/index.jsf");
                     }
                     if (result.getCallerGroups().contains("Admin")) {
                         response.sendRedirect("AdminUI/index.jsf");
@@ -120,7 +134,33 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
 
             if (KeepRecord.getToken() != null) {
                 System.out.println("KeepRecord Token: " + KeepRecord.getToken());
-                return context.notifyContainerAboutLogin(KeepRecord.getPrincipal(), KeepRecord.getRoles());
+
+                if (request.getRequestURI().contains("signin.jsf")) {
+                    securityData = new SecurityData(KeepRecord.getToken());
+
+                    res = authClient.validateToken(securityData, javax.ws.rs.core.Response.class);
+                    System.out.println("frontend after client call : ");
+                    resSecurityData = res.readEntity(gresSecurityData);
+                    System.out.println("frontend after client read entity : ");
+
+                    if (resSecurityData.isStatus()) {
+                        System.out.println("Token is validated!!");
+                        if (KeepRecord.getRoles().contains("Admin")) {
+                            response.sendRedirect("AdminUI/index.jsf");
+                        }
+                        if (KeepRecord.getRoles().contains("User")) {
+                            response.sendRedirect("UI/index.jsf");
+                        }
+                        if (KeepRecord.getRoles().contains("Client")) {
+                            response.sendRedirect("ClientUI/index.jsf");
+                        }
+                        return context.notifyContainerAboutLogin(KeepRecord.getPrincipal(), KeepRecord.getRoles());
+                    } else {
+                        System.out.println("Token is not validated!!");
+                        return context.responseUnauthorized();
+                    }
+                }
+//                return context.notifyContainerAboutLogin(KeepRecord.getPrincipal(), KeepRecord.getRoles());
             }
 
         } catch (Exception ex) {
