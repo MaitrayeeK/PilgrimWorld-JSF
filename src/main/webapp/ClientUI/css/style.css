@@ -1,0 +1,77 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 17-May-2023, 2:52:32 PM
+    Author     : maitr
+*/
+/*
+.ui-wizard {
+    display: grid;
+    align-items: center;
+}*/
+.ui-wizard {
+    text-align: center;
+}
+.ui-wizard>:nth-child(1) {
+    display: inline-block;
+}
+
+.ui-wizard .ui-wizard-step-titles .ui-wizard-step-title:last-child, .ui-wizard .ui-wizard-step-titles .ui-wizard-step-title:first-child {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    border-right: none !important;
+}
+
+.ui-wizard .ui-wizard-step-titles .ui-wizard-step-title {
+    border: none !important;
+    border-bottom: 2px solid #dee2e6 !important;
+}
+
+.ui-wizard .ui-wizard-step-titles .ui-wizard-step-title.ui-state-highlight {
+    border-color: #0d3c61 !important;
+}
+
+.ui-wizard .ui-wizard-nav-back, .ui-wizard .ui-wizard-nav-next {
+    width: 2.5rem;
+    border-radius: 50%;
+}
+
+.ui-button {
+    background: #0d3c61 !important;
+    border: none !important;
+}
+
+.ui-wizard .ui-wizard-nav-back span:nth-child(2), .ui-wizard .ui-wizard-nav-next span:nth-child(2) {
+    visibility: hidden;
+}
+
+.ui-wizard .ui-wizard-nav-back .ui-button-icon-left, .ui-wizard .ui-wizard-nav-next .ui-button-icon-right {
+    right: 1rem !important;
+    left: 0.8rem !important;
+}
+
+.ui-button:hover {
+    background: #072034 !important;
+}
+
+.ui-state-focus, .ui-inputfield:focus {
+    box-shadow: none !important;
+    border-color: #0d3c61 !important;
+}
+
+.ui-state-hover, .ui-inputfield:hover {
+    border-color: #0d3c61 !important;
+}
+
+.tclass {
+    text-align: left !important;
+}
+
+.ui-radiobutton .ui-radiobutton-box.ui-state-active {
+    border-color: #0d3c61 !important;
+    background: #0d3c61 !important;
+}
