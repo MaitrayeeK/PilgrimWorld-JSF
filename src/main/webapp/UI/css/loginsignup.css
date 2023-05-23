@@ -365,6 +365,7 @@ button:hover i {
 .ui-button:hover {
     background: #072034 !important;
 }
+
 .ui-state-focus, .ui-inputfield:focus {
     box-shadow: none !important;
     border-color: #0d3c61 !important;
