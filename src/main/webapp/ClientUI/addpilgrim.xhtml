@@ -17,9 +17,9 @@
                         <p:messages/>
 
                         <p:inputText id="name" styleClass="w-full mb-3" placeholder="Name"/>
-
+                        
                         <p:inputText styleClass="w-full mb-3" placeholder="Address"/>
-
+                        
                         <p:selectOneMenu id="statec" value="#{signupBean.stateid}" class="bg-transparent" styleClass="w-full mb-3">
                             <p:ajax listener="#{signupBean.onStateChange()}" update="city"/>
                             <f:selectItem itemLabel="Select State" itemValue="" noSelectionOption="true"/>
@@ -90,7 +90,7 @@
                 <p:tab id="confirm" title="Confirmation">
                     <p:panel header="Confirmation">
                         
-
+                        
                         
                     </p:panel>
                 </p:tab>

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pilgrim World</title>
+        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+        <link href="#{facesContext.externalContext.requestContextPath}/AdminUI/css/profilecss.css" rel="stylesheet"></link>
+    </h:head>
+
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <div class="main">
+            <div class="container">
+                <div class="content">
+                    <h:form>
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
+                        <p:wizard>
+                            <p:tab id="details" title="Details">
+                                <p:panel header="User Details">
+                                    <p:panelGrid columns="2"
+                                                 columnClasses="ui-grid-col-4,ui-grid-col-8"
+                                                 layout="grid"
+                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none;">
+
+                                        <p:outputLabel value="First Name: " class="detail-label"/>
+                                        <p:outputLabel value="#{usersBean.firstName}"/>
+
+                                        <p:outputLabel value="Last Name: " class="detail-label"/>
+                                        <p:outputLabel value="#{usersBean.lastName}"/>
+
+                                        <p:outputLabel value="Username: " class="detail-label"/>
+                                        <p:outputLabel value="#{usersBean.uname}"/>
+
+                                        <p:outputLabel value="Address: " class="detail-label"/>
+                                        <p:outputLabel value="#{usersBean.address}"/>
+
+                                        <p:outputLabel value="State: " class="detail-label"/>
+                                        <p:outputLabel value="#{usersBean.statename}"/>
+
+                                        <p:outputLabel value="City: " class="detail-label"/>
+                                        <p:outputLabel value="#{usersBean.cityname}"/>
+
+                                        <p:outputLabel value="Email: " class="detail-label"/>
+                                        <p:outputLabel value="#{usersBean.email}"/>
+
+                                    </p:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="edit" title="Edit">
+                                <p:panel header="Edit Profile">
+                                    <p:panelGrid columns="2"
+                                                 columnClasses="ui-grid-col-4,ui-grid-col-8"
+                                                 layout="grid"
+                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none;">
+
+                                        <p:outputLabel for="fname" value="First Name: " class="detail-label"/>
+                                        <p:inputText id="fname" value="#{usersBean.firstName}"/>
+
+                                        <p:outputLabel for="lname" value="Last Name: " class="detail-label"/>
+                                        <p:inputText id="lname" value="#{usersBean.lastName}"/>
+
+                                        <p:outputLabel for="uname" value="Username: " class="detail-label"/>
+                                        <p:inputText id="uname" value="#{usersBean.uname}"/>
+
+                                        <p:outputLabel for="address" value="Address: " class="detail-label"/>
+                                        <p:inputText id="address" value="#{usersBean.address}"/>
+
+                                        <p:outputLabel for="state" value="State: " class="detail-label"/>
+                                        <p:selectOneMenu id="state" value="#{usersBean.stateid}" class="bg-transparent">
+                                            <p:ajax listener="#{usersBean.onStateChange()}" update="city"/>
+                                            <f:selectItem itemLabel="Select State" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{usersBean.states}" var="state" itemLabel="#{state.stateName}" itemValue="#{state.stateId}"/>
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel for="city" value="City: " class="detail-label"/>
+                                        <p:selectOneMenu id="city" value="#{usersBean.cityid}" class="bg-transparent" >
+                                            <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{usersBean.cities}" var="item" itemLabel="#{item.cityName}" itemValue="#{item.cityId}"/>
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel for="email" value="Email: " class="detail-label"/>
+                                        <p:inputText id="email" value="#{usersBean.email}"/>
+
+                                    </p:panelGrid>
+
+                                    <p:commandButton value="Save Changes" action="#{usersBean.onSubmit()}" update="growl"/>
+                                </p:panel>
+                            </p:tab>
+                        </p:wizard>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

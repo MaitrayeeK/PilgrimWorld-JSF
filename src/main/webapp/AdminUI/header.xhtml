@@ -18,8 +18,12 @@
         <h:form>
             <p:speedDial direction="down">
                 <p:menuitem icon="fa-solid fa-pen-nib" />
-                <p:menuitem icon="fa-solid fa-trash" />
-                <p:menuitem icon="fa-solid fa-right-from-bracket" />
+                <p:menuitem id="profile" icon="fa-solid fa-user" url="#{facesContext.externalContext.requestContextPath}/AdminUI/profile.jsf" >
+                    <p:tooltip for="profile" value="Profile"/>
+                </p:menuitem>
+                <p:menuitem id="logout" icon="fa-solid fa-right-from-bracket" url="#{facesContext.externalContext.requestContextPath}/logout.jsf" >
+                    <p:tooltip for="logout" value="Logout"/>
+                </p:menuitem>
             </p:speedDial>
 
             <p:sidebar widgetVar="sidebar1">

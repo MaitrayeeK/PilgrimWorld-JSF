@@ -21,7 +21,7 @@ public class PilgrimBean implements Serializable {
     
     public PilgrimBean() {
     }
-
+    
     public String getTimeslotType() {
         System.out.println(timeslotType);
         return timeslotType;
@@ -41,4 +41,4 @@ public class PilgrimBean implements Serializable {
     }
     
     
-}
+        }

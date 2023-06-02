@@ -14,7 +14,7 @@
         <div class="main">
             <div class="card">
                 <h:form>
-                    <p:dataTable id="dt-users" var="user" value="#{usersDisplayBean.users}" widgetVar="usersTable"
+                    <p:dataTable id="dt-users" var="user" value="#{usersBean.users}" widgetVar="usersTable"
                                  emptyMessage="No users found with given criteria"
                                  paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
                         <f:facet name="header">
@@ -53,7 +53,7 @@
                             <p:commandButton update="userDetail" oncomplete="PF('userDialog').show()"
                                              icon="fa fa-search" title="View">
                                 <f:setPropertyActionListener value="#{user}"
-                                                             target="#{usersDisplayBean.selectedUser}"/>
+                                                             target="#{usersBean.selectedUser}"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -70,23 +70,23 @@
                     </p:avatar>
                     <div class="field">
                         <p:outputLabel value="Name:" class="mr-2" style="font-weight: bold" />
-                        <p:outputLabel value="#{usersDisplayBean.selectedUser.firstname} #{usersDisplayBean.selectedUser.lastname}"/>
+                        <p:outputLabel value="#{usersBean.selectedUser.firstname} #{usersBean.selectedUser.lastname}"/>
                     </div>
                     <div class="field">
                         <p:outputLabel value="Email:" class="mr-2" style="font-weight: bold" />
-                        <p:outputLabel value="#{usersDisplayBean.selectedUser.email}"/>
+                        <p:outputLabel value="#{usersBean.selectedUser.email}"/>
                     </div>
                     <div class="field">
                         <p:outputLabel value="Address:" class="mr-2" style="font-weight: bold" />
-                        <p:outputLabel value="#{usersDisplayBean.selectedUser.address}"/>
+                        <p:outputLabel value="#{usersBean.selectedUser.address}"/>
                     </div>
                     <div class="field">
                         <p:outputLabel value="State:" class="mr-2" style="font-weight: bold" />
-                        <p:outputLabel value="#{usersDisplayBean.selectedUser.state.stateName}"/>
+                        <p:outputLabel value="#{usersBean.selectedUser.state.stateName}"/>
                     </div>
                     <div class="field">
                         <p:outputLabel value="City:" class="mr-2" style="font-weight: bold" />
-                        <p:outputLabel value="#{usersDisplayBean.selectedUser.city.cityName}"/>
+                        <p:outputLabel value="#{usersBean.selectedUser.city.cityName}"/>
                     </div>
                     <div class="formgrid grid">
                         

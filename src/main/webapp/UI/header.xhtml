@@ -32,9 +32,15 @@
                 <p:menuitem id="logout" icon="fa-solid fa-right-from-bracket fa-beat-fade" title="logout" rendered="#{signupBean.isLoggedin eq 'true'}" url="#{facesContext.externalContext.requestContextPath}/logout.jsf" >
                     <p:tooltip for="logout" value="Logout" />
                 </p:menuitem>
-                <p:menuitem icon="fa-solid fa-calendar-plus fa-beat" title="calender" />
-                <p:menuitem icon="fa-solid fa-compass fa-spin" />
-                <p:menuitem icon="fa-brands fa-searchengin fa-bounce" />
+                <p:menuitem id="schedule" icon="fa-solid fa-calendar-plus fa-beat" title="calender" >
+                    <p:tooltip for="schedule" value="Schedule" />
+                </p:menuitem>
+                <p:menuitem id="explore" icon="fa-solid fa-compass fa-spin" >
+                    <p:tooltip for="explore" value="Explore" />
+                </p:menuitem>
+                <p:menuitem id="search" icon="fa-brands fa-searchengin fa-bounce" >
+                    <p:tooltip for="search" value="Search" />
+                </p:menuitem>
             </p:speedDial>
             
             <!--            <p:tooltip id="speeddialtt"
