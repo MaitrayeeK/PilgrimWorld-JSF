@@ -17,7 +17,8 @@ public class SecurityData implements Serializable {
     private Status status;
     private String token;
     private UserMaster user;
-    private JWTCredential credential;
+    private long credentialValidity;
+    private boolean rememberMe;
     
     public SecurityData() {
     }
@@ -26,15 +27,15 @@ public class SecurityData implements Serializable {
         this.status = status;
         this.token = token;
         this.user = user;
-        this.credential = credential;
     }
 
     public SecurityData(String token) {
         this.token = token;
     }
-    
-    public SecurityData(UserMaster user) {
+
+    public SecurityData(UserMaster user, boolean rememberMe) {
         this.user = user;
+        this.rememberMe = rememberMe;
     }
 
     public Status getStatus() {
@@ -61,11 +62,19 @@ public class SecurityData implements Serializable {
         this.user = user;
     }
 
-    public JWTCredential getCredential() {
-        return credential;
+    public long getCredentialValidity() {
+        return credentialValidity;
     }
 
-    public void setCredential(JWTCredential credential) {
-        this.credential = credential;
+    public void setCredentialValidity(long credentialValidity) {
+        this.credentialValidity = credentialValidity;
+    }
+
+    public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 }

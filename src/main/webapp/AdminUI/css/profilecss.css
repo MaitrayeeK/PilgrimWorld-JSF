@@ -1,0 +1,36 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 26-May-2023, 4:04:39 PM
+    Author     : Dell
+*/
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    width: 80%;
+    max-width: 600px;
+}
+
+.ui-panel-titlebar {
+    display: flex;
+    justify-content: center;
+}
+
+.ui-panel-title {
+    font-size: larger;
+}
+
+body {
+    background-color: #dedeed
+}
+
+.detail-label {
+    font-weight: bolder;
+}
+

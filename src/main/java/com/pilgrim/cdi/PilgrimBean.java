@@ -30,7 +30,7 @@ public class PilgrimBean implements Serializable {
         weekdays.add("Friday");
         weekdays.add("Saturday");
     }
-
+  
     public int getTimeslotType() {
         return timeslotType;
     }
