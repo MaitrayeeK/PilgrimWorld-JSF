@@ -51,6 +51,9 @@ public class PilgrimMaster implements Serializable {
     
     private Collection<PilgrimImages> pilgrimImagesCollection;
 
+    public PilgrimMaster() {
+    }
+
     public PilgrimMaster(Integer pilgrimId, String pilgrimName, String address, String pilgrimImage, Date createdDate, Date updatedDate, CityMaster city, StateMaster state, UserMaster user) {
         this.pilgrimId = pilgrimId;
         this.pilgrimName = pilgrimName;

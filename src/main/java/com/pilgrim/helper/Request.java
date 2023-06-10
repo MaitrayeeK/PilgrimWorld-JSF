@@ -7,7 +7,6 @@ package com.pilgrim.helper;
 
 
 import java.io.Serializable;
-import javax.json.bind.annotation.JsonbTransient;
 
 /**
  *
@@ -17,7 +16,6 @@ import javax.json.bind.annotation.JsonbTransient;
 public class Request<T> implements Serializable {
     private T data;
 
-    @JsonbTransient
     public T getData() {
         return data;
     }

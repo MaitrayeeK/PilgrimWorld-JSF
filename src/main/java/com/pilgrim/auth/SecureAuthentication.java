@@ -59,22 +59,47 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext context) throws AuthenticationException {
 
         System.out.println("in ValidateRequest!");
+        
+        //extracting token
+        HttpSession session = request.getSession();
+        String token;
+        if (null == session.getAttribute("session_token")) {
+            token = null;
+        } else {
+            token = session.getAttribute("session_token").toString();
+            System.out.println("Session Token: " + token);
+        }
 
         //logout
         try {
             if (request.getRequestURI().contains("logout")) {
                 request.logout();
                 KeepRecord.reset();
+                session.invalidate();
 
                 Cookie[] cookies = request.getCookies();
 
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
                         if (cookie.getName().equals("token")) {
+                            cookie.setValue("");
                             cookie.setMaxAge(0);
+                            response.addCookie(cookie);
                         }
                         if (cookie.getName().equals("role")) {
+                            cookie.setValue("");
                             cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                        }
+                        if (cookie.getName().equals("username")) {
+                            cookie.setValue("");
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                        }
+                        if (cookie.getName().equals("password")) {
+                            cookie.setValue("");
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
                         }
                     }
                 }
@@ -134,15 +159,7 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
             ex.printStackTrace();
         }
 
-        //extracting token
-        HttpSession session = request.getSession();
-        String token;
-        if (null == session.getAttribute("session_token")) {
-            token = null;
-        } else {
-            token = session.getAttribute("session_token").toString();
-            System.out.println("Session Token: " + token);
-        }
+        
 
         try {
 

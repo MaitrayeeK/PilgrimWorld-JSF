@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pilgrim World</title>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <main>
+            <header class="site-header site-menu-header">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-12 mx-auto">
+                            <h1 class="text-white">Our Menus</h1>
+
+                            <strong class="text-white">Perfect for all Breakfast, Lunch and Dinner</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overlay"></div>
+            </header>
+
+            <section class="menu section-padding">
+                <div class="container">
+                    <h:form id="form1">
+                        <div class="row">
+
+                            <div class="col-md-6 mb-4">
+                                <p:galleria value="#{pilgrimBean.selectedPilgrimImages}" var="photo" numVisible="5" 
+                                            showItemNavigators="true" circular="true" showThumbnails="false" showIndicators="true" changeItemOnIndicatorHover="true" style="max-width: 640px">
+                                    <img src="../images/pilgrims/#{photo.image}" alt="#{photo.pilgrim.pilgrimName}" style="width: 100%; display: block;"/>
+                                </p:galleria>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <h3>#{pilgrimBean.selectedPilgrim.pilgrimName}</h3>
+                                <h6 class="mb-4">#{pilgrimBean.selectedPilgrim.city.cityName}/#{pilgrimBean.selectedPilgrim.state.stateName}</h6>
+                                <p:tabView>
+                                    <p:tab title="Ticket Booking">
+                                        <p:datePicker id="booking_date" value="#{pilgrimBean.date}" styleClass="w-full mb-3" placeholder="Booking Date">
+                                            <p:ajax event="dateSelect" listener="#{pilgrimBean.onDateSelect}" update="timeslots"/>
+                                        </p:datePicker>
+                                        <br/>
+                                        <p:selectOneMenu id="timeslots" value="#{pilgrimBean.pilgrimtimeslotsdetailsid}" styleClass="mb-3">
+                                            <p:ajax listener="#{pilgrimBean.onTimeSlotChange()}" update="ticketprice"/>
+                                            <f:selectItem itemLabel="Select TimeSlot" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{pilgrimBean.selectedPTimeSlotsDetails}" var="tsd" 
+                                                           itemLabel="#{tsd.fromTime.hours}:#{tsd.fromTime.minutes} To #{tsd.toTime.hours}:#{tsd.toTime.minutes}" itemValue="#{tsd.timeslotsDetailsId}"/>
+                                        </p:selectOneMenu>
+                                        <br/>
+                                        <p:outputLabel id="ticketprice" value="Ticket Price: #{pilgrimBean.pilgrimTicketPrice}"/>
+                                    </p:tab>
+                                    <p:tab title="Room Accomodation">
+                                        <p class="m-0">
+                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
+                                            illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+                                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                                        </p>
+                                    </p:tab>
+                                </p:tabView>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </section>
+        </main>
+    </h:body>
+</html>
+

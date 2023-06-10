@@ -8,6 +8,18 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -17,7 +29,11 @@ public class PilgrimTimeslots implements Serializable {
     
     private Integer timeslotsId;
     
-    private int weekDate;
+    private Integer weekday;
+    
+    private Date fromDate;
+    
+    private Date toDate;
     
     private Date createdDate;
     
@@ -30,21 +46,6 @@ public class PilgrimTimeslots implements Serializable {
     public PilgrimTimeslots() {
     }
 
-    public PilgrimTimeslots(Integer timeslotsId, int weekDate, Date createdDate, Date updatedDate, PilgrimMaster pilgrim) {
-        this.timeslotsId = timeslotsId;
-        this.weekDate = weekDate;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
-        this.pilgrim = pilgrim;
-    }
-
-    public PilgrimTimeslots(int weekDate, Date createdDate, Date updatedDate, PilgrimMaster pilgrim) {
-        this.weekDate = weekDate;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
-        this.pilgrim = pilgrim;
-    }
-
     public Integer getTimeslotsId() {
         return timeslotsId;
     }
@@ -53,12 +54,28 @@ public class PilgrimTimeslots implements Serializable {
         this.timeslotsId = timeslotsId;
     }
 
-    public int getWeekDate() {
-        return weekDate;
+    public Integer getWeekday() {
+        return weekday;
     }
 
-    public void setWeekDate(int weekDate) {
-        this.weekDate = weekDate;
+    public void setWeekday(Integer weekday) {
+        this.weekday = weekday;
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public Date getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
     }
 
     public Date getCreatedDate() {
