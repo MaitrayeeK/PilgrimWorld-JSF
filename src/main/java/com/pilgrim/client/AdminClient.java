@@ -49,8 +49,8 @@ public class AdminClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T removeCommission(Object requestEntity, Class<T> responseType) throws ClientErrorException {
-        return webTarget.path("commissions/delete").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+    public <T> T removeCommission(Class<T> responseType, String commissionid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("commissions/delete/{0}", new Object[]{commissionid})).request().delete(responseType);
     }
 
     public <T> T getAllCitiesByState(Class<T> responseType, String stateid) throws ClientErrorException {
@@ -59,20 +59,22 @@ public class AdminClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T getCommissionsByPilgrim(Object requestEntity, Class<T> responseType) throws ClientErrorException {
-        return webTarget.path("commissions/getByPilgrim").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+    public <T> T getCommissionsByPilgrim(Class<T> responseType, String pilgrimid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("commissions/getByPilgrim/{0}", new Object[]{pilgrimid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T removeProfit(Object requestEntity, Class<T> responseType) throws ClientErrorException {
-        return webTarget.path("profits/delete").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+    public <T> T removeProfit(Class<T> responseType, String profitid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("profits/delete/{0}", new Object[]{profitid})).request().delete(responseType);
     }
 
     public <T> T addCommission(Object requestEntity, Class<T> responseType) throws ClientErrorException {
         return webTarget.path("commissions/add").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
     }
 
-    public <T> T removeUser(Object requestEntity, Class<T> responseType) throws ClientErrorException {
-        return webTarget.path("users/delete").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+    public <T> T removeUser(Class<T> responseType, String userid) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("users/delete/{0}", new Object[]{userid})).request().delete(responseType);
     }
 
     public <T> T getUserByGroup(Class<T> responseType, String groupid) throws ClientErrorException {
@@ -128,5 +130,5 @@ public class AdminClient {
     public void close() {
         client.close();
     }
-
+    
 }

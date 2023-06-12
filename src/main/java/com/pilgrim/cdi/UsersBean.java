@@ -5,6 +5,7 @@
 package com.pilgrim.cdi;
 
 import com.pilgrim.client.AdminClient;
+import com.pilgrim.helper.Request;
 import com.pilgrim.helper.Response;
 import com.pilgrim.record.KeepRecord;
 import com.pligrim.models.CityMaster;
@@ -277,7 +278,10 @@ public class UsersBean implements Serializable {
         loggedInUser.setEmail(email);
         loggedInUser.setUpdatedDate(new Date());
         
-        response = adminClient.updateuser(loggedInUser, javax.ws.rs.core.Response.class);
+        Request<UserMaster> requestbody = new Request<>();
+        requestbody.setData(loggedInUser);
+        
+        response = adminClient.updateuser(requestbody, javax.ws.rs.core.Response.class);
         resUpdate = response.readEntity(gresUpdate);
         if(resUpdate.isStatus()) {
             addMessage(FacesMessage.SEVERITY_INFO, "Info Message", resUpdate.getMessage());

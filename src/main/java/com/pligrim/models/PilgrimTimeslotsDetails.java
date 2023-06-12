@@ -8,6 +8,18 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -16,12 +28,6 @@ import javax.json.bind.annotation.JsonbTransient;
 public class PilgrimTimeslotsDetails implements Serializable {
     
     private Integer timeslotsDetailsId;
-    
-    private Integer weekday;
-    
-    private Date fromDate;
-    
-    private Date toDate;
     
     private Date fromTime;
     
@@ -40,11 +46,8 @@ public class PilgrimTimeslotsDetails implements Serializable {
     public PilgrimTimeslotsDetails() {
     }
 
-    public PilgrimTimeslotsDetails(Integer timeslotsDetailsId, Integer weekday, Date fromDate, Date toDate, Date fromTime, Date toTime, Date createdDate, Date updatedDate, PilgrimTimeslots timeslots) {
+    public PilgrimTimeslotsDetails(Integer timeslotsDetailsId, Date fromTime, Date toTime, Date createdDate, Date updatedDate, PilgrimTimeslots timeslots) {
         this.timeslotsDetailsId = timeslotsDetailsId;
-        this.weekday = weekday;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
         this.fromTime = fromTime;
         this.toTime = toTime;
         this.createdDate = createdDate;
@@ -52,10 +55,7 @@ public class PilgrimTimeslotsDetails implements Serializable {
         this.timeslots = timeslots;
     }
 
-    public PilgrimTimeslotsDetails(Integer weekday, Date fromDate, Date toDate, Date fromTime, Date toTime, Date createdDate, Date updatedDate, PilgrimTimeslots timeslots) {
-        this.weekday = weekday;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+    public PilgrimTimeslotsDetails(Date fromTime, Date toTime, Date createdDate, Date updatedDate, PilgrimTimeslots timeslots) {
         this.fromTime = fromTime;
         this.toTime = toTime;
         this.createdDate = createdDate;
@@ -70,31 +70,7 @@ public class PilgrimTimeslotsDetails implements Serializable {
     public void setTimeslotsDetailsId(Integer timeslotsDetailsId) {
         this.timeslotsDetailsId = timeslotsDetailsId;
     }
-
-    public Integer getWeekday() {
-        return weekday;
-    }
-
-    public void setWeekday(Integer weekday) {
-        this.weekday = weekday;
-    }
-
-    public Date getFromDate() {
-        return fromDate;
-    }
-
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public Date getToDate() {
-        return toDate;
-    }
-
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
-    }
-
+    
     public Date getFromTime() {
         return fromTime;
     }
