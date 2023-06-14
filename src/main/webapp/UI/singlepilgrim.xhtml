@@ -8,6 +8,7 @@
     <h:head>
         <title>Pilgrim World</title>
     </h:head>
+    <h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
     <h:body>
         <ui:include src="header.xhtml"/>
         <main>
@@ -28,40 +29,155 @@
 
             <section class="menu section-padding">
                 <div class="container">
-                    <h:form id="form1">
+                    <h:form>
                         <div class="row">
 
                             <div class="col-md-6 mb-4">
-                                <p:galleria value="#{pilgrimBean.selectedPilgrimImages}" var="photo" numVisible="5" 
+                                <p:galleria value="#{bookingBean.selectedPilgrimImages}" var="photo" numVisible="5" 
                                             showItemNavigators="true" circular="true" showThumbnails="false" showIndicators="true" changeItemOnIndicatorHover="true" style="max-width: 640px">
                                     <img src="../images/pilgrims/#{photo.image}" alt="#{photo.pilgrim.pilgrimName}" style="width: 100%; display: block;"/>
                                 </p:galleria>
                             </div>
 
                             <div class="col-md-6 mb-4">
-                                <h3>#{pilgrimBean.selectedPilgrim.pilgrimName}</h3>
-                                <h6 class="mb-4">#{pilgrimBean.selectedPilgrim.city.cityName}/#{pilgrimBean.selectedPilgrim.state.stateName}</h6>
+                                <h3>#{bookingBean.selectedPilgrim.pilgrimName}</h3>
+                                <h6 class="mb-4">#{bookingBean.selectedPilgrim.city.cityName}/#{bookingBean.selectedPilgrim.state.stateName}</h6>
                                 <p:tabView>
                                     <p:tab title="Ticket Booking">
-                                        <p:datePicker id="booking_date" value="#{pilgrimBean.date}" styleClass="w-full mb-3" placeholder="Booking Date">
-                                            <p:ajax event="dateSelect" listener="#{pilgrimBean.onDateSelect}" update="timeslots"/>
-                                        </p:datePicker>
-                                        <br/>
-                                        <p:selectOneMenu id="timeslots" value="#{pilgrimBean.pilgrimtimeslotsdetailsid}" styleClass="mb-3">
-                                            <p:ajax listener="#{pilgrimBean.onTimeSlotChange()}" update="ticketprice"/>
-                                            <f:selectItem itemLabel="Select TimeSlot" itemValue="" noSelectionOption="true"/>
-                                            <f:selectItems value="#{pilgrimBean.selectedPTimeSlotsDetails}" var="tsd" 
-                                                           itemLabel="#{tsd.fromTime.hours}:#{tsd.fromTime.minutes} To #{tsd.toTime.hours}:#{tsd.toTime.minutes}" itemValue="#{tsd.timeslotsDetailsId}"/>
-                                        </p:selectOneMenu>
-                                        <br/>
-                                        <p:outputLabel id="ticketprice" value="Ticket Price: #{pilgrimBean.pilgrimTicketPrice}"/>
+                                        <div class="grid">
+                                            <div class="col-6 md:col-6 lg:col-3">
+                                                <div class="surface-card shadow-2 p-3 border-round">
+
+                                                    <div class="flex justify-content-between mb-3">
+                                                        <div>
+                                                            <span class="block text-500 font-medium mb-3">Booking Date</span>
+                                                        </div>
+                                                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                             style="width:2.5rem;height:2.5rem">
+                                                            <i class="pi pi-calendar-plus text-blue-500 text-xl"/>
+                                                        </div>
+                                                    </div>
+                                                    <p:datePicker id="booking_date" value="#{bookingBean.booking.bookingDate}">
+                                                        <p:ajax event="dateSelect" listener="#{bookingBean.onBookingDateChange}" update="timeslots"/>
+                                                    </p:datePicker>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 md:col-6 lg:col-3">
+                                                <div class="surface-card shadow-2 p-3 border-round">
+
+                                                    <div class="flex justify-content-between mb-3">
+                                                        <div>
+                                                            <span class="block text-500 font-medium mb-3">No of person</span>
+                                                        </div>
+                                                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                             style="width:2.5rem;height:2.5rem">
+                                                            <i class="pi pi-users text-blue-500 text-xl"/>
+                                                        </div>
+                                                    </div>
+                                                    <p:spinner id="noofperson" value="#{bookingBean.booking.noOfPerson}" min="0" max="10" rotate="true"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 md:col-6 lg:col-3">
+                                                <div class="surface-card shadow-2 p-3 border-round">
+
+                                                    <div class="flex justify-content-between mb-3">
+                                                        <div>
+                                                            <span class="block text-500 font-medium mb-3">Time Slots</span>
+                                                        </div>
+                                                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                             style="width:2.5rem;height:2.5rem">
+                                                            <i class="pi pi-clock text-blue-500 text-xl"/>
+                                                        </div>
+                                                    </div>
+                                                    <p:selectOneMenu id="timeslots" value="#{bookingBean.timeslotsDetailsId}" style="width: 100%">
+                                                        <p:ajax listener="#{bookingBean.onTimeSlotChange()}" update="ticketprice"/>
+                                                        <f:selectItem itemLabel="Select TimeSlot" itemValue="" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{bookingBean.selectedPTimeSlotsDetails}" var="tsd" 
+                                                                       itemLabel="#{tsd.fromTime.hours}:#{tsd.fromTime.minutes} To #{tsd.toTime.hours}:#{tsd.toTime.minutes}" itemValue="#{tsd.timeslotsDetailsId}"/>
+                                                    </p:selectOneMenu>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 md:col-6 lg:col-3">
+                                                <div class="surface-card shadow-2 p-3 border-round">
+
+                                                    <div class="flex justify-content-between mb-3">
+                                                        <div>
+                                                            <span class="block text-500 font-medium mb-3">Ticket Price</span>
+                                                        </div>
+                                                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                             style="width:2.5rem;height:2.5rem">
+                                                            <i class="pi pi-money-bill text-blue-500 text-xl"/>
+                                                        </div>
+                                                    </div>
+                                                    <p:outputLabel id="ticketprice" value="#{bookingBean.selectedPilgrimTicket.price}" styleClass="mb-3"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </p:tab>
                                     <p:tab title="Room Accomodation">
-                                        <p class="m-0">
-                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                            illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                                            odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-                                        </p>
+                                        <div class="grid">
+                                            <div class="col-12 md:col-6 lg:col-3">
+                                                <div class="surface-card shadow-2 p-3 border-round">
+
+                                                    <div class="flex justify-content-between mb-3">
+                                                        <div>
+                                                            <span class="block text-500 font-medium mb-3">Room</span>
+                                                        </div>
+                                                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                             style="width:2.5rem;height:2.5rem">
+                                                            <i class="pi pi-home text-blue-500 text-xl"/>
+                                                        </div>
+                                                    </div>
+                                                    <p:selectOneMenu id="rooms" value="#{bookingBean.pilgrimRoomId}" styleClass="mb-3" style="width: 100%">
+                                                        <p:ajax listener="#{bookingBean.onRoomChange()}" update="roomprice"/>
+                                                        <f:selectItem itemLabel="Select Room" itemValue="" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{bookingBean.selectedPilgrimRooms}" var="room" 
+                                                                       itemLabel="#{room.roomType}" itemValue="#{room.pilgrimRoomId}"/>
+                                                    </p:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-6 md:col-6 lg:col-3">
+                                                <div class="surface-card shadow-2 p-3 border-round">
+
+                                                    <div class="flex justify-content-between mb-3">
+                                                        <div>
+                                                            <span class="block text-500 font-medium mb-3">Room Price</span>
+                                                        </div>
+                                                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                             style="width:2.5rem;height:2.5rem">
+                                                            <i class="pi pi-money-bill text-blue-500 text-xl"/>
+                                                        </div>
+                                                    </div>
+                                                    <p:outputLabel id="roomprice" value="#{bookingBean.booking.pilgrimRoom.price}" styleClass="mb-3"/>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-6 md:col-6 lg:col-3">
+                                                <div class="surface-card shadow-2 p-3 border-round">
+
+                                                    <div class="flex justify-content-between mb-3">
+                                                        <div>
+                                                            <span class="block text-500 font-medium mb-3">No of Rooms</span>
+                                                        </div>
+                                                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                             style="width:2.5rem;height:2.5rem">
+                                                            <i class="pi pi-home text-blue-500 text-xl"/>
+                                                        </div>
+                                                    </div>
+                                                    <p:spinner id="totalrooms" value="#{bookingBean.booking.totalRooms}" min="0" max="10" rotate="true"/>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </p:tab>
+                                    <p:growl id="growl" sticky="true" showDetail="true"/>
+                                    <p:tab title="Confirmation">
+                                        <p:commandButton value="Book Now" icon="fa-solid fa-floppy-disk" action="#{bookingBean.onBook()}" update="growl"/>
                                     </p:tab>
                                 </p:tabView>
                             </div>

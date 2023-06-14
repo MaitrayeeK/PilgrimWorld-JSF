@@ -17,13 +17,19 @@ public class BookingMaster implements Serializable {
     
     private Integer bookingId;
     
+    private Integer totalRooms;
+    
     private int noOfPerson;
+    
+    private Date bookingDate;
     
     private float totalPrice;
     
     private Date createdDate;
     
     private Date updatedDate;
+    
+    private PilgrimRooms pilgrimRoom;
     
     private Collection<PaymentMaster> paymentMasterCollection;
     
@@ -36,7 +42,7 @@ public class BookingMaster implements Serializable {
     private PilgrimTimeslotsDetails timeslotsDetails;
     
     private UserMaster user;
-
+    
     public BookingMaster() {
     }
 
@@ -152,5 +158,29 @@ public class BookingMaster implements Serializable {
 
     public void setUser(UserMaster user) {
         this.user = user;
+    }
+
+    public Integer getTotalRooms() {
+        return totalRooms;
+    }
+
+    public void setTotalRooms(Integer totalRooms) {
+        this.totalRooms = totalRooms;
+    }
+
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public PilgrimRooms getPilgrimRoom() {
+        return pilgrimRoom;
+    }
+
+    public void setPilgrimRoom(PilgrimRooms pilgrimRoom) {
+        this.pilgrimRoom = pilgrimRoom;
     }
 }

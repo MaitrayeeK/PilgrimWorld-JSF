@@ -55,7 +55,7 @@ public class ClientsClient {
 
     public <T> T getPilgrimRooms(Class<T> responseType, String pilgrimid) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("pilgrimRooms/{0}", new Object[]{pilgrimid}));
+        resource = resource.path(java.text.MessageFormat.format("pilgrimRooms/getByPilgrim/{0}", new Object[]{pilgrimid}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -142,6 +142,12 @@ public class ClientsClient {
     public <T> T getPilgrimTimeslots(Class<T> responseType, String pilgrimid) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("pilgrimTimeslots/{0}", new Object[]{pilgrimid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T getPilgrimRoomsById(Class<T> responseType, String proomid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("pilgrimRooms/{0}", new Object[]{proomid}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
