@@ -1,63 +1,66 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Pilgrim World</title>
     </h:head>
     <h:body>
-        <footer class="site-footer section-padding">
+        <h:form>
+            <footer class="site-footer section-padding">
 
-            <div class="container">
+                <div class="container">
 
-                <div class="row">
+                    <div class="row">
 
-                    <div class="col-12">
-                        <h4 class="text-white mb-4 me-5">Crispy Kitchen</h4>
-                    </div>
+                        <div class="col-12">
+                            <h4 class="text-white mb-4 me-5">Pilgrim World</h4>
+                        </div>
 
-                    <div class="col-lg-4 col-md-7 col-xs-12 tooplate-mt30">
-                        <h6 class="text-white mb-lg-4 mb-3">Location</h6>
+                        <div class="col-lg-4 col-md-7 col-xs-12 tooplate-mt30">
+                            <h6 class="text-white mb-lg-4 mb-3">Add your pilgrim</h6>
 
-                        <p>121 Einstein Loop N, Bronx, NY 10475, United States</p>
+                            <!--<p>121 Einstein Loop N, Bronx, NY 10475, United States</p>-->
 
-                        <a href="https://goo.gl/maps/wZVGLA7q64uC1s886" class="custom-btn btn btn-dark mt-2">Directions</a>
-                    </div>
+                            <p:commandButton onclick="#{signupBean.isPilgrimClient()}" class="custom-btn btn btn-dark mt-2" value="Add"></p:commandButton>
+                        </div>
 
-                    <div class="col-lg-4 col-md-5 col-xs-12 tooplate-mt30">
-                        <h6 class="text-white mb-lg-4 mb-3">Opening Hours</h6>
+                        <!--                    <div class="col-lg-4 col-md-5 col-xs-12 tooplate-mt30">
+                                                <h6 class="text-white mb-lg-4 mb-3">Opening Hours</h6>
+                        
+                                                <p class="mb-2">Monday - Friday</p>
+                        
+                                                <p>10:00 AM - 08:00 PM</p>
+                        
+                                                <p>Tel: <a href="tel: 010-02-0340" class="tel-link">010-02-0340</a></p>
+                                            </div>-->
 
-                        <p class="mb-2">Monday - Friday</p>
+                        <div class="col-lg-4 col-md-6 col-xs-12 tooplate-mt30">
+                            <h6 class="text-white mb-lg-4 mb-3">Social</h6>
 
-                        <p>10:00 AM - 08:00 PM</p>
+                            <ul class="social-icon">
+                                <li><a href="#" class="social-icon-link bi-facebook"><i class="fa-brands fa-facebook"></i></a></li>
 
-                        <p>Tel: <a href="tel: 010-02-0340" class="tel-link">010-02-0340</a></p>
-                    </div>
+                                <li><a href="#" class="social-icon-link bi-instagram"><i class="fa-brands fa-instagram"></i></a></li>
 
-                    <div class="col-lg-4 col-md-6 col-xs-12 tooplate-mt30">
-                        <h6 class="text-white mb-lg-4 mb-3">Social</h6>
+                                <li><a href="https://twitter.com/search?q=tooplate.comsrc=typed_queryf=live" target="_blank"
+                                       class="social-icon-link bi-twitter"><i class="fa-brands fa-twitter"></i></a></li>
 
-                        <ul class="social-icon">
-                            <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+                                <li><a href="#" class="social-icon-link bi-youtube"><i class="fa-brands fa-youtube"></i></a></li>
+                            </ul>
 
-                            <li><a href="#" class="social-icon-link bi-instagram"></a></li>
+                            <p class="copyright-text tooplate-mt60">Copyright © 2023 Pilgrim World
+                                <br/>Design: <a rel="nofollow" href="https://www.tooplate.com/" target="_blank">Riya and Maitrayee</a></p>
 
-                            <li><a href="https://twitter.com/search?q=tooplate.comsrc=typed_queryf=live" target="_blank"
-                                   class="social-icon-link bi-twitter"></a></li>
+                        </div>
 
-                            <li><a href="#" class="social-icon-link bi-youtube"></a></li>
-                        </ul>
+                    </div><!-- row ending -->
 
-                        <p class="copyright-text tooplate-mt60">Copyright © 2022 Crispy Kitchen Co., Ltd.
-                            <br/>Design: <a rel="nofollow" href="https://www.tooplate.com/" target="_blank">Tooplate</a></p>
+                </div><!-- container ending -->
 
-                    </div>
-
-                </div><!-- row ending -->
-
-            </div><!-- container ending -->
-
-        </footer>
+            </footer>
+        </h:form>
     </h:body>
 </html>
 

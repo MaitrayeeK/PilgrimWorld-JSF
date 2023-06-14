@@ -11,10 +11,14 @@ import java.io.Serializable;
 /**
  *
  * @author Maitrayee
+ * @param <T>
  */
 
 public class Request<T> implements Serializable {
     private T data;
+
+    public Request() {
+    }
 
     public T getData() {
         return data;

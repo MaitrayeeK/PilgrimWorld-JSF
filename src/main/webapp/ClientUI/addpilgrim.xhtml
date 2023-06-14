@@ -3,140 +3,74 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <h:head>
-        <title>Pilgrim World</title>
-        <link href="#{facesContext.externalContext.requestContextPath}/ClientUI/css/style.css" rel="stylesheet"></link>
-        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
-    </h:head>
-    <h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
-    <h:body>
-        <h:form>
-            <p:wizard>
-                <p:tab id="pilgrim" title="Pilgrim">
-                    <p:panel header="Pilgrim Details">
-                        <p:messages/>
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      <h:head>
+    <title>Pilgrim World</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700" rel="stylesheet"></link>
+    <link href="#{facesContext.externalContext.requestContextPath}/UI/css/loginsignup.css" rel="stylesheet"></link>
+    <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+</h:head>
+<h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
+<h:body>
+    <div class="wrapper">
+        <div class="inner">
+            <div class="image-holder">
+                <img src="#{facesContext.externalContext.requestContextPath}/UI/images/signup-screen.png" alt=""/>
+            </div>
+            <h:form enctype="multipart/form-data">
+                <div class="text-center mb-5">
+                    <div class="text-900 text-3xl font-semibold mb-3">Welcome</div>
+                    <span class="text-800 font-semibold line-height-3">Add your details</span>
+                </div>
 
-                        <p:inputText id="name" styleClass="w-full mb-3" placeholder="Name"/>
-                        
-                        <p:inputText styleClass="w-full mb-3" placeholder="Address"/>
-                        
-                        <p:selectOneMenu id="statec" value="#{signupBean.stateid}" class="bg-transparent" styleClass="w-full mb-3">
-                            <p:ajax listener="#{signupBean.onStateChange()}" update="city"/>
-                            <f:selectItem itemLabel="Select State" itemValue="" noSelectionOption="true"/>
-                            <f:selectItems value="#{signupBean.states}" var="state" itemLabel="#{state.stateName}" itemValue="#{state.stateId}"/>
-                        </p:selectOneMenu>
-                        <p:selectOneMenu id="city" value="#{signupBean.cityid}" class="bg-transparent" styleClass="w-full mb-3">
-                            <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true"/>
-                            <f:selectItems value="#{signupBean.cities}" var="item" itemLabel="#{item.cityName}" itemValue="#{item.cityId}"/>
-                        </p:selectOneMenu>
+                <p:growl id="growl" sticky="true" showDetail="true"/>
+                <p:wizard >
+                    <p:tab id="personal" title="Pilgrim">
+                        <p:panel header="Pilgrim Details">
+                            <p:messages/>
 
-                        <div class="ui-fluid">
-                            <div class="field">
-                                <p:inputTextarea id="customDropZone" widgetVar="textarea"
-                                                 rows="4" />
-                                <small>
-                                    Drop on the text area to upload, or
-                                    <p:link value="choose" onclick="PF('uploadDnd').show();
-                                            return false" style="font-size:inherit"/>.
-                                </small>
-                            </div>
-                        </div>
-                        <p:fileUpload widgetVar="uploadDnd" 
-                                      sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" dropZone="customDropZone"
-                                      style="display: none"/>
+                            <p:inputText id="name" styleClass="w-full mb-3" placeholder="Name" value="#{pilgrimBean.pilgrimMaster.pilgrimName}"/>
 
-                    </p:panel>
-                </p:tab>
+                            <p:fileUpload listener="#{pilgrimBean.handlemainfilesUpload}" mode="advanced" dragDropSupport="true"
+                                          sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
 
-                <p:tab id="address" title="Address">
-                    <p:panel header="Address Details">
-                        <p:messages/>
+                        </p:panel>
+                    </p:tab>
 
-                        <div class="ui-fluid">
-                            <div class="field">
-                                <p:inputTextarea id="multipleimages" widgetVar="textarea"
-                                                 rows="10" />
-                                <small>
-                                    Drop on the text area to upload, or
-                                    <p:link value="choose" onclick="PF('uploadDnd1').show();
-                                            return false" style="font-size:inherit"/>.
-                                </small>
-                            </div>
-                        </div>
-                        <p:fileUpload widgetVar="uploadDnd1" 
-                                      sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" dropZone="multipleimages"
-                                      style="display: none" multiple="true" fileLimit="20"/>
+                    <p:tab id="photo" title="Address">
+                        <p:panel header="Address details">
+                            <p:messages/>
+                            
+                            <p:inputText styleClass="w-full mb-3" placeholder="Address" value="#{pilgrimBean.pilgrimMaster.address}"/>
 
-                    </p:panel>
-                </p:tab>
+                            <p:selectOneMenu id="statec" value="#{pilgrimBean.pilgrimMaster.state.stateId}" class="bg-transparent" styleClass="w-full mb-3">
+                                <p:ajax listener="#{stateCityBean.onStateChange(pilgrimBean.pilgrimMaster.state.stateId)}" update="city"/>
+                                <f:selectItem itemLabel="Select State" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{stateCityBean.states}" var="state" itemLabel="#{state.stateName}" itemValue="#{state.stateId}"/>
+                            </p:selectOneMenu>
+                            <p:selectOneMenu id="city" value="#{pilgrimBean.pilgrimMaster.city.cityId}" class="bg-transparent" styleClass="w-full mb-3">
+                                <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{stateCityBean.cities}" var="item" itemLabel="#{item.cityName}" itemValue="#{item.cityId}"/>
+                            </p:selectOneMenu>
+                            
 
-                <p:tab id="timeslots" title="Timeslots">
-                    <p:panel header="Contact Information">
-                        <p:messages/>
-                        <div class="tclass">
-                            <div class="mt-0 font-semibold text-sm">Select how you want to set your time slots</div>
-                            <small>
-                                Select week to set timing for week days or date to set timing for particular dates.
-                            </small>
-                        </div>
-                        <p:selectOneRadio id="console" value="#{pilgrimBean.timeslotType}">
-                            <f:selectItem itemLabel="Week" itemValue="1"/>
-                            <f:selectItem itemLabel="Dates" itemValue="2"/>
-                        </p:selectOneRadio>
+                        </p:panel>
+                    </p:tab>
 
-                        <p:inputText id="timslots" styleClass="w-full mt-3" placeholder="Timeslots/day" value="#{pilgrimBean.timeslots}"/>
-                        <div class="tclass"><small>How many time slots do you want to add for per day.</small></div>
-                    </p:panel>
-                </p:tab>
+                    <p:tab id="confirm" title="Confirmation">
+                        <p:panel header="Confirmation">
 
-                <p:tab id="timeslotsdetail" title="Timeslots Detail">
-                    <p:panel header="Confirmation">
-                        <div class="tclass">
-                            <c:choose>
-                                <c:when test="#{pilgrimBean.timeslotType eq '2'}">
-                                    <p:outputLabel class="mb-1" value="Select dates" rendered="#{pilgrimBean.timeslotType eq '2'}"/><br/><br/>
-                                    <p:outputLabel value="To:" rendered="#{pilgrimBean.timeslotType eq '2'}"/>&nbsp; <p:datePicker rendered="#{pilgrimBean.timeslotType eq '2'}"/>&nbsp;&nbsp;
-                                    <p:outputLabel value="From:" rendered="#{pilgrimBean.timeslotType eq '2'}"/>&nbsp; <p:datePicker rendered="#{pilgrimBean.timeslotType eq '2'}"/><br/><br/>
+                            <p:commandButton value="Submit" icon="fa-solid fa-floppy-disk" action="#{pilgrimBean.onSubmit()}" />
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
 
-                                    <p:outputLabel class="mb-1" value="Add timeslots and its ticket information(price)" rendered="#{pilgrimBean.timeslotType eq '2'}" /><br/><br/>
-                                    <c:forEach var="i" begin="1" end="#{pilgrimBean.timeslots}">
-                                        <p:datePicker class="mb-1" timeOnly="true" pattern="HH:mm" rendered="#{pilgrimBean.timeslotType eq '2'}" placeholder="To"/>&nbsp;&nbsp;
-                                        <p:datePicker class="mb-1" timeOnly="true" pattern="HH:mm" rendered="#{pilgrimBean.timeslotType eq '2'}" placeholder="From"/>&nbsp;&nbsp;
-                                        <p:inputText class="mb-1" placeholder="Price"/><br/>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:forEach var="i" items="#{pilgrimBean.weekdays}">
-                                        <div class="#{i}">
-                                            <p:inputText class="mb-1" value="#{i}" rendered="#{pilgrimBean.timeslotType eq '1'}"/>&nbsp;
-                                            <c:forEach var="i" begin="1" end="#{pilgrimBean.timeslots}">
-                                                <p:datePicker class="mb-1" timeOnly="true" pattern="HH:mm" rendered="#{pilgrimBean.timeslotType eq '1'}" placeholder="To"/>&nbsp;&nbsp;
-                                                <p:datePicker class="mb-1" timeOnly="true" pattern="HH:mm" rendered="#{pilgrimBean.timeslotType eq '1'}" placeholder="From"/>&nbsp;&nbsp;
-                                                <p:inputText class="mb-1" placeholder="Price"/><br/>
-                                                <p:inputText class="mb-1" placeholder="Price" style="visibility: hidden;"/>&nbsp;
-                                            </c:forEach>
-                                            <br/>
-                                        </div>
-                                    </c:forEach>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </p:panel>
-                </p:tab>
-                
-                <p:tab id="confirm" title="Confirmation">
-                    <p:panel header="Confirmation">
-                        <div class="tclass">
-                            <p:commandButton value="Submit" icon="fa-solid fa-floppy-disk"/>
-                        </div>
-                    </p:panel>
-                </p:tab>
-            </p:wizard>
-
-        </h:form>
-    </h:body>
+        </div>
+    </div>
+</h:body>
 </html>
 
