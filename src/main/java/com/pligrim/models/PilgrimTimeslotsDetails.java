@@ -28,7 +28,7 @@ import javax.validation.constraints.NotNull;
 public class PilgrimTimeslotsDetails implements Serializable {
     
     private Integer timeslotsDetailsId;
-    
+
     private Date fromTime;
     
     private Date toTime;
@@ -36,7 +36,7 @@ public class PilgrimTimeslotsDetails implements Serializable {
     private Date createdDate;
     
     private Date updatedDate;
-    
+   
     private PilgrimTimeslots timeslots;
     
     private Collection<PilgrimTickets> pilgrimTicketsCollection;
@@ -119,7 +119,7 @@ public class PilgrimTimeslotsDetails implements Serializable {
     public void setPilgrimTicketsCollection(Collection<PilgrimTickets> pilgrimTicketsCollection) {
         this.pilgrimTicketsCollection = pilgrimTicketsCollection;
     }
-
+    
     @JsonbTransient
     public Collection<BookingMaster> getBookingMasterCollection() {
         return bookingMasterCollection;

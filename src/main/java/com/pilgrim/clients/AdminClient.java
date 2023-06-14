@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/WebServices/JerseyClient.java to edit this template
  */
-package com.pilgrim.client;
+package com.pilgrim.clients;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;

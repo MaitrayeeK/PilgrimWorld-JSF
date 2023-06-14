@@ -4,8 +4,9 @@
  */
 package com.pilgrim.cdi;
 
-import com.pilgrim.client.AdminClient;
+
 import com.pilgrim.helper.Request;
+import com.pilgrim.clients.AdminClient;
 import com.pilgrim.helper.Response;
 import com.pilgrim.record.KeepRecord;
 import com.pligrim.models.CityMaster;
@@ -119,7 +120,7 @@ public class UsersBean implements Serializable {
     }
 
     public Collection<UserMaster> getUsers() {
-        response = adminClient.getUserByGroup(javax.ws.rs.core.Response.class, String.valueOf(4));
+        response = adminClient.getUserByGroup(javax.ws.rs.core.Response.class, String.valueOf(6));
         resUsers = response.readEntity(gresUsers);
         users = resUsers.getResult();
         return users;

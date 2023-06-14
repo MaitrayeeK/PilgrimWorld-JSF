@@ -4,7 +4,7 @@
  */
 package com.pilgrim.cdi;
 
-import com.pilgrim.client.AdminClient;
+import com.pilgrim.clients.AdminClient;
 import com.pilgrim.helper.Request;
 import com.pilgrim.helper.Response;
 import com.pilgrim.record.KeepRecord;
@@ -58,7 +58,7 @@ public class SignupBean implements Serializable {
     Pbkdf2PasswordHashImpl pb;
 
     String firstName, lastName, uname, email, password, address;
-    Integer stateid;
+    Integer stateid, isClient;
     Integer cityid;
     UploadedFile userImage;
     boolean isLoggedin;
@@ -198,6 +198,14 @@ public class SignupBean implements Serializable {
         this.isLoggedin = isLoggedin;
     }
 
+    public Integer getIsClient() {
+        return isClient;
+    }
+
+    public void setIsClient(Integer isClient) {
+        this.isClient = isClient;
+    }
+    
     public void onStateChange() {
         if (stateid != null && !stateid.equals("")) {
             response = client.getAllCitiesByState(javax.ws.rs.core.Response.class, String.valueOf(stateid));
@@ -244,11 +252,11 @@ public class SignupBean implements Serializable {
             Random random = new Random();
             String imageName = uname + "_" + random.nextInt(1000) + ext;
             System.out.println("Image Name: " + imageName);
+//
+//            File uploadedImage = new File("D:\\Sem_8\\PilgrimWorld_Project\\PilgrimWorldf\\src\\main\\webapp\\images\\users\\" + imageName);
+//            Files.copy(imageInputStream, uploadedImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            File uploadedImage = new File("D:\\Sem_8\\PilgrimWorld_Project\\PilgrimWorldf\\src\\main\\webapp\\images\\users\\" + imageName);
-            Files.copy(imageInputStream, uploadedImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-            Request<UserMaster> req = new Request<>();
+            Request req = new Request();
             UserMaster user = new UserMaster();
             user.setFirstname(firstName);
             user.setLastname(lastName);
@@ -263,8 +271,6 @@ public class SignupBean implements Serializable {
             CityMaster city = new CityMaster();
             city.setCityId(cityid);
             user.setCity(city);
-
-            System.out.println("Password: " + password);
 
             user.setEmail(email);
             user.setPassword(password);
@@ -286,7 +292,11 @@ public class SignupBean implements Serializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-//        
+    }
+    
+    public String isPilgrimClient() {
+        System.out.println("here");
+        isClient = 1;
+        return "signup.jsf";
     }
 }

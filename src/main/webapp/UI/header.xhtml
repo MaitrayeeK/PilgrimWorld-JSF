@@ -25,7 +25,7 @@
         <p:scrollTop />
         <p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />
         <h:form>
-            <p:speedDial radius="120" direction="down-right" type="quarter-circle">
+            <p:speedDial radius="120" direction="down-right" type="quarter-circle" class="myclass">
                 <p:menuitem id="signup" icon="fa-solid fa-right-to-bracket fa-beat-fade" rendered="#{signupBean.isLoggedin eq 'false'}" url="#{facesContext.externalContext.requestContextPath}/signin.jsf">
                     <p:tooltip for="signup" value="Signin" />
                 </p:menuitem>
@@ -70,5 +70,12 @@
                        hideEffect="explode"/>-->
         </h:form>
     </h:body>
+    <script>
+        var element = document.getElementsByClassName("myclass")[0].firstChild;
+        window.onload = (event) => {
+            console.log("here");
+            element.dispatchEvent(new Event('click'));
+        };
+    </script>
 </html>
 

@@ -28,15 +28,15 @@ import javax.validation.constraints.NotNull;
 public class PilgrimTimeslots implements Serializable {
     
     private Integer timeslotsId;
-    
+   
     private Integer weekday;
-    
+
     private Date fromDate;
     
     private Date toDate;
     
     private Date createdDate;
-    
+   
     private Date updatedDate;
     
     private PilgrimMaster pilgrim;

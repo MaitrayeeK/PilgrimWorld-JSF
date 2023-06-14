@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="#{facesContext.externalContext.requestContextPath}/ClientUI/css/style.css" rel="stylesheet"></link>
+        <!--<link href="#{facesContext.externalContext.requestContextPath}/ClientUI/css/bootstrap.min.css" rel="stylesheet"></link>-->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700" rel="stylesheet"></link>
+        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"></link>
+    </h:head>
+    <h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
+    <!--    <h:outputStylesheet name="primefaces-vela/theme.css"/>-->
+    <h:body>
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <div class="flex align-items-center mb-4 ml-5">
+                    <div class="relative">
+                        <p:avatar styleClass="mr-2" size="xlarge" shape="circle">
+                            <img src="#{facesContext.externalContext.requestContextPath}/images/users/messages-2.jpg"/>
+                        </p:avatar>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="my-1">Jhon Doe</h4>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt mr-3"></i>Dashboard</a>
+                    <a href="#" class="nav-link"><i class="fa fa-laptop mr-3"></i>Elements</a>
+                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th mr-3"></i>Widgets</a>
+                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard mr-3"></i>Forms</a>
+                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table mr-3"></i>Tables</a>
+                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar mr-3"></i>Charts</a>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Orders</span>
+                                <div class="text-900 font-medium text-xl">152</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-shopping-cart text-blue-500 text-xl"/>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-medium">24 new </span>
+                        <span class="text-500">since last visit</span>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Revenue</span>
+                                <div class="text-900 font-medium text-xl">$2.100</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-map-marker text-orange-500 text-xl"/>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-medium">%52+ </span>
+                        <span class="text-500">since last week</span>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Customers</span>
+                                <div class="text-900 font-medium text-xl">28441</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-inbox text-cyan-500 text-xl"/>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-medium">520  </span>
+                        <span class="text-500">newly registered</span>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Comments</span>
+                                <div class="text-900 font-medium text-xl">152 Unread</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-comment text-purple-500 text-xl"/>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-medium">85 </span>
+                        <span class="text-500">responded</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid">
+                <div class="col-6">
+                    <div class="col-12 col-6">
+                        <div class="card">
+                            <h5>Basic</h5>
+                            <p:barChart model="#{chartJsView.barModel}" style="height: 300px;"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-6">
+                        <div class="card">
+                            <h5>Basic</h5>
+                            <p:bubbleChart model="#{chartJsView.bubbleModel}" style="height: 200px;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <p:radarChart model="#{chartJsView.radarModel}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+
