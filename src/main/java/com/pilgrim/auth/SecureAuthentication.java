@@ -228,6 +228,7 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                     KeepRecord.setPrincipal(result.getCallerPrincipal());
                     KeepRecord.setRoles(result.getCallerGroups());
                     KeepRecord.setToken(securityData.getToken());
+                    KeepRecord.setUserid(securityData.getUser().getUserId());
                     KeepRecord.setUsername(username);
                     KeepRecord.setPassword(password);
 

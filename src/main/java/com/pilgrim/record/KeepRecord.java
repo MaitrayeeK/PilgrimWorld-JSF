@@ -22,6 +22,7 @@ public class KeepRecord implements Serializable {
     private static Set<String> roles;
     private static String errorStatus;
     private static String token;
+    private static Integer userid;
     private static String username;
     private static String password;
     private static boolean isLoggedin;
@@ -31,6 +32,7 @@ public class KeepRecord implements Serializable {
         principal = null;
         errorStatus = "";
         token = null;
+        userid = null;
         username = null;
         password = null;
         isLoggedin = false;
@@ -41,6 +43,7 @@ public class KeepRecord implements Serializable {
         principal = null;
         errorStatus = "";
         token = null;
+        userid = null;
         username = null;
         password = null;
         isLoggedin = false;
@@ -84,6 +87,14 @@ public class KeepRecord implements Serializable {
 
     public static void setToken(String token) {
         KeepRecord.token = token;
+    }
+
+    public static Integer getUserid() {
+        return userid;
+    }
+
+    public static void setUserid(Integer userid) {
+        KeepRecord.userid = userid;
     }
 
     public static String getUsername() {

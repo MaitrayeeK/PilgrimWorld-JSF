@@ -17,7 +17,7 @@ public class PilgrimRooms implements Serializable {
     
     private int noOfRooms;
     
-    private int roomType;
+    private String roomType;
     
     private float price;
     
@@ -30,7 +30,7 @@ public class PilgrimRooms implements Serializable {
     public PilgrimRooms() {
     }
 
-    public PilgrimRooms(Integer pilgrimRoomId, int noOfRooms, int roomType, float price, Date createdDate, Date updatedDate, PilgrimMaster pilgrim) {
+    public PilgrimRooms(Integer pilgrimRoomId, int noOfRooms, String roomType, float price, Date createdDate, Date updatedDate, PilgrimMaster pilgrim) {
         this.pilgrimRoomId = pilgrimRoomId;
         this.noOfRooms = noOfRooms;
         this.roomType = roomType;
@@ -40,7 +40,7 @@ public class PilgrimRooms implements Serializable {
         this.pilgrim = pilgrim;
     }
 
-    public PilgrimRooms(int noOfRooms, int roomType, float price, Date createdDate, Date updatedDate, PilgrimMaster pilgrim) {
+    public PilgrimRooms(int noOfRooms, String roomType, float price, Date createdDate, Date updatedDate, PilgrimMaster pilgrim) {
         this.noOfRooms = noOfRooms;
         this.roomType = roomType;
         this.price = price;
@@ -65,11 +65,11 @@ public class PilgrimRooms implements Serializable {
         this.noOfRooms = noOfRooms;
     }
 
-    public int getRoomType() {
+    public String getRoomType() {
         return roomType;
     }
 
-    public void setRoomType(int roomType) {
+    public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
 
