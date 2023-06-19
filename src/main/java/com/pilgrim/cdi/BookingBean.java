@@ -4,12 +4,14 @@
  */
 package com.pilgrim.cdi;
 
+import com.pilgrim.clients.AdminClient;
 import com.pilgrim.clients.ClientsClient;
 import com.pilgrim.clients.CustomerClient;
 import com.pilgrim.helper.Request;
 import com.pilgrim.helper.Response;
 import com.pilgrim.record.KeepRecord;
 import com.pligrim.models.BookingMaster;
+import com.pligrim.models.PaymentMaster;
 import com.pligrim.models.PilgrimImages;
 import com.pligrim.models.PilgrimMaster;
 import com.pligrim.models.PilgrimRooms;
@@ -24,8 +26,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.ws.rs.core.GenericType;
 import org.primefaces.event.SelectEvent;
 
@@ -39,14 +50,17 @@ public class BookingBean implements Serializable {
 
     ClientsClient client;
     CustomerClient customerClient;
+    AdminClient adminClient;
     javax.ws.rs.core.Response response;
 
     BookingMaster booking;
     Integer timeslotsDetailsId;
     Integer pilgrimRoomId;
+    Float totalTicketPrice;
+    Float totalRoomPrice;
 
-    Response resAddBooking;
-    GenericType<Response> gresAddBooking;
+    Response resAdd;
+    GenericType<Response> gresAdd;
 
     Response<PilgrimMaster> resSelectedPilgrim;
     GenericType<Response<PilgrimMaster>> gresSelectedPilgrim;
@@ -75,12 +89,20 @@ public class BookingBean implements Serializable {
     Response<PilgrimRooms> resSelectedRoom;
     GenericType<Response<PilgrimRooms>> gresSelectedRoom;
 
+    Response<UserMaster> resLoggedinUser;
+    GenericType<Response<UserMaster>> gresLoggedinUser;
+
+    Response<List<BookingMaster>> resBookings;
+    GenericType<Response<List<BookingMaster>>> gresBookings;
+    List<BookingMaster> bookings;
+
     public BookingBean() {
         client = new ClientsClient();
         customerClient = new CustomerClient();
+        adminClient = new AdminClient();
         booking = new BookingMaster();
 
-        gresAddBooking = new GenericType<Response>() {
+        gresAdd = new GenericType<Response>() {
         };
 
         gresSelectedPilgrim = new GenericType<Response<PilgrimMaster>>() {
@@ -109,6 +131,13 @@ public class BookingBean implements Serializable {
 
         gresSelectedRoom = new GenericType<Response<PilgrimRooms>>() {
         };
+
+        gresLoggedinUser = new GenericType<Response<UserMaster>>() {
+        };
+
+        gresBookings = new GenericType<Response<List<BookingMaster>>>() {
+        };
+        bookings = new ArrayList<>();
     }
 
     public BookingMaster getBooking() {
@@ -183,7 +212,36 @@ public class BookingBean implements Serializable {
         this.pilgrimRoomId = pilgrimRoomId;
     }
 
+    public Float getTotalTicketPrice() {
+        return totalTicketPrice;
+    }
+
+    public void setTotalTicketPrice(Float totalTicketPrice) {
+        this.totalTicketPrice = totalTicketPrice;
+    }
+
+    public Float getTotalRoomPrice() {
+        return totalRoomPrice;
+    }
+
+    public void setTotalRoomPrice(Float totalRoomPrice) {
+        this.totalRoomPrice = totalRoomPrice;
+    }
+
+    public List<BookingMaster> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<BookingMaster> bookings) {
+        this.bookings = bookings;
+    }
+
     public String gotoSinglePilgrim(Integer pilgrimid) {
+
+        booking = new BookingMaster();
+        timeslotsDetailsId = null;
+        pilgrimRoomId = null;
+        selectedPilgrimTicket.setPrice(0);
 
         //get selected pilgrim
         response = client.getPilgrimsById(javax.ws.rs.core.Response.class, String.valueOf(pilgrimid));
@@ -251,15 +309,15 @@ public class BookingBean implements Serializable {
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public void onBook() {
+    public String onBook() {
 
-        UserMaster user = new UserMaster();
-        user.setUserId(KeepRecord.getUserid());
-        booking.setUser(user);
+        response = adminClient.getUserByUsername(javax.ws.rs.core.Response.class, KeepRecord.getUsername());
+        resLoggedinUser = response.readEntity(gresLoggedinUser);
+        booking.setUser(resLoggedinUser.getResult());
 
-        PilgrimMaster pilgrim = new PilgrimMaster();
-        pilgrim.setPilgrimId(selectedPilgrim.getPilgrimId());
-        booking.setPilgrim(pilgrim);
+//        PilgrimMaster pilgrim = new PilgrimMaster();
+//        pilgrim.setPilgrimId(selectedPilgrim.getPilgrimId());
+        booking.setPilgrim(selectedPilgrim);
 
         PilgrimTimeslotsDetails timeslotsdetails = new PilgrimTimeslotsDetails();
         timeslotsdetails.setTimeslotsDetailsId(timeslotsDetailsId);
@@ -269,33 +327,110 @@ public class BookingBean implements Serializable {
         booking.setCreatedDate(new Date());
         booking.setUpdatedDate(new Date());
 
-        float ticketprice = selectedPilgrimTicket.getPrice() * booking.getNoOfPerson();
-        float roomprice = booking.getPilgrimRoom().getPrice() * booking.getTotalRooms();
-        booking.setTotalPrice(ticketprice + roomprice);
+        totalTicketPrice = selectedPilgrimTicket.getPrice() * booking.getNoOfPerson();
 
-        System.out.println("TicketPrice: " + ticketprice);
-        System.out.println("RoomPrice: " + roomprice);
-        System.out.println("TotalPrice: " + booking.getTotalPrice());
-
-        System.out.println("User: " + booking.getUser().getUserId());
-        System.out.println("Pilgrim: " + booking.getPilgrim().getPilgrimId());
-        System.out.println("TimeSlotsDetailsId: " + booking.getTimeslotsDetails().getTimeslotsDetailsId());
-        System.out.println("TicketId: " + booking.getTicket().getTicketId());
-        System.out.println("RoomId: " + booking.getPilgrimRoom().getPilgrimRoomId());
+        if (booking.getPilgrimRoom().getPilgrimRoomId() != null) {
+            totalRoomPrice = booking.getPilgrimRoom().getPrice() * booking.getTotalRooms();
+            booking.setTotalPrice(totalTicketPrice + totalRoomPrice);
+        } else {
+            booking.setTotalPrice(totalTicketPrice);
+        }
 
         Request<BookingMaster> requestbody = new Request<>();
         requestbody.setData(booking);
 
         //add booking
         response = customerClient.addBooking(requestbody, javax.ws.rs.core.Response.class);
-        resAddBooking = response.readEntity(gresAddBooking);
-        if(resAddBooking.isStatus()){
-            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", resAddBooking.getMessage());
+        resAdd = response.readEntity(gresAdd);
+        if (resAdd.isStatus()) {
+            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", resAdd.getMessage());
+            return "checkout.jsf?faces-redirect=true";
+        } else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", resAdd.getMessage());
+            return null;
         }
-        else{
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", resAddBooking.getMessage());
-        }
+    }
+
+    public String onPay() {
         
+        response = customerClient.getBookings(javax.ws.rs.core.Response.class);
+        resBookings = response.readEntity(gresBookings);
+        bookings = resBookings.getResult();
+
+        PaymentMaster payment = new PaymentMaster();
+        payment.setUser(booking.getUser());
+        payment.setPilgrim(booking.getPilgrim());
+        payment.setBooking(bookings.get(bookings.size() - 1));
+        payment.setTotalPrice(booking.getTotalPrice());
+        payment.setCreatedDate(new Date());
+        payment.setUpdatedDate(new Date());
+
+        Request<PaymentMaster> requestbody = new Request<>();
+        requestbody.setData(payment);
+
+        response = customerClient.addPayment(requestbody, javax.ws.rs.core.Response.class);
+        resAdd = response.readEntity(gresAdd);
+        if (resAdd.isStatus()) {
+
+            //sending booking information via email to user
+            try {
+
+                Properties properties = new Properties();
+                properties.put("mail.smtp.auth", true);
+                properties.put("mail.smtp.starttls.enable", true);
+                properties.put("mail.smtp.port", "587");
+                properties.put("mail.smtp.host", "smtp.gmail.com");
+
+                String username = "rencylakhani129@gmail.com";
+                String password = "nqxhpzweevmmgzsy";
+
+                Session session = Session.getInstance(properties, new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+                String recipient_email = booking.getUser().getEmail();
+                String sender_email = "rencylakhani129@gmail.com";
+
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(sender_email));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient_email));
+                message.setSubject("Booking Information");
+
+                String email_body = null;
+
+                if (booking.getPilgrimRoom().getPilgrimRoomId() != null) {
+                    email_body = "<h3>Booking Information</h3>\n"
+                            + "        <h4>Booking Date: " + booking.getBookingDate() + "</h4>\n"
+                            + "        <h4>No of Person: " + booking.getNoOfPerson() + "</h4>\n"
+                            + "        <h4>Total Ticket Price: " + totalTicketPrice + "</h4>\n"
+                            + "        <h4>Room: " + booking.getPilgrimRoom().getRoomType() + "</h4>\n"
+                            + "        <h4>Total Rooms: " + booking.getTotalRooms() + "</h4>\n"
+                            + "        <h4>Total Room Price: " + totalRoomPrice + "</h4>\n"
+                            + "        <h4>Total Booking Price: " + booking.getTotalPrice() + "</h4>";
+                } else {
+                    email_body = "<h3>Booking Information</h3>\n"
+                            + "        <h4>Booking Date: " + booking.getBookingDate() + "</h4>\n"
+                            + "        <h4>No of Person: " + booking.getNoOfPerson() + "</h4>\n"
+                            + "        <h4>Total Ticket Price: " + totalTicketPrice + "</h4>\n"
+                            + "        <h4>Total Booking Price: " + booking.getTotalPrice() + "</h4>";
+                }
+
+                message.setContent(email_body, "text/html");
+
+                Transport.send(message);
+                System.out.println("Mail sent successfully!!");
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return "successpayment.jsf?faces-redirect=true";
+        } else {
+            return null;
+        }
     }
 
 }

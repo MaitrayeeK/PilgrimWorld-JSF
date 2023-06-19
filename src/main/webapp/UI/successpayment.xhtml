@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pilgrim World</title>
+    </h:head>
+    <h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <main>
+            <header class="site-header site-menu-header">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-12 mx-auto">
+                            <h1 class="text-white">Payment</h1>
+
+                            <strong class="text-white">Empowering you with swift and secure transactions</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overlay"></div>
+            </header>
+            <section class="menu section-padding">
+                <div class="container">
+                    <h:form>
+                        <div class="grid flex justify-content-center">
+                            <div class="col-6 md:col-6 lg:col-3">
+                                <div class="surface-card shadow-2 p-3 border-round">
+                                    <div class="flex justify-content-center">
+                                        <p:avatar styleClass="mb-4" size="xlarge" shape="circle">
+                                            <img src="images/payment_done.png" alt="alt" class="payment-done" />
+                                        </p:avatar>
+                                    </div>
+                                    <span class="font-bold text-2xl mb-3 flex justify-content-center" style="color: green">Payment Successful !</span>
+                                    <span class="block text-500 font-bold mb-3 flex justify-content-center">Thank You ! Your booking is done !</span>
+                                    <span class="block text-500 font-bold mb-3 flex justify-content-center">You will receive a summary of your booking information via email.</span>
+                                    <div class="flex justify-content-center">
+                                        <p:commandButton value="Back To Home Page" action="index.jsf?faces-redirect=true" style="background-color: navy"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </section>
+        </main>
+    </h:body>
+</html>
+
