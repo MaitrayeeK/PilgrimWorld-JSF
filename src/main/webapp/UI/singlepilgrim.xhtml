@@ -29,7 +29,7 @@
 
             <section class="menu section-padding">
                 <div class="container">
-                    <h:form>
+                    <h:form id="booking_form">
                         <div class="row">
 
                             <div class="col-md-6 mb-4">
@@ -43,6 +43,7 @@
                                 <h3>#{bookingBean.selectedPilgrim.pilgrimName}</h3>
                                 <h6 class="mb-4">#{bookingBean.selectedPilgrim.city.cityName}/#{bookingBean.selectedPilgrim.state.stateName}</h6>
                                 <p:tabView>
+                                    <p:growl id="growl" sticky="true" showDetail="true"/>
                                     <p:tab title="Ticket Booking">
                                         <div class="grid">
                                             <div class="col-6 md:col-6 lg:col-3">
@@ -50,16 +51,18 @@
 
                                                     <div class="flex justify-content-between mb-3">
                                                         <div>
-                                                            <span class="block text-500 font-medium mb-3">Booking Date</span>
+                                                            <span class="text-900 font-medium text-l">Booking Date</span>
                                                         </div>
                                                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                                              style="width:2.5rem;height:2.5rem">
                                                             <i class="pi pi-calendar-plus text-blue-500 text-xl"/>
                                                         </div>
                                                     </div>
-                                                    <p:datePicker id="booking_date" value="#{bookingBean.booking.bookingDate}">
+                                                    <p:datePicker id="booking_date" value="#{bookingBean.booking.bookingDate}" 
+                                                                  required="true" requiredMessage="Booking Date is required.">
                                                         <p:ajax event="dateSelect" listener="#{bookingBean.onBookingDateChange}" update="timeslots"/>
                                                     </p:datePicker>
+                                                    <p:message for="booking_date" styleClass="mt-1"/>
                                                 </div>
                                             </div>
 
@@ -68,7 +71,7 @@
 
                                                     <div class="flex justify-content-between mb-3">
                                                         <div>
-                                                            <span class="block text-500 font-medium mb-3">No of person</span>
+                                                            <span class="text-900 font-medium text-l">No of person</span>
                                                         </div>
                                                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                                              style="width:2.5rem;height:2.5rem">
@@ -84,7 +87,7 @@
 
                                                     <div class="flex justify-content-between mb-3">
                                                         <div>
-                                                            <span class="block text-500 font-medium mb-3">Time Slots</span>
+                                                            <span class="text-900 font-medium text-l">Time Slots</span>
                                                         </div>
                                                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                                              style="width:2.5rem;height:2.5rem">
@@ -105,7 +108,7 @@
 
                                                     <div class="flex justify-content-between mb-3">
                                                         <div>
-                                                            <span class="block text-500 font-medium mb-3">Ticket Price</span>
+                                                            <span class="text-900 font-medium text-l">Ticket Price</span>
                                                         </div>
                                                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                                              style="width:2.5rem;height:2.5rem">
@@ -125,7 +128,7 @@
 
                                                     <div class="flex justify-content-between mb-3">
                                                         <div>
-                                                            <span class="block text-500 font-medium mb-3">Room</span>
+                                                            <span class="text-900 font-medium text-l">Room</span>
                                                         </div>
                                                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                                              style="width:2.5rem;height:2.5rem">
@@ -140,13 +143,13 @@
                                                     </p:selectOneMenu>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-6 md:col-6 lg:col-3">
                                                 <div class="surface-card shadow-2 p-3 border-round">
 
                                                     <div class="flex justify-content-between mb-3">
                                                         <div>
-                                                            <span class="block text-500 font-medium mb-3">Room Price</span>
+                                                            <span class="text-900 font-medium text-l">Room Price</span>
                                                         </div>
                                                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                                              style="width:2.5rem;height:2.5rem">
@@ -156,13 +159,13 @@
                                                     <p:outputLabel id="roomprice" value="#{bookingBean.booking.pilgrimRoom.price}" styleClass="mb-3"/>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-6 md:col-6 lg:col-3">
                                                 <div class="surface-card shadow-2 p-3 border-round">
 
                                                     <div class="flex justify-content-between mb-3">
                                                         <div>
-                                                            <span class="block text-500 font-medium mb-3">No of Rooms</span>
+                                                            <span class="text-900 font-medium text-l">No of Rooms</span>
                                                         </div>
                                                         <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                                              style="width:2.5rem;height:2.5rem">
@@ -172,12 +175,11 @@
                                                     <p:spinner id="totalrooms" value="#{bookingBean.booking.totalRooms}" min="0" max="10" rotate="true"/>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </p:tab>
-                                    <p:growl id="growl" sticky="true" showDetail="true"/>
                                     <p:tab title="Confirmation">
-                                        <p:commandButton value="Book Now" icon="fa-solid fa-floppy-disk" action="#{bookingBean.onBook()}" update="growl"/>
+                                        <p:commandButton value="Book Now" icon="fa-solid fa-floppy-disk" action="#{bookingBean.onBook()}" update="booking_form"/>
                                     </p:tab>
                                 </p:tabView>
                             </div>

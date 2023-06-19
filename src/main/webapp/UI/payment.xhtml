@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pilgrim World</title>
+    </h:head>
+    <h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <main>
+            <header class="site-header site-menu-header">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-12 mx-auto">
+                            <h1 class="text-white">Payment</h1>
+
+                            <strong class="text-white">Empowering you with swift and secure transactions</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overlay"></div>
+            </header>
+            <section class="menu section-padding">
+                <div class="container">
+                    <div class="grid flex justify-content-center">
+                        <div class="col-6 md:col-6 lg:col-3">
+                            <div class="surface-card shadow-2 p-3 border-round">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block text-900 font-bold text-2xl mb-3">Payment Details</span>
+                                    </div>
+                                    <div>
+                                        <i class="fa-brands fa-cc-visa text-3xl" style="color:navy;"></i>
+                                        <i class="fa fa-cc-mastercard text-3xl" style="color:red;"></i>
+                                        <i class="fa fa-cc-amex text-3xl" style="color:blue;"></i>
+                                        <i class="fa fa-cc-discover text-3xl" style="color:orange;"></i>
+                                    </div>
+                                </div>
+                                <p:divider/>
+                                <h:form id="payment_form">
+                                    <div class="row">
+                                        <p:tooltip/>
+                                        <div class="col-12">
+                                            <p:inputText id="cardowner" placeholder="Card Owner" style="width: 100%"
+                                                         required="true" requiredMessage="Card Owner is required." />
+                                            <p:message for="cardowner" display="tooltip"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <p:inputMask id="cardnumber" mask="9999 9999 9999 9999" validateMask="true" placeholder="Card Number" 
+                                                         style="width: 100%" required="true" requiredMessage="Card Number is required."/>
+                                            <p:message for="cardnumber" display="tooltip"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <p:datePicker id="expiry" view="month" pattern="MM/yyyy" yearNavigator="true" yearRange="2023-2040" style="width: 100%" 
+                                                          required="true" requiredMessage="Expiry Date is required." placeholder="Expiry" />
+                                            <p:message for="expiry" display="tooltip"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <p:inputMask id="cvv" mask="9 9 9" validateMask="true" placeholder="CVV" 
+                                                         style="width: 100%" required="true" requiredMessage="CVV is required."/>
+                                            <p:message for="cvv" display="tooltip"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <p:commandButton value="Pay Now &#8377;#{bookingBean.booking.totalPrice}" 
+                                                             update="payment_form" style="width: 100%" action="#{bookingBean.onPay()}"/>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </h:body>
+</html>
+
