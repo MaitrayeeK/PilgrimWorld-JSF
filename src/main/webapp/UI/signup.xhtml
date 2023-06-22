@@ -21,13 +21,12 @@
                     <img src="#{facesContext.externalContext.requestContextPath}/UI/images/signup-screen.png" alt=""/>
                 </div>
                 <h:form enctype="multipart/form-data">
+                    <p:growl id="growl" sticky="true" showDetail="true"/>
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-semibold mb-3">Welcome</div>
                         <span class="text-800 font-semibold line-height-3">Already have an account?</span>
                         <a class="font-semibold no-underline ml-2 text-blue-900 cursor-pointer" href="#{facesContext.externalContext.requestContextPath}/UI/signin.jsf">Login!</a>
                     </div>
-
-                    <p:growl id="growl" sticky="true" showDetail="true"/>
                     <p:wizard >
                         <p:tab id="personal" title="Personal">
                             <p:panel header="Personal Details">
@@ -97,7 +96,7 @@
                         <p:tab id="confirm" title="Confirmation">
                             <p:panel header="Confirmation">
 
-                                <p:commandButton value="Submit" icon="fa-solid fa-floppy-disk" action="#{signupBean.onSubmit()}" />
+                                <p:commandButton value="Submit" icon="fa-solid fa-floppy-disk" action="#{signupBean.onSubmit()}" update="growl" />
                             </p:panel>
                         </p:tab>
                     </p:wizard>

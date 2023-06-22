@@ -13,67 +13,76 @@
         <ui:include src="header.xhtml"/>
         <div class="main">
             <div class="card">
-                    <p:dataTable id="basicDT"><!--var="product" value="#{dtSelectionView.products1}"-->
-                    <p:column headerText="ID">
-                        <h:outputText />
-                    </p:column>
+                <h:form>
+                    <p:dataTable id="dt-pilgrims" var="pilgrim" value="#{pilgrimBean.pilgrims}" widgetVar="pilgrimsTable"
+                                 emptyMessage="No pilgrims found with given criteria"
+                                 paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            <div class="flex align-items-center justify-content-between">
+                                <span style="font-weight: bold">List of Pilgrims</span>
+                                <div>
+                                    <p:inputText id="globalFilter" onkeyup="PF('pilgrimsTable').filter()" style="width:15rem"
+                                                 placeholder="Enter keyword" styleClass="mr-2" />
+                                    <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                        <p:dataExporter type="pdf" target="dt-pilgrims" fileName="pilgrims" />
+                                    </p:commandButton>
+                                </div>
+                            </div>
 
-                    <p:column headerText="Name">
-                        <h:outputText />
-                    </p:column>
+                        </f:facet>
+                        <p:column headerText="ID" sortBy="#{pilgrim.pilgrimId}" filterBy="#{pilgrim.pilgrimId}">
+                            <h:outputText value="#{pilgrim.pilgrimId}" />
+                        </p:column>
 
-                    <p:column headerText="Managed By">
-                        <h:outputText />
-                    </p:column>
+                        <p:column headerText="Name" sortBy="#{pilgrim.pilgrimName}" filterBy="#{pilgrim.pilgrimName}">
+                            <h:outputText value="#{pilgrim.pilgrimName}" />
+                        </p:column>
 
-                    <p:column headerText="State">
-                        <h:outputText  />
-                    </p:column>
+                        <p:column headerText="State" sortBy="#{pilgrim.state.stateName}" filterBy="#{pilgrim.state.stateName}">
+                            <h:outputText value="#{pilgrim.state.stateName}" />
+                        </p:column>
 
-                    <p:column style="width:3rem;text-align: center">
-                        <p:commandButton update=":form:productDetail" oncomplete="PF('productDialog').show()"
-                                         icon="fa-brands fa-searchengine" title="View">
-                            <f:setPropertyActionListener value="#{product}"
-                                                         target="#{dtSelectionView.selectedProduct}"/>
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
+                        <p:column headerText="Image" exportable="false">
+                            <img alt="#{pilgrim.pilgrimName}" src="../images/pilgrims/#{pilgrim.pilgrimImage}" class="product-image"/>
+                        </p:column>
+
+                        <p:column style="width:3rem;text-align: center">
+                            <p:commandButton update="pilgrimDetail" oncomplete="PF('pilgrimDialog').show()"
+                                             icon="fa fa-search" title="View">
+                                <f:setPropertyActionListener value="#{pilgrim}"
+                                                             target="#{pilgrimBean.selectedPilgrim}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
             </div>
         </div>
-        <p:dialog header="Product Info" widgetVar="productDialog" modal="true" showEffect="fade"
-                  hideEffect="fade" resizable="false">
-            <p:outputPanel id="productDetail" style="text-align:center;">
-                <p:column rendered="#{not empty dtSelectionView.selectedProduct}">
-                    <div class="product">
-                        <div class="product-grid-item card" style="margin-bottom: 0">
-                            <div class="product-grid-item-top">
-                                <div>
-                                    <i class="pi pi-tag product-category-icon"/>
-                                    <span class="product-category">#{dtSelectionView.selectedProduct.category}</span>
-                                </div>
-                                <span class="product-badge status-#{dtSelectionView.selectedProduct.inventoryStatus.name().toLowerCase()}">#{dtSelectionView.selectedProduct.inventoryStatus.text}</span>
-                            </div>
-                            <div class="product-grid-item-content">
-                                <p:graphicImage
-                                    name="demo/images/product/#{dtSelectionView.selectedProduct.image}"/>
-                                <div class="product-name">#{dtSelectionView.selectedProduct.name}</div>
-                                <div class="product-description">#{dtSelectionView.selectedProduct.description}</div>
-                                <p:rating readonly="true" value="#{dtSelectionView.selectedProduct.rating}"/>
-                            </div>
-                            <div class="product-grid-item-bottom">
-                                <h:outputText value="#{dtSelectionView.selectedProduct.price}"
-                                              styleClass="product-price">
-                                    <f:convertNumber currencySymbol="$" type="currency"/>
-                                </h:outputText>
-                                <p:commandButton value="Add To Cart" icon="pi pi-shopping-cart"
-                                                 disabled="#{dtSelectionView.selectedProduct.inventoryStatus == 'OUTOFSTOCK'}">
-                                    <f:setPropertyActionListener value="#{dtSelectionView.selectedProduct}"
-                                                                 target="#{dtSelectionView.selectedProduct}"/>
-                                </p:commandButton>
-                            </div>
-                        </div>
+
+        <p:dialog header="Pilgrim Details" showEffect="fade" modal="true" widgetVar="pilgrimDialog"
+                  hideEffect="fade">
+            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                <p:outputPanel id="pilgrimDetail">
+                    <img src="../images/pilgrims/#{pilgrimBean.selectedPilgrim.pilgrimImage}" alt="#{pilgrimBean.selectedPilgrim.pilgrimName}" class="mb-4" style="height: 200px; width: 200px"/>
+                    <div class="field">
+                        <p:outputLabel value="Name:" class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{pilgrimBean.selectedPilgrim.pilgrimName}"/>
                     </div>
-                </p:column>
+                    <div class="field">
+                        <p:outputLabel value="Address: " class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{pilgrimBean.selectedPilgrim.address}"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel value="State:" class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{pilgrimBean.selectedPilgrim.state.stateName}"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel value="City: " class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{pilgrimBean.selectedPilgrim.city.cityName}"/>
+                    </div>
+                    <div class="formgrid grid">
+
+                    </div>
+                </p:outputPanel>
             </p:outputPanel>
         </p:dialog>
     </h:body>

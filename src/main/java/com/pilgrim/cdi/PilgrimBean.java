@@ -55,8 +55,9 @@ public class PilgrimBean implements Serializable {
     UploadedFiles subfiles;
     ArrayList<String> pilgrimImageList = new ArrayList<>();
     Integer cityId;
-
     int timeslotType = 1;
+    PilgrimMaster selectedPilgrim;
+    
     int timeslots;
     ArrayList weekdays = new ArrayList<>();
 
@@ -95,6 +96,11 @@ public class PilgrimBean implements Serializable {
         pilgrimTimeslots = new PilgrimTimeslots();
         pilgrimTimeslotsDetails = new PilgrimTimeslotsDetails();
         pilgrimTickets = new PilgrimTickets();
+
+        gresPligrims = new GenericType<Response<Collection<PilgrimMaster>>>() {
+        };
+        pilgrims = new ArrayList<>();
+        selectedPilgrim = new PilgrimMaster();
 
         weekdays.add("Sunday");
         weekdays.add("Monday");
@@ -203,6 +209,13 @@ public class PilgrimBean implements Serializable {
 
     public void setWeekdays(ArrayList weekdays) {
         this.weekdays = weekdays;
+    }
+    public PilgrimMaster getSelectedPilgrim() {
+        return selectedPilgrim;
+    }
+
+    public void setSelectedPilgrim(PilgrimMaster selectedPilgrim) {
+        this.selectedPilgrim = selectedPilgrim;
     }
 
     public int getTimeslotType() {

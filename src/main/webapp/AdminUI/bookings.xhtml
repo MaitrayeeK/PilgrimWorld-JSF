@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pilgrim World</title>
+        <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        
+        <div class="main">
+            <div class="card">
+                <h:form>
+                    <p:dataTable id="dt-bookings" var="booking" value="#{bookingBean.bookings}" widgetVar="bookingsTable"
+                                 emptyMessage="No bookings found with given criteria"
+                                 paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            <div class="flex align-items-center justify-content-between">
+                                <span style="font-weight: bold">List of Bookings</span>
+                                <div>
+                                    <p:inputText id="globalFilter" onkeyup="PF('bookingsTable').filter()" style="width:15rem"
+                                                 placeholder="Enter keyword" styleClass="mr-2" />
+                                    <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                        <p:dataExporter type="pdf" target="dt-bookings" fileName="bookings" />
+                                    </p:commandButton>
+                                </div>
+                            </div>
+
+                        </f:facet>
+                        <p:column headerText="ID" sortBy="#{booking.bookingId}" filterBy="#{booking.bookingId}">
+                            <h:outputText value="#{booking.bookingId}" />
+                        </p:column>
+
+                        <p:column headerText="User" sortBy="#{booking.user.firstname}" filterBy="#{booking.user.firstname}">
+                            <h:outputText value="#{booking.user.firstname} #{booking.user.lastname}" />
+                        </p:column>
+
+                        <p:column headerText="Booking Date" sortBy="#{booking.bookingDate}" filterBy="#{booking.bookingDate}">
+                            <h:outputText value="#{booking.bookingDate}" >
+                                <f:convertDateTime pattern="dd/MM/YYYY"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Total Price" sortBy="#{booking.totalPrice}" filterBy="#{booking.totalPrice}">
+                            <h:outputText value="#{booking.totalPrice}" />
+                        </p:column>
+
+                        <p:column style="width:3rem;text-align: center">
+                            <p:commandButton update="bookingDetail" oncomplete="PF('bookingDialog').show()"
+                                             icon="fa fa-search" title="View">
+                                <f:setPropertyActionListener value="#{booking}"
+                                                             target="#{bookingBean.selectedBooking}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
+        <p:dialog header="Booking Details" showEffect="fade" modal="true" widgetVar="bookingDialog"
+                  hideEffect="fade">
+            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                <p:outputPanel id="bookingDetail">
+                    <div class="field">
+                        <p:outputLabel value="User: " class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{bookingBean.selectedBooking.user.firstname} #{bookingBean.selectedBooking.user.lastname}"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel value="Booking Date: " class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{bookingBean.selectedBooking.bookingDate}">
+                            <f:convertDateTime pattern="dd/MM/YYYY"/>
+                        </p:outputLabel>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel value="No of person: " class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{bookingBean.selectedBooking.noOfPerson}"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel value="Ticket Price: " class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{bookingBean.selectedBooking.ticket.price}"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel value="Total Price: " class="mr-2" style="font-weight: bold" />
+                        <p:outputLabel value="#{bookingBean.selectedBooking.totalPrice}"/>
+                    </div>
+                    
+                    <div class="formgrid grid">
+
+                    </div>
+                </p:outputPanel>
+            </p:outputPanel>
+        </p:dialog>
+    </h:body>
+</html>
+
