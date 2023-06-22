@@ -205,7 +205,7 @@ public class SignupBean implements Serializable {
     public void setIsClient(Integer isClient) {
         this.isClient = isClient;
     }
-    
+
     public void onStateChange() {
         if (stateid != null && !stateid.equals("")) {
             response = client.getAllCitiesByState(javax.ws.rs.core.Response.class, String.valueOf(stateid));
@@ -215,7 +215,7 @@ public class SignupBean implements Serializable {
             cities = new ArrayList<CityMaster>();
         }
     }
-    
+
     public void checkUsernameExists(FacesContext ctx, UIComponent component, Object value) {
         String username = (String) value;
         if (!username.equals("")) {
@@ -228,7 +228,7 @@ public class SignupBean implements Serializable {
             }
         }
     }
-    
+
     public void checkEmailExists(FacesContext ctx, UIComponent component, Object value) {
         String emailValue = (String) value;
         if (!emailValue.equals("")) {
@@ -247,14 +247,14 @@ public class SignupBean implements Serializable {
         try {
             InputStream imageInputStream = userImage.getInputStream();
             String uploadedImageName = userImage.getFileName();
-            
+
             String ext = uploadedImageName.substring(uploadedImageName.indexOf("."), uploadedImageName.length());
             Random random = new Random();
             String imageName = uname + "_" + random.nextInt(1000) + ext;
             System.out.println("Image Name: " + imageName);
-//
-//            File uploadedImage = new File("D:\\Sem_8\\PilgrimWorld_Project\\PilgrimWorldf\\src\\main\\webapp\\images\\users\\" + imageName);
-//            Files.copy(imageInputStream, uploadedImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            File uploadedImage = new File("D:\\Sem8\\Project\\PilgrimWorldf\\src\\main\\webapp\\images\\users\\" + imageName);
+            Files.copy(imageInputStream, uploadedImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             Request req = new Request();
             UserMaster user = new UserMaster();
@@ -276,7 +276,11 @@ public class SignupBean implements Serializable {
             user.setPassword(password);
 
             GroupMaster group = new GroupMaster();
-            group.setGroupId(6);
+            if (isClient != null) {
+                group.setGroupId(2);
+            } else {
+                group.setGroupId(3);
+            }
             user.setGroup(group);
 
             req.setData(user);
@@ -293,10 +297,9 @@ public class SignupBean implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+
     public String isPilgrimClient() {
-        System.out.println("here");
         isClient = 1;
-        return "signup.jsf";
+        return "signup.jsf?faces-redirect=true";
     }
 }

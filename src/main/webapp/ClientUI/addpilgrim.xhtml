@@ -34,8 +34,8 @@
 
                             <p:inputText id="name" styleClass="w-full mb-3" placeholder="Name" value="#{pilgrimBean.pilgrimMaster.pilgrimName}"/>
 
-                            <p:fileUpload listener="#{pilgrimBean.handlemainfilesUpload}" mode="advanced" dragDropSupport="true"
-                                          sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                            <p:fileUpload value="#{pilgrimBean.pilgrimImage}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(jpe?g|png)$/" 
+                                              required="true" />
 
                         </p:panel>
                     </p:tab>

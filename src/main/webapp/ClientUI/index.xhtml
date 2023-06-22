@@ -2,134 +2,421 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
-        <link href="#{facesContext.externalContext.requestContextPath}/ClientUI/css/style.css" rel="stylesheet"></link>
-        <!--<link href="#{facesContext.externalContext.requestContextPath}/ClientUI/css/bootstrap.min.css" rel="stylesheet"></link>-->
+        <link href="#{facesContext.externalContext.requestContextPath}/ClientUI/css/bootstrap.min.css" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700" rel="stylesheet"></link>
         <script src="https://kit.fontawesome.com/668b50f6bd.js" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"></link>
+        <link href="#{facesContext.externalContext.requestContextPath}/AdminUI/css/style.css" rel="stylesheet"></link>
     </h:head>
+    <style>
+        .ui-tabs .ui-tabs-nav li.ui-tabs-header {
+            background: transparent !important;
+        }
+        .ui-tabs .ui-tabs-nav {
+            background: transparent !important;
+        }
+
+        .ui-tabs .ui-tabs-panels {
+            background: transparent !important;
+        }
+        .card, .ui-card {
+            box-shadow: none !important;
+            border: none;
+            background: none;
+        }
+    </style>
     <h:outputStylesheet library="webjars" name="primeflex/3.2.0/primeflex.min.css" />
     <!--    <h:outputStylesheet name="primefaces-vela/theme.css"/>-->
     <h:body>
-        <div class="sidebar pe-4 pb-3">
-            <nav class="navbar bg-light navbar-light">
-                <div class="flex align-items-center mb-4 ml-5">
-                    <div class="relative">
-                        <p:avatar styleClass="mr-2" size="xlarge" shape="circle">
-                            <img src="#{facesContext.externalContext.requestContextPath}/images/users/messages-2.jpg"/>
-                        </p:avatar>
-                    </div>
-                    <div class="ml-4">
-                        <h4 class="my-1">Jhon Doe</h4>
-                        <span>Admin</span>
-                    </div>
-                </div>
-                <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt mr-3"></i>Dashboard</a>
-                    <a href="#" class="nav-link"><i class="fa fa-laptop mr-3"></i>Elements</a>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th mr-3"></i>Widgets</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard mr-3"></i>Forms</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table mr-3"></i>Tables</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar mr-3"></i>Charts</a>
-                </div>
-            </nav>
-        </div>
+        <h:form>
+            <p:speedDial direction="down">
+                <p:menuitem icon="fa-solid fa-pen-nib" />
+                <p:menuitem id="profile" icon="fa-solid fa-user" url="#{facesContext.externalContext.requestContextPath}/AdminUI/profile.jsf" >
+                    <p:tooltip for="profile" value="Profile"/>
+                </p:menuitem>
+                <p:menuitem id="logout" icon="fa-solid fa-right-from-bracket" url="#{facesContext.externalContext.requestContextPath}/logout.jsf" >
+                    <p:tooltip for="logout" value="Logout"/>
+                </p:menuitem>
+            </p:speedDial> 
+            <div class="card mt-2">
+                <p:tabView orientation="left" styleClass="mt-5">
+                    <p:tab title="Pilgrim">
+                        <!--<p:outputLabel for="name" value="" class="detail-label"/>-->
 
-        <div class="main">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style="border:0px none; background: none !important;" >
 
-            <div class="grid">
-                <div class="col-12 md:col-6 lg:col-3">
-                    <div class="surface-card shadow-2 p-3 border-round">
-                        <div class="flex justify-content-between mb-3">
-                            <div>
-                                <span class="block text-500 font-medium mb-3">Orders</span>
-                                <div class="text-900 font-medium text-xl">152</div>
+                            <p:outputLabel for="name" value="Pilgrim Name: " class="detail-label"/>
+                            <p:inputText id="name" value='#{pilgrimBean.pilgrimMaster.pilgrimName}'/>
+
+                            <p:outputLabel for="address" value="Address: " class="detail-label"/>
+                            <p:inputText id="address" value='#{pilgrimBean.pilgrimMaster.address}'/>
+
+                            <p:outputLabel for="state" value="State: " class="detail-label"/>
+                            <p:selectOneMenu id="state" value="#{pilgrimBean.pilgrimMaster.state.stateId}" class="bg-transparent" styleClass="w-full mb-3">
+                                <p:ajax listener="#{stateCityBean.onStateChange(pilgrimBean.pilgrimMaster.state.stateId)}" update="city"/>
+                                <f:selectItem itemLabel="Select State" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{stateCityBean.states}" var="state" itemLabel="#{state.stateName}" itemValue="#{state.stateId}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="city" value="City: " class="detail-label"/>
+                            <p:selectOneMenu id="city" value="#{pilgrimBean.pilgrimMaster.city.cityId}" class="bg-transparent" styleClass="w-full mb-3">
+                                <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{stateCityBean.cities}" var="item" itemLabel="#{item.cityName}" itemValue="#{item.cityId}"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+                        <div class="flex justify-content-center">
+                            <p:commandButton styleClass="w-6" value="Save Changes" />
+                        </div>
+                        <p:linkButton value="Add Pilgrim" href="#{facesContext.externalContext.requestContextPath}/ClientUI/addpilgrim.jsf"/>
+
+                    </p:tab>
+                    <p:tab title="Dashboard">
+                        <div class="main">
+                            <div class="grid">
+                                <div class="col-12 md:col-6 lg:col-3">
+                                    <div class="surface-card shadow-2 p-3 border-round">
+                                        <div class="flex justify-content-between mb-3">
+                                            <div>
+                                                <span class="block text-500 font-medium mb-3">Orders</span>
+                                                <div class="text-900 font-medium text-xl">152</div>
+                                            </div>
+                                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                                 style="width:2.5rem;height:2.5rem">
+                                                <i class="pi pi-shopping-cart text-blue-500 text-xl"/>
+                                            </div>
+                                        </div>
+                                        <span class="text-green-500 font-medium">24 new </span>
+                                        <span class="text-500">since last visit</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 md:col-6 lg:col-3">
+                                    <div class="surface-card shadow-2 p-3 border-round">
+                                        <div class="flex justify-content-between mb-3">
+                                            <div>
+                                                <span class="block text-500 font-medium mb-3">Revenue</span>
+                                                <div class="text-900 font-medium text-xl">$2.100</div>
+                                            </div>
+                                            <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                                                 style="width:2.5rem;height:2.5rem">
+                                                <i class="pi pi-map-marker text-orange-500 text-xl"/>
+                                            </div>
+                                        </div>
+                                        <span class="text-green-500 font-medium">%52+ </span>
+                                        <span class="text-500">since last week</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 md:col-6 lg:col-3">
+                                    <div class="surface-card shadow-2 p-3 border-round">
+                                        <div class="flex justify-content-between mb-3">
+                                            <div>
+                                                <span class="block text-500 font-medium mb-3">Customers</span>
+                                                <div class="text-900 font-medium text-xl">28441</div>
+                                            </div>
+                                            <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                                                 style="width:2.5rem;height:2.5rem">
+                                                <i class="pi pi-inbox text-cyan-500 text-xl"/>
+                                            </div>
+                                        </div>
+                                        <span class="text-green-500 font-medium">520  </span>
+                                        <span class="text-500">newly registered</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 md:col-6 lg:col-3">
+                                    <div class="surface-card shadow-2 p-3 border-round">
+                                        <div class="flex justify-content-between mb-3">
+                                            <div>
+                                                <span class="block text-500 font-medium mb-3">Comments</span>
+                                                <div class="text-900 font-medium text-xl">152 Unread</div>
+                                            </div>
+                                            <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                                                 style="width:2.5rem;height:2.5rem">
+                                                <i class="pi pi-comment text-purple-500 text-xl"/>
+                                            </div>
+                                        </div>
+                                        <span class="text-green-500 font-medium">85 </span>
+                                        <span class="text-500">responded</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
-                                 style="width:2.5rem;height:2.5rem">
-                                <i class="pi pi-shopping-cart text-blue-500 text-xl"/>
+                            <div class="grid">
+                                <div class="col-6">
+                                    <div class="col-12 col-6">
+                                        <div class="card">
+                                            <h5>Basic</h5>
+                                            <p:barChart model="#{chartJsView.barModel}" style="height: 300px;"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-6">
+                                        <div class="card">
+                                            <h5>Basic</h5>
+                                            <p:bubbleChart model="#{chartJsView.bubbleModel}" style="height: 200px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <p:radarChart model="#{chartJsView.radarModel}"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <span class="text-green-500 font-medium">24 new </span>
-                        <span class="text-500">since last visit</span>
-                    </div>
-                </div>
-                <div class="col-12 md:col-6 lg:col-3">
-                    <div class="surface-card shadow-2 p-3 border-round">
-                        <div class="flex justify-content-between mb-3">
-                            <div>
-                                <span class="block text-500 font-medium mb-3">Revenue</span>
-                                <div class="text-900 font-medium text-xl">$2.100</div>
+                    </p:tab>
+                    <p:tab title="Timeslots details">
+                        <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style="border:0px none; background: none !important;" >
+
+                            <p:toolbar>
+                                <p:toolbarGroup>
+                                    <p:commandButton value="New" icon="pi pi-plus"
+                                                     oncomplete="PF('manageProductDialogs3').show()"
+                                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                                    </p:commandButton>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+
+                            <p:dataTable id="dt-products" widgetVar="dtProducts" var="product" value="#{pilgrimBean.pilgrimTimeslotses}"
+                                         reflow="true" styleClass="products-table"
+                                         rowKey="#{product.timeslotsId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                                <f:facet name="header">
+                                    <div class="products-table-header">
+                                        <span style="font-weight: bold">Timeslots</span>
+                                        <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                                            <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search" />
+                                        </span>
+                                    </div>
+                                </f:facet>
+
+                                <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                                <p:column headerText="Id" sortBy="#{product.timeslotsId}" >
+                                    <h:outputText value="#{product.timeslotsId}" />
+                                </p:column>
+                                <p:column headerText="Week" sortBy="#{product.weekday}">
+                                    <h:outputText value="#{product.weekday}" />
+                                </p:column>
+                                <p:column headerText="To date" sortBy="#{product.toDate}">
+                                    <h:outputText value="#{product.toDate}"/>
+                                </p:column>
+                                <p:column headerText="From date" sortBy="#{product.fromDate}">
+                                    <h:outputText value="#{product.fromDate}"/>
+                                </p:column>
+                                <p:column exportable="false">
+                                    <p:commandButton icon="pi pi-pencil"
+                                                     oncomplete="PF('manageProductDialog').show()" 
+                                                     styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                        <f:setPropertyActionListener value="#{product}" target="#{pilgrimBean.pilgrimTimeslots}" />
+                                    </p:commandButton>
+                                </p:column>                               
+
+                            </p:dataTable>
+
+                            <p:dialog header="Timeslots Details" showEffect="fade" modal="true" widgetVar="manageProductDialog"
+                                      responsive="true">
+                                <div class="grid">
+                                    <div class="col-4">
+                                        <p:datePicker timeOnly="true" pattern="HH:mm" placeholder="To" value='#{pilgrimBean.pilgrimTimeslotsDetails.toTime}'/>&nbsp;&nbsp;
+                                    </div>
+                                    <div class="col-4">
+                                        <p:datePicker timeOnly="true" pattern="HH:mm" placeholder="From" value='#{pilgrimBean.pilgrimTimeslotsDetails.fromTime}'/>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Save" icon="pi pi-check" actionListener='#{pilgrimBean.onSubmitAddTimeslotDetails()}'/>
+                                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                                     class="ui-button-secondary" type="button" />
+                                </f:facet>
+                            </p:dialog>
+
+                            <p:dialog header="Timeslots" showEffect="fade" modal="true" widgetVar="manageProductDialogs3"
+                                      responsive="true">
+                                <p:selectOneRadio id="console" value="#{pilgrimBean.timeslotType}">
+                                    <p:ajax update="timeslot-details"/>
+                                    <f:selectItem itemLabel="Week" itemValue="1"/>
+                                    <f:selectItem itemLabel="Date" itemValue="2"/>
+                                </p:selectOneRadio>
+                                <p:card styleClass="mt-3" id="timeslot-details">
+                                    <c:choose>
+                                        <c:when test="#{pilgrimBean.timeslotType eq '2'}">
+                                            <p:outputLabel class="mb-1" value="Select dates" rendered="#{pilgrimBean.timeslotType eq '2'}"/><br/><br/>
+                                            <div class="grid">
+                                                <div class="col-4">
+                                                    <p:datePicker placeholder="To" value="#{pilgrimBean.pilgrimTimeslots.toDate}"/>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p:datePicker placeholder="From" value="#{pilgrimBean.pilgrimTimeslots.fromDate}"/>&nbsp;&nbsp;
+                                                </div>
+                                            </div>
+
+                                        </c:when>
+                                        <c:when test="#{pilgrimBean.timeslotType eq '1'}">
+                                            <div class="grid">
+                                                <div class="col-6">
+                                                    <p:selectOneMenu id="weekday" class="bg-transparent" value="#{pilgrimBean.pilgrimTimeslots.weekday}">
+                                                        <f:selectItem itemLabel="Select weekday" itemValue="" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{pilgrimBean.weekdays}" var="i" itemValue="#{pilgrimBean.weekdays.indexOf(i)}"/>
+                                                    </p:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </c:when>
+                                    </c:choose>
+                                </p:card>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Save" icon="pi pi-check" actionListener="#{pilgrimBean.onSubmitAddTimeslots()}"/>
+                                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialogs3').hide()"
+                                                     class="ui-button-secondary" type="button" />
+                                </f:facet>
+                            </p:dialog>
+
+                            <p:dataTable id="dt-timeslotsdetails" widgetVar="dtProductss" var="products" value="#{pilgrimBean.pilgrimTimeslotsDetailses}"
+                                         styleClass="products-table"
+                                         rowKey="#{products.timeslotsDetailsId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                                <f:facet name="header">
+                                    <div class="products-table-header">
+                                        <span style="font-weight: bold">Timeslots Details</span>
+                                        <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                                            <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search" />
+                                        </span>
+                                    </div>
+                                </f:facet>
+
+                                <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                                <p:column headerText="Id" sortBy="#{products.timeslotsDetailsId}" >
+                                    <h:outputText value="#{products.timeslotsDetailsId}" />
+                                </p:column>
+                                <p:column headerText="TimeslotID" sortBy="#{products.timeslots.timeslotsId}">
+                                    <h:outputText value="#{products.timeslots.timeslotsId}" />
+                                </p:column>
+                                <p:column headerText="To time" sortBy="#{products.toTime}">
+                                    <h:outputText value="#{products.toTime}"/>
+                                </p:column>
+                                <p:column headerText="From time" sortBy="#{products.fromTime}">
+                                    <h:outputText value="#{products.fromTime}"/>
+                                </p:column>
+                                <p:column exportable="false">
+                                    <p:commandButton icon="pi pi-pencil"
+                                                     oncomplete="PF('manageProductDialogs').show()" 
+                                                     styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                        <f:setPropertyActionListener value="#{products}" target="#{pilgrimBean.pilgrimTimeslotsDetails}" />
+                                    </p:commandButton>
+                                </p:column>                               
+
+                            </p:dataTable>
+
+                            <p:dialog header="Ticket Details" showEffect="fade" modal="true" widgetVar="manageProductDialogs"
+                                      responsive="true">
+
+                                <p:inputText placeholder="Price" value='#{pilgrimBean.pilgrimTickets.price}'/>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Save" icon="pi pi-check" actionListener='#{pilgrimBean.onSubmitAddTicketDetails()}'/>
+                                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialogs').hide()"
+                                                     class="ui-button-secondary" type="button" />
+                                </f:facet>
+                            </p:dialog>
+
+                            <p:dataTable id="dt-ticket" widgetVar="dtProductss" var="productss" value="#{pilgrimBean.pilgrimTicketses}"
+                                         reflow="true" styleClass="products-table"
+                                         rowKey="#{productss.ticketId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                                <f:facet name="header">
+                                    <div class="products-table-header">
+                                        <span style="font-weight: bold">Ticket Details</span>
+                                        <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                                            <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search" />
+                                        </span>
+                                    </div>
+                                </f:facet>
+
+                                <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                                <p:column headerText="Id" sortBy="#{productss.ticketId}" >
+                                    <h:outputText value="#{productss.ticketId}" />
+                                </p:column>
+                                <p:column headerText="Timeslot deatil ID" sortBy="#{productss.timeslotsDetails.timeslotsDetailsId}">
+                                    <h:outputText value="#{productss.timeslotsDetails.timeslotsDetailsId}" />
+                                </p:column>
+                                <p:column headerText="Price" sortBy="#{productss.price}">
+                                    <h:outputText value="#{productss.price}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:panelGrid>
+
+                    </p:tab>
+                    <p:tab title="Images">
+                        <p:fileUpload listener="#{pilgrimBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" sizeLimit="100000" fileLimit="3"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    </p:tab>
+                    <p:tab title="Rooms">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:commandButton value="New" icon="pi pi-plus"
+                                                 oncomplete="PF('manageProductDialogsroom').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:dataTable id="dt-rooms" widgetVar="dtProducts" var="rooms" value="#{pilgrimBean.pilgrimRoomses}"
+                                     reflow="true" styleClass="products-table"
+                                     rowKey="#{rooms.pilgrimRoomId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                            <f:facet name="header">
+                                <div class="products-table-header">
+                                    <span style="font-weight: bold">Rooms</span>
+                                    <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                            <p:column headerText="Id" sortBy="#{rooms.pilgrimRoomId}" >
+                                <h:outputText value="#{rooms.pilgrimRoomId}" />
+                            </p:column>
+                            <p:column headerText="Week" sortBy="#{rooms.pilgrim.pilgrimId}">
+                                <h:outputText value="#{rooms.pilgrim.pilgrimId}" />
+                            </p:column>
+                            <p:column headerText="To date" sortBy="#{rooms.noOfRooms}">
+                                <h:outputText value="#{rooms.noOfRooms}"/>
+                            </p:column>
+                            <p:column headerText="From date" sortBy="#{rooms.roomType}">
+                                <h:outputText value="#{rooms.roomType}"/>
+                            </p:column>
+                            <p:column headerText="From date" sortBy="#{rooms.price}">
+                                <h:outputText value="#{rooms.price}"/>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:dialog header="Rooms Details" showEffect="fade" modal="true" widgetVar="manageProductDialogsroom"
+                                  responsive="true">
+                            <div class="grid">
+                                <div class="col-4">
+                                    <p:datePicker timeOnly="true" pattern="HH:mm" placeholder="To" value='#{pilgrimBean.pilgrimTimeslotsDetails.toTime}'/>&nbsp;&nbsp;
+                                </div>
+                                <div class="col-4">
+                                    <p:datePicker timeOnly="true" pattern="HH:mm" placeholder="From" value='#{pilgrimBean.pilgrimTimeslotsDetails.fromTime}'/>&nbsp;&nbsp;
+                                </div>
                             </div>
-                            <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
-                                 style="width:2.5rem;height:2.5rem">
-                                <i class="pi pi-map-marker text-orange-500 text-xl"/>
-                            </div>
-                        </div>
-                        <span class="text-green-500 font-medium">%52+ </span>
-                        <span class="text-500">since last week</span>
-                    </div>
-                </div>
-                <div class="col-12 md:col-6 lg:col-3">
-                    <div class="surface-card shadow-2 p-3 border-round">
-                        <div class="flex justify-content-between mb-3">
-                            <div>
-                                <span class="block text-500 font-medium mb-3">Customers</span>
-                                <div class="text-900 font-medium text-xl">28441</div>
-                            </div>
-                            <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
-                                 style="width:2.5rem;height:2.5rem">
-                                <i class="pi pi-inbox text-cyan-500 text-xl"/>
-                            </div>
-                        </div>
-                        <span class="text-green-500 font-medium">520  </span>
-                        <span class="text-500">newly registered</span>
-                    </div>
-                </div>
-                <div class="col-12 md:col-6 lg:col-3">
-                    <div class="surface-card shadow-2 p-3 border-round">
-                        <div class="flex justify-content-between mb-3">
-                            <div>
-                                <span class="block text-500 font-medium mb-3">Comments</span>
-                                <div class="text-900 font-medium text-xl">152 Unread</div>
-                            </div>
-                            <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
-                                 style="width:2.5rem;height:2.5rem">
-                                <i class="pi pi-comment text-purple-500 text-xl"/>
-                            </div>
-                        </div>
-                        <span class="text-green-500 font-medium">85 </span>
-                        <span class="text-500">responded</span>
-                    </div>
-                </div>
+                            <f:facet name="footer">
+                                <p:commandButton value="Save" icon="pi pi-check" actionListener='#{pilgrimBean.onSubmitAddTimeslotDetails()}'/>
+                                <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                                 class="ui-button-secondary" type="button" />
+                            </f:facet>
+                        </p:dialog>
+                    </p:tab>
+                </p:tabView>
             </div>
-            <div class="grid">
-                <div class="col-6">
-                    <div class="col-12 col-6">
-                        <div class="card">
-                            <h5>Basic</h5>
-                            <p:barChart model="#{chartJsView.barModel}" style="height: 300px;"/>
-                        </div>
-                    </div>
-                    <div class="col-12 col-6">
-                        <div class="card">
-                            <h5>Basic</h5>
-                            <p:bubbleChart model="#{chartJsView.bubbleModel}" style="height: 200px;"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card">
-                        <p:radarChart model="#{chartJsView.radarModel}"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </h:form>
     </h:body>
 </html>
 

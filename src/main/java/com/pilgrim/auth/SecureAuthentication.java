@@ -59,7 +59,8 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext context) throws AuthenticationException {
 
         System.out.println("in ValidateRequest!");
-        
+        System.out.println("Username: " + request.getParameter("username"));
+
         //extracting token
         HttpSession session = request.getSession();
         String token;
@@ -159,8 +160,6 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
             ex.printStackTrace();
         }
 
-        
-
         try {
 
             System.out.println("Username: " + request.getParameter("username"));
@@ -239,6 +238,9 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                     }
                     if (result.getCallerGroups().contains("Admin")) {
                         response.sendRedirect("AdminUI/index.jsf");
+                    }
+                    if (result.getCallerGroups().contains("Client")) {
+                        response.sendRedirect("ClientUI/index.jsf");
                     }
                     return status;
                 } else {

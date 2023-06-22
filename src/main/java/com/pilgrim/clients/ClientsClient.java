@@ -18,7 +18,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author Dell
+ * @author maitr
  */
 public class ClientsClient {
 
@@ -151,6 +151,12 @@ public class ClientsClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T getAllTimeslotsDetails(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("pilgrims/getAllTimeslotsdetails");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T addPilgrimTimeslots(Object requestEntity, Class<T> responseType) throws ClientErrorException {
         return webTarget.path("pilgrimTimeslots/add").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
     }
@@ -209,6 +215,12 @@ public class ClientsClient {
 
     public <T> T addAdvertisement(Object requestEntity, Class<T> responseType) throws ClientErrorException {
         return webTarget.path("advertisements/add").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+    }
+
+    public <T> T getPilgrimsByUser(Class<T> responseType, String userid) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("pilgrims/getByUser/{0}", new Object[]{userid}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public <T> T getPilgrims(Class<T> responseType) throws ClientErrorException {

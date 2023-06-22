@@ -7,7 +7,6 @@
         <title>Pilgrim World</title>
     </h:head>
     <h:body>
-        <h:form>
             <footer class="site-footer section-padding">
 
                 <div class="container">
@@ -23,7 +22,7 @@
 
                             <!--<p>121 Einstein Loop N, Bronx, NY 10475, United States</p>-->
 
-                            <p:commandButton onclick="#{signupBean.isPilgrimClient()}" class="custom-btn btn btn-dark mt-2" value="Add"></p:commandButton>
+                            <p:commandButton action="#{signupBean.isPilgrimClient()}" class="custom-btn btn btn-dark mt-2" value="Add"></p:commandButton>
                         </div>
 
                         <!--                    <div class="col-lg-4 col-md-5 col-xs-12 tooplate-mt30">
@@ -40,14 +39,14 @@
                             <h6 class="text-white mb-lg-4 mb-3">Social</h6>
 
                             <ul class="social-icon">
-                                <li><a href="#" class="social-icon-link bi-facebook"><i class="fa-brands fa-facebook"></i></a></li>
+                                <li class="ms-3"><a href="#" ><i class="fa-brands fa-facebook"></i></a></li>
 
-                                <li><a href="#" class="social-icon-link bi-instagram"><i class="fa-brands fa-instagram"></i></a></li>
+                                <li class="ms-3"><a href="#" ><i class="fa-brands fa-instagram"></i></a></li>
 
-                                <li><a href="https://twitter.com/search?q=tooplate.comsrc=typed_queryf=live" target="_blank"
-                                       class="social-icon-link bi-twitter"><i class="fa-brands fa-twitter"></i></a></li>
+                                <li class="ms-3"><a href="https://twitter.com/search?q=tooplate.comsrc=typed_queryf=live" target="_blank"
+                                       ><i class="fa-brands fa-twitter"></i></a></li>
 
-                                <li><a href="#" class="social-icon-link bi-youtube"><i class="fa-brands fa-youtube"></i></a></li>
+                                <li class="ms-3"><a href="#" ><i class="fa-brands fa-youtube"></i></a></li>
                             </ul>
 
                             <p class="copyright-text tooplate-mt60">Copyright © 2023 Pilgrim World
@@ -60,7 +59,6 @@
                 </div><!-- container ending -->
 
             </footer>
-        </h:form>
     </h:body>
 </html>
 
