@@ -49,7 +49,7 @@ public class UsersBean implements Serializable {
     GenericType<Response<Collection<StateMaster>>> gresStates;
     Response<Collection<CityMaster>> resCities;
     GenericType<Response<Collection<CityMaster>>> gresCities;
-    
+
     Response<Boolean> resIfExists;
     GenericType<Response<Boolean>> gresIfExists;
 
@@ -86,11 +86,11 @@ public class UsersBean implements Serializable {
         gresUser = new GenericType<Response<UserMaster>>() {
         };
         loggedInUser = new UserMaster();
-        
+
         response = adminClient.getUserByUsername(javax.ws.rs.core.Response.class, KeepRecord.getUsername());
         resUser = response.readEntity(gresUser);
         loggedInUser = resUser.getResult();
-        
+
         firstName = loggedInUser.getFirstname();
         lastName = loggedInUser.getLastname();
         uname = loggedInUser.getUsername();
@@ -258,14 +258,14 @@ public class UsersBean implements Serializable {
             cities = new ArrayList<>();
         }
     }
-    
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
-    
+
     public String onSubmit() {
-        
+
         loggedInUser.setFirstname(firstName);
         loggedInUser.setLastname(lastName);
         loggedInUser.setUsername(uname);
@@ -278,10 +278,10 @@ public class UsersBean implements Serializable {
         loggedInUser.setCity(city);
         loggedInUser.setEmail(email);
         loggedInUser.setUpdatedDate(new Date());
-        
+
         Request<UserMaster> requestbody = new Request<>();
         requestbody.setData(loggedInUser);
-        
+
         response = adminClient.updateuser(requestbody, javax.ws.rs.core.Response.class);
         resUpdate = response.readEntity(gresUpdate);
         if(resUpdate.isStatus()) {
