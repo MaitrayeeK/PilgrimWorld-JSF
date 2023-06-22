@@ -97,6 +97,11 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
                             cookie.setMaxAge(0);
                             response.addCookie(cookie);
                         }
+                        if (cookie.getName().equals("userid")) {
+                            cookie.setValue("");
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                        }
                         if (cookie.getName().equals("password")) {
                             cookie.setValue("");
                             cookie.setMaxAge(0);
@@ -113,25 +118,33 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
         }
 
         Cookie[] cookies = request.getCookies();
-        String token_cookie = null;
-        String token_role = null;
+        String cookie_token = null;
+        String cookie_role = null;
+        String cookie_username = null;
+        String cookie_userid = null;
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
-                    token_cookie = cookie.getValue();
+                    cookie_token = cookie.getValue();
                 }
                 if (cookie.getName().equals("role")) {
-                    token_role = cookie.getValue();
+                    cookie_role = cookie.getValue();
+                }
+                if (cookie.getName().equals("username")) {
+                    cookie_username = cookie.getValue();
+                }
+                if (cookie.getName().equals("userid")) {
+                    cookie_userid = cookie.getValue();
                 }
             }
         }
 
         //checking token validity when remeber me is checked
         try {
-            if (token_cookie != null) {
+            if (cookie_token != null) {
                 if (request.getRequestURI().contains("signin.jsf")) {
-                    securityData = new SecurityData(token_cookie);
+                    securityData = new SecurityData(cookie_token);
 
                     res = authClient.validateToken(securityData, javax.ws.rs.core.Response.class);
                     System.out.println("frontend after client call : ");
@@ -140,13 +153,23 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
 
                     if (resSecurityData.isStatus()) {
                         System.out.println("Token is validated!!");
-                        if (token_role.contains("Admin")) {
+                        
+                        Set<String> roles = new HashSet<>();
+                        roles.add(cookie_role);
+
+                        KeepRecord.setIsLoggedin(true);
+                        KeepRecord.setRoles(roles);
+                        KeepRecord.setToken(cookie_token);
+                        KeepRecord.setUserid(Integer.parseInt(cookie_userid));
+                        KeepRecord.setUsername(cookie_username);
+
+                        if (cookie_role.contains("Admin")) {
                             response.sendRedirect("AdminUI/index.jsf");
                         }
-                        if (token_role.contains("User")) {
+                        if (cookie_role.contains("User")) {
                             response.sendRedirect("UI/index.jsf");
                         }
-                        if (token_role.contains("Client")) {
+                        if (cookie_role.contains("Client")) {
                             response.sendRedirect("ClientUI/index.jsf");
                         }
                         return context.notifyContainerAboutLogin(KeepRecord.getPrincipal(), KeepRecord.getRoles());
@@ -194,16 +217,19 @@ public class SecureAuthentication implements HttpAuthenticationMechanism, Serial
 
                     if (rememberme != null) {
                         Cookie unameCookie = new Cookie("username", username);
+                        Cookie uidCookie = new Cookie("userid", securityData.getUser().getUserId().toString());
                         Cookie passCookie = new Cookie("password", pb.generate(password.toCharArray()));
                         Cookie tokenCookie = new Cookie("token", securityData.getToken());
                         Cookie roleCookie = new Cookie("role", securityData.getUser().getGroup().getGroupName());
 
                         response.addCookie(unameCookie);
+                        response.addCookie(uidCookie);
                         response.addCookie(passCookie);
                         response.addCookie(tokenCookie);
                         response.addCookie(roleCookie);
 
                         unameCookie.setMaxAge((int) securityData.getCredentialValidity());
+                        uidCookie.setMaxAge((int) securityData.getCredentialValidity());
                         passCookie.setMaxAge((int) securityData.getCredentialValidity());
                         tokenCookie.setMaxAge((int) securityData.getCredentialValidity());
                         roleCookie.setMaxAge((int) securityData.getCredentialValidity());

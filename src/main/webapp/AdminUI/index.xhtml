@@ -12,23 +12,27 @@
     <h:body>
         <ui:include src="header.xhtml"/>
         <h:form>
+<<<<<<< Updated upstream
             
             <div class="main">
                 <div class="grid">
+=======
+
+            <div class="main">
+                <div class="grid mb-4">
+>>>>>>> Stashed changes
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="surface-card shadow-2 p-3 border-round">
                             <div class="flex justify-content-between mb-3">
                                 <div>
-                                    <span class="block text-500 font-medium mb-3">Orders</span>
-                                    <div class="text-900 font-medium text-xl">152</div>
+                                    <span class="block text-500 font-medium mb-3">Booking</span>
+                                    <div class="text-900 font-medium text-xl">#{bookingBean.bookings.size()}</div>
                                 </div>
                                 <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                                      style="width:2.5rem;height:2.5rem">
                                     <i class="pi pi-shopping-cart text-blue-500 text-xl"/>
                                 </div>
                             </div>
-                            <span class="text-green-500 font-medium">24 new </span>
-                            <span class="text-500">since last visit</span>
                         </div>
                     </div>
                     <div class="col-12 md:col-6 lg:col-3">
@@ -36,15 +40,13 @@
                             <div class="flex justify-content-between mb-3">
                                 <div>
                                     <span class="block text-500 font-medium mb-3">Revenue</span>
-                                    <div class="text-900 font-medium text-xl">$2.100</div>
+                                    <div class="text-900 font-medium text-xl">&#8377;#{bookingBean.revenue}</div>
                                 </div>
                                 <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
                                      style="width:2.5rem;height:2.5rem">
                                     <i class="pi pi-map-marker text-orange-500 text-xl"/>
                                 </div>
                             </div>
-                            <span class="text-green-500 font-medium">%52+ </span>
-                            <span class="text-500">since last week</span>
                         </div>
                     </div>
                     <div class="col-12 md:col-6 lg:col-3">
@@ -52,55 +54,43 @@
                             <div class="flex justify-content-between mb-3">
                                 <div>
                                     <span class="block text-500 font-medium mb-3">Customers</span>
-                                    <div class="text-900 font-medium text-xl">28441</div>
+                                    <div class="text-900 font-medium text-xl">#{usersBean.users.size()}</div>
                                 </div>
                                 <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
                                      style="width:2.5rem;height:2.5rem">
                                     <i class="pi pi-inbox text-cyan-500 text-xl"/>
                                 </div>
                             </div>
-                            <span class="text-green-500 font-medium">520  </span>
-                            <span class="text-500">newly registered</span>
                         </div>
                     </div>
                     <div class="col-12 md:col-6 lg:col-3">
                         <div class="surface-card shadow-2 p-3 border-round">
                             <div class="flex justify-content-between mb-3">
                                 <div>
-                                    <span class="block text-500 font-medium mb-3">Comments</span>
-                                    <div class="text-900 font-medium text-xl">152 Unread</div>
+                                    <span class="block text-500 font-medium mb-3">Clients</span>
+                                    <div class="text-900 font-medium text-xl">#{usersBean.clients.size()}</div>
                                 </div>
                                 <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
                                      style="width:2.5rem;height:2.5rem">
                                     <i class="pi pi-comment text-purple-500 text-xl"/>
                                 </div>
                             </div>
-                            <span class="text-green-500 font-medium">85 </span>
-                            <span class="text-500">responded</span>
                         </div>
                     </div>
                 </div>
                 <div class="grid">
-                    <div class="col-6">
-                        <div class="col-12 col-6">
-                            <div class="card">
-                                <h5>Basic</h5>
-                                <p:barChart model="#{chartJsView.barModel}" style="height: 300px;"/>
-                            </div>
-                        </div>
-                        <div class="col-12 col-6">
-                            <div class="card">
-                                <h5>Basic</h5>
-                                <p:bubbleChart model="#{chartJsView.bubbleModel}" style="height: 200px;"/>
-                            </div>
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="surface-card shadow-2 p-3 border-round">
+                            <p:pieChart model="#{usersBean.pieModel}" style="width: 100%; height: 500px;"/>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <p:radarChart model="#{chartJsView.radarModel}"/>
+                    <div class="col-12 md:col-9 lg:col-9">
+                        <div class="surface-card shadow-2 p-3 border-round">
+                            <p:barChart model="#{bookingBean.hbarModel}" style="width: 100%; height: 500px;"/>
                         </div>
                     </div>
                 </div>
+
             </div>
         </h:form>
     </h:body>

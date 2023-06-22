@@ -221,7 +221,7 @@ public class SignupBean implements Serializable {
         if (!username.equals("")) {
             response = client.checkifUsernameExists(javax.ws.rs.core.Response.class, username);
             resIfExists = response.readEntity(gresIfExists);
-            if(resIfExists.getResult().equals(true)) {
+            if (resIfExists.getResult().equals(true)) {
                 FacesMessage msg = new FacesMessage("Username already exists!");
                 msg.setSeverity(FacesMessage.SEVERITY_ERROR);
                 throw new ValidatorException(msg);
@@ -234,7 +234,7 @@ public class SignupBean implements Serializable {
         if (!emailValue.equals("")) {
             response = client.checkifEmailExists(javax.ws.rs.core.Response.class, emailValue);
             resIfExists = response.readEntity(gresIfExists);
-            if(resIfExists.getResult().equals(true)) {
+            if (resIfExists.getResult().equals(true)) {
                 FacesMessage msg = new FacesMessage("Email already exists!");
                 msg.setSeverity(FacesMessage.SEVERITY_ERROR);
                 throw new ValidatorException(msg);
@@ -242,7 +242,7 @@ public class SignupBean implements Serializable {
         }
     }
 
-    public void onSubmit() {
+    public String onSubmit() {
 
         try {
             InputStream imageInputStream = userImage.getInputStream();
@@ -253,7 +253,7 @@ public class SignupBean implements Serializable {
             String imageName = uname + "_" + random.nextInt(1000) + ext;
             System.out.println("Image Name: " + imageName);
 
-            File uploadedImage = new File("D:\\Sem8\\Project\\PilgrimWorldf\\src\\main\\webapp\\images\\users\\" + imageName);
+            File uploadedImage = new File("D:\\Sem_8\\PilgrimWorld_Project\\PilgrimWorldf\\src\\main\\webapp\\images\\users\\" + imageName);
             Files.copy(imageInputStream, uploadedImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             Request req = new Request();
@@ -289,16 +289,20 @@ public class SignupBean implements Serializable {
             response1 = response.readEntity(gresponse1);
             if (response1.isStatus()) {
                 addMessage(FacesMessage.SEVERITY_INFO, "Info Message", "Registration completed! Login to continue.");
-//            return "signin.jsf";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../signin.jsf");
+//                return "../signin.jsf?faces-redirect=true";
+                return null;
             } else {
                 addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Registration not completed! ");
+                return null;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            return null;
         }
     }
 
-    public String isPilgrimClient() {
+    public String isPilgrimClient() {               
         isClient = 1;
         return "signup.jsf?faces-redirect=true";
     }

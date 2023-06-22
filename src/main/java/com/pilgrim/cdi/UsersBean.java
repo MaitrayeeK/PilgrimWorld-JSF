@@ -4,7 +4,6 @@
  */
 package com.pilgrim.cdi;
 
-
 import com.pilgrim.helper.Request;
 import com.pilgrim.clients.AdminClient;
 import com.pilgrim.helper.Response;
@@ -19,9 +18,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.pie.PieChartDataSet;
+import org.primefaces.model.charts.pie.PieChartModel;
 import org.primefaces.model.file.UploadedFile;
 
 /**
@@ -37,6 +40,10 @@ public class UsersBean implements Serializable {
 
     Response<Collection<UserMaster>> resUsers;
     GenericType<Response<Collection<UserMaster>>> gresUsers;
+
+    Response<Collection<UserMaster>> resClients;
+    GenericType<Response<Collection<UserMaster>>> gresClients;
+    Collection<UserMaster> clients;
 
     Collection<UserMaster> users;
     UserMaster selectedUser;
@@ -66,12 +73,17 @@ public class UsersBean implements Serializable {
     String statename, cityname;
     UploadedFile userImage;
 
+    private PieChartModel pieModel;
+
     public UsersBean() {
         adminClient = new AdminClient();
         resUsers = new Response<>();
         gresUsers = new GenericType<Response<Collection<UserMaster>>>() {
         };
         users = new ArrayList<>();
+        gresClients = new GenericType<Response<Collection<UserMaster>>>() {
+        };
+        clients = new ArrayList<>();
         selectedUser = new UserMaster();
         filteredUsers = new ArrayList<>();
         gresStates = new GenericType<Response<Collection<StateMaster>>>() {
@@ -100,7 +112,20 @@ public class UsersBean implements Serializable {
         cityid = loggedInUser.getCity().getCityId();
         cityname = loggedInUser.getCity().getCityName();
         email = loggedInUser.getEmail();
-        
+
+    }
+
+    @PostConstruct
+    public void init() {
+        createPieModel();
+    }
+
+    public PieChartModel getPieModel() {
+        return pieModel;
+    }
+
+    public void setPieModel(PieChartModel pieModel) {
+        this.pieModel = pieModel;
     }
 
     public UserMaster getSelectedUser() {
@@ -120,7 +145,7 @@ public class UsersBean implements Serializable {
     }
 
     public Collection<UserMaster> getUsers() {
-        response = adminClient.getUserByGroup(javax.ws.rs.core.Response.class, String.valueOf(6));
+        response = adminClient.getUserByGroup(javax.ws.rs.core.Response.class, String.valueOf(4));
         resUsers = response.readEntity(gresUsers);
         users = resUsers.getResult();
         return users;
@@ -128,6 +153,17 @@ public class UsersBean implements Serializable {
 
     public void setUsers(Collection<UserMaster> users) {
         this.users = users;
+    }
+
+    public Collection<UserMaster> getClients() {
+        response = adminClient.getUserByGroup(javax.ws.rs.core.Response.class, String.valueOf(5));
+        resClients = response.readEntity(gresClients);
+        clients = resClients.getResult();
+        return clients;
+    }
+
+    public void setClients(Collection<UserMaster> clients) {
+        this.clients = clients;
     }
 
     public Collection<UserMaster> getFilteredUsers() {
@@ -247,7 +283,6 @@ public class UsersBean implements Serializable {
 //    public void setLoggedInUser(UserMaster loggedInUser) {
 //        this.loggedInUser = loggedInUser;
 //    }
-
     public void onStateChange() {
         System.out.println("State fron onStateChange: " + stateid);
         if (stateid != null && !stateid.equals("")) {
@@ -284,13 +319,39 @@ public class UsersBean implements Serializable {
 
         response = adminClient.updateuser(requestbody, javax.ws.rs.core.Response.class);
         resUpdate = response.readEntity(gresUpdate);
-        if(resUpdate.isStatus()) {
+        if (resUpdate.isStatus()) {
             addMessage(FacesMessage.SEVERITY_INFO, "Info Message", resUpdate.getMessage());
             return "profile.jsf";
-        }
-        else{
+        } else {
             addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", resUpdate.getMessage());
             return null;
         }
+    }
+
+    private void createPieModel() {
+        getClients();
+        getUsers();
+        
+        pieModel = new PieChartModel();
+        ChartData data = new ChartData();
+
+        PieChartDataSet dataSet = new PieChartDataSet();
+        List<Number> values = new ArrayList<>();
+        values.add(clients.size());
+        values.add(users.size());
+        dataSet.setData(values);
+
+        List<String> bgColors = new ArrayList<>();
+        bgColors.add("rgb(255, 99, 132)");
+        bgColors.add("rgb(255, 205, 86)");
+        dataSet.setBackgroundColor(bgColors);
+
+        data.addChartDataSet(dataSet);
+        List<String> labels = new ArrayList<>();
+        labels.add("Client");
+        labels.add("User");
+        data.setLabels(labels);
+
+        pieModel.setData(data);
     }
 }
